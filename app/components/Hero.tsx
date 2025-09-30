@@ -1,7 +1,7 @@
 'use client'
 
 export default function Hero() {
-  const whatsappUrl = "https://web.whatsapp.com/send?phone=554391244440";
+  const whatsappUrl = "https://api.whatsapp.com/send?phone=554391244440";
   
   return (
     <section className="hero">
