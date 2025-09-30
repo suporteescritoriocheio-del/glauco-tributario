@@ -1,7 +1,7 @@
 'use client'
 
 export default function Footer() {
-  const whatsappUrl = "https://web.whatsapp.com/send?phone=554391244440&text=";
+  const whatsappUrl = "https://web.whatsapp.com/send?phone=554391244440"; 
   
   return (
     <footer id="contato">

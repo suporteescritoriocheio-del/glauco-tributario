@@ -1,7 +1,7 @@
 'use client'
 
 export default function Problems() {
-  const whatsappUrl = "https://web.whatsapp.com/send?phone=554391244440&text=";
+  const whatsappUrl = "https://web.whatsapp.com/send?phone=554391244440";
   
   return (
     <section className="section-light problems-section" id="problemas">
