@@ -9,7 +9,7 @@ export default function Authority() {
         
         <div className="authority-stats">
           <div className="stat">
-            <span className="stat-number">15+</span>
+            <span className="stat-number"25+</span>
             <span className="stat-text">Anos de atuação especializada em Direito Tributário</span>
           </div>
           <div className="stat">
