@@ -47,7 +47,7 @@ export const POST: APIRoute = async ({ request }) => {
                 // Use Resend test email until domain is verified
                 // Change to 'contato@glaucoramos.com' after domain verification
                 from: 'Glauco Tributário <contato@glaucoramos.com.br>',
-                to: ['advocacia@glaucoramos.com'],
+                to: ['advocacia@glaucoramos.com', 'higorrodriguest8@gmail.com'],
                 subject: `Novo Lead - ${name} via WhatsApp CTA`,
                 html: `
                     <h2>Novo Lead Capturado!</h2>
