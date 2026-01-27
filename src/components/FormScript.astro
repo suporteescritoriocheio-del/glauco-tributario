@@ -1,0 +1,123 @@
+---
+// Minimal inline JavaScript for form validation and tracking
+// Kept under 1KB for performance
+---
+
+<script is:inline>
+    // Form validation
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("contact-form");
+        if (form) {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                // Basic validation
+                const nome = document.getElementById("nome").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const telefone = document
+                    .getElementById("telefone")
+                    .value.trim();
+
+                if (!nome || !email || !telefone) {
+                    alert("Por favor, preencha todos os campos obrigatórios.");
+                    return false;
+                }
+
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert("Por favor, insira um e-mail válido.");
+                    return false;
+                }
+
+                // Google Ads conversion tracking (if configured)
+                if (typeof gtag !== "undefined") {
+                    gtag("event", "conversion", {
+                        send_to: "AW-CONVERSION_ID/CONVERSION_LABEL",
+                    });
+                }
+
+                // Redirect to WhatsApp or submit form
+                const mensagem = document
+                    .getElementById("mensagem")
+                    .value.trim();
+                const cidade = document.getElementById("cidade").value.trim();
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = "ENVIANDO...";
+
+                // Send data to API
+                fetch("/api/capture-lead", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        name: nome,
+                        email: email,
+                        whatsapp: telefone,
+                        city: cidade,
+                        message: mensagem,
+                        source: "Formulário de Contato",
+                        timestamp: new Date().toISOString(),
+                    }),
+                })
+                    .then((response) => {
+                        // Track conversion in Google Ads
+                        if (typeof gtag !== "undefined") {
+                            gtag("event", "conversion", {
+                                send_to: "AW-11104417748/bqfVCO3iwN4ZENTv_64p",
+                                value: 1.0,
+                                currency: "BRL",
+                            });
+                        }
+
+                        if (response.ok) {
+                            alert(
+                                "Recebemos sua mensagem! Em breve entraremos em contato via WhatsApp.",
+                            );
+
+                            // Redirect to WhatsApp as fallback/convenience
+                            const whatsappMsg = encodeURIComponent(
+                                `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\nMensagem: ${mensagem || "Não informado"}`,
+                            );
+                            window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
+                        } else {
+                            throw new Error("Erro no envio");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Erro:", error);
+                        alert(
+                            "Erro ao enviar mensagem. Redirecionando para o WhatsApp...",
+                        );
+                        const whatsappMsg = encodeURIComponent(
+                            `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\nMensagem: ${mensagem || "Não informado"}`,
+                        );
+                        window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
+                    })
+                    .finally(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    });
+            });
+        }
+
+        // WhatsApp CTA tracking
+        const whatsappLinks = document.querySelectorAll(
+            'a[href^="https://wa.me"]',
+        );
+        whatsappLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                if (typeof gtag !== "undefined") {
+                    gtag("event", "click", {
+                        event_category: "engagement",
+                        event_label: "whatsapp_cta",
+                    });
+                }
+            });
+        });
+    });
+</script>

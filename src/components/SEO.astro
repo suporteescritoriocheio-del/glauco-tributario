@@ -1,0 +1,108 @@
+---
+interface Props {
+    title: string;
+    description: string;
+    canonical?: string;
+    ogImage?: string;
+}
+
+const {
+    title,
+    description,
+    canonical = "https://glaucoramos.com/empresarial",
+    ogImage = "https://glaucoramos.com/og-empresarial.jpg",
+} = Astro.props;
+---
+
+<!-- Primary Meta Tags -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content={Astro.generator} />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta
+    name="keywords"
+    content="advocacia empresarial, direito tributário, consultoria jurídica empresarial, advogado tributarista, direito societário, planejamento tributário, recuperação judicial, fusões aquisições, advogado empresarial São Paulo, advogado empresarial Curitiba"
+/>
+<link rel="canonical" href={canonical} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:site_name" content="Glauco Ramos Advocacia" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonical} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Additional SEO -->
+<meta name="robots" content="index, follow" />
+<meta name="author" content="Glauco Ramos Advocacia" />
+<meta name="language" content="Portuguese" />
+<meta name="revisit-after" content="7 days" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+<!-- Preconnect for performance -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+/>
+
+<!-- Google Tag Manager -->
+<script is:inline>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-58XT4LRL");
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script
+    is:inline
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=GT-K58ZV73"></script>
+<script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "GT-K58ZV73");
+
+    // Google Ads Conversion Tracking
+    gtag("config", "AW-11104417748");
+</script>
+
+<!-- Microsoft Clarity -->
+<script is:inline type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+        c[a] =
+            c[a] ||
+            function () {
+                (c[a].q = c[a].q || []).push(arguments);
+            };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i + "?ref=gtm2";
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "gf5ul8s6a7");
+</script>

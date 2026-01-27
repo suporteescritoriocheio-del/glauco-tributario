@@ -1,0 +1,145 @@
+---
+// Structured data for enhanced SEO and rich snippets
+const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "LegalService",
+            "@id": "https://glaucoramos.com/#organization",
+            name: "Glauco Ramos Advocacia",
+            url: "https://glaucoramos.com",
+            logo: "https://glaucoramos.com/logo.png",
+            image: "https://glaucoramos.com/og-empresarial.jpg",
+            description:
+                "Advocacia empresarial especializada em direito tributário, societário e consultoria jurídica para empresas em todo o Brasil.",
+            telephone: "+55-43-99124-4440",
+            email: "advocacia@glaucoramos.com",
+            address: [
+                {
+                    "@type": "PostalAddress",
+                    addressLocality: "São Paulo",
+                    addressRegion: "SP",
+                    addressCountry: "BR",
+                },
+                {
+                    "@type": "PostalAddress",
+                    addressLocality: "Curitiba",
+                    addressRegion: "PR",
+                    addressCountry: "BR",
+                },
+                {
+                    "@type": "PostalAddress",
+                    addressLocality: "Londrina",
+                    addressRegion: "PR",
+                    addressCountry: "BR",
+                },
+            ],
+            areaServed: "BR",
+            priceRange: "$$",
+            aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.5",
+                reviewCount: "31",
+                bestRating: "5",
+                worstRating: "1",
+            },
+        },
+        {
+            "@type": "Attorney",
+            name: "Glauco Ramos",
+            jobTitle: "Advogado Especialista em Direito Tributário",
+            worksFor: {
+                "@id": "https://glaucoramos.com/#organization",
+            },
+            alumniOf: "Universidade Estadual de Londrina",
+            knowsAbout: [
+                "Direito Tributário",
+                "Direito Societário",
+                "Direito Empresarial",
+                "Fusões e Aquisições",
+                "Recuperação Judicial",
+            ],
+            yearsOfExperience: "30",
+        },
+        {
+            "@type": "FAQPage",
+            mainEntity: [
+                {
+                    "@type": "Question",
+                    name: "Quanto custa uma consultoria?",
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "Oferecemos uma primeira análise gratuita para entender seu caso. Após isso, apresentamos uma proposta transparente e personalizada, sem custos ocultos.",
+                    },
+                },
+                {
+                    "@type": "Question",
+                    name: "Vocês atendem empresas de qualquer porte?",
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "Sim! Atendemos desde MEIs e pequenas empresas até médias e grandes corporações. Cada caso recebe atenção personalizada.",
+                    },
+                },
+                {
+                    "@type": "Question",
+                    name: "Minha empresa fica fora de SP, Curitiba ou Londrina. Vocês podem me atender?",
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "Com certeza! Atendemos empresas de todo o Brasil através de consultoria online, com a mesma qualidade do atendimento presencial.",
+                    },
+                },
+                {
+                    "@type": "Question",
+                    name: "Quanto tempo leva para resolver meu caso?",
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "Depende da complexidade. Na primeira reunião, apresentamos um cronograma realista com prazos esperados para cada etapa.",
+                    },
+                },
+                {
+                    "@type": "Question",
+                    name: "Como funciona o acompanhamento do caso?",
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "Mantemos comunicação constante via WhatsApp, e-mail e reuniões periódicas. Você sempre saberá o andamento do seu processo.",
+                    },
+                },
+                {
+                    "@type": "Question",
+                    name: "Vocês trabalham com urgências?",
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "Sim! Temos plantão 24h para emergências empresariais que exigem resposta imediata.",
+                    },
+                },
+            ],
+        },
+        {
+            "@type": "Service",
+            serviceType: "Consultoria Empresarial Estratégica",
+            provider: {
+                "@id": "https://glaucoramos.com/#organization",
+            },
+            areaServed: "BR",
+        },
+        {
+            "@type": "Service",
+            serviceType: "Direito Societário",
+            provider: {
+                "@id": "https://glaucoramos.com/#organization",
+            },
+            areaServed: "BR",
+        },
+        {
+            "@type": "Service",
+            serviceType: "Planejamento Tributário",
+            provider: {
+                "@id": "https://glaucoramos.com/#organization",
+            },
+            areaServed: "BR",
+        },
+    ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
