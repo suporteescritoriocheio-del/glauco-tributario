@@ -7,9 +7,44 @@ declare function gtag(...args: any[]): void;
 const modal = document.getElementById('lead-modal') as HTMLDivElement;
 const modalClose = document.getElementById('modal-close') as HTMLButtonElement;
 const leadForm = document.getElementById('lead-form') as HTMLFormElement;
+const whatsappInput = document.getElementById('lead-whatsapp') as HTMLInputElement;
 
 // Store the WhatsApp URL to redirect to after form submission
 let targetWhatsAppUrl = '';
+
+// Phone mask function - formats as (00) 00000-0000
+function applyPhoneMask(value: string): string {
+    // Remove all non-digits
+    const digits = value.replace(/\D/g, '');
+
+    // Apply mask based on length
+    if (digits.length <= 2) {
+        return digits.length ? `(${digits}` : '';
+    } else if (digits.length <= 7) {
+        return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    } else {
+        return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+    }
+}
+
+// Apply mask on input
+whatsappInput?.addEventListener('input', (e) => {
+    const input = e.target as HTMLInputElement;
+    const cursorPos = input.selectionStart || 0;
+    const oldLength = input.value.length;
+
+    input.value = applyPhoneMask(input.value);
+
+    // Adjust cursor position
+    const newLength = input.value.length;
+    const newPos = cursorPos + (newLength - oldLength);
+    input.setSelectionRange(newPos, newPos);
+});
+
+// Clean phone number for API (remove formatting)
+function cleanPhoneNumber(value: string): string {
+    return value.replace(/\D/g, '');
+}
 
 // Show modal function
 function showModal(whatsappUrl: string) {
@@ -48,11 +83,12 @@ leadForm?.addEventListener('submit', async (e) => {
 
     const formData = new FormData(leadForm);
     const name = formData.get('name') as string;
-    const whatsapp = formData.get('whatsapp') as string;
+    const whatsappRaw = formData.get('whatsapp') as string;
+    const whatsapp = cleanPhoneNumber(whatsappRaw);
 
     // Basic validation
-    if (!name || !whatsapp) {
-        alert('Por favor, preencha todos os campos.');
+    if (!name || whatsapp.length < 10) {
+        alert('Por favor, preencha todos os campos corretamente.');
         return;
     }
 
