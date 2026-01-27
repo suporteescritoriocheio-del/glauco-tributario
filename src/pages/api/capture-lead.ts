@@ -2,6 +2,9 @@
 
 import type { APIRoute } from 'astro';
 
+// Force this route to be server-rendered (not pre-rendered as static)
+export const prerender = false;
+
 export const POST: APIRoute = async ({ request }) => {
     try {
         const body = await request.json();
@@ -41,7 +44,9 @@ export const POST: APIRoute = async ({ request }) => {
                 'Authorization': `Bearer ${RESEND_API_KEY}`,
             },
             body: JSON.stringify({
-                from: 'Glauco Tributário <contato@glaucoramos.com>',
+                // Use Resend test email until domain is verified
+                // Change to 'contato@glaucoramos.com' after domain verification
+                from: 'Glauco Tributário <onboarding@resend.dev>',
                 to: ['advocacia@glaucoramos.com'],
                 subject: `Novo Lead - ${name} via WhatsApp CTA`,
                 html: `
@@ -58,7 +63,8 @@ export const POST: APIRoute = async ({ request }) => {
 
         if (!emailResponse.ok) {
             const errorData = await emailResponse.json();
-            console.error('Resend API error:', errorData);
+            console.error('Resend API error:', JSON.stringify(errorData));
+            // Still return success to user - don't block WhatsApp redirect
         }
 
         return new Response(

@@ -100,6 +100,10 @@ leadForm?.addEventListener('submit', async (e) => {
 
     } catch (error) {
         console.error('Error capturing lead:', error);
+        console.error('Error details:', {
+            message: error instanceof Error ? error.message : 'Unknown error',
+            stack: error instanceof Error ? error.stack : undefined,
+        });
         alert('Erro ao enviar. Redirecionando para o WhatsApp...');
 
         // Even on error, redirect to WhatsApp (better UX)
