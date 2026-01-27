@@ -276,7 +276,7 @@ p {
    =========================== */
 .hero {
     background-color: var(--color-black);
-    background: linear-gradient(rgba(17, 17, 17, 0.85), rgba(0, 0, 0, 0.7)), url('/img/hero-bg.png');
+    background: linear-gradient(rgba(17, 17, 17, 0.85), rgba(0, 0, 0, 0.7)), url('/img/hero-bg.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

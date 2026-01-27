@@ -57,7 +57,11 @@ const {
 <link
     href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
     rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
 />
+<!-- Preload LCP image -->
+<link rel="preload" as="image" href="/img/hero-bg.jpg" fetchpriority="high" />
 
 <!-- Google Tag Manager -->
 <script is:inline>
