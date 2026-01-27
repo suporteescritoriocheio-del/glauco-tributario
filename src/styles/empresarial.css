@@ -178,7 +178,7 @@ p {
   /* Fallback color */
   background-color: var(--color-black);
   /* Elegant dark gradient setup for image overlay */
-  background: linear-gradient(rgba(17, 17, 17, 0.8), rgba(0, 0, 0, 0.6)), url('/img/hero-bg.jpg');
+  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.8)), url('/img/hero-bg.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -221,10 +221,10 @@ p {
 
 .hero-subtitle {
   font-size: 1.15rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.95);
   max-width: 700px;
   margin: 0 auto var(--space-lg);
-  font-weight: 300;
+  font-weight: 400;
   border-left: 1px solid var(--color-gold);
   padding-left: var(--space-sm);
   text-align: left;
