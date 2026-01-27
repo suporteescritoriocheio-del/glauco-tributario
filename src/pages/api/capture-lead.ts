@@ -41,7 +41,7 @@ export const POST: APIRoute = async ({ request }) => {
                 'Authorization': `Bearer ${RESEND_API_KEY}`,
             },
             body: JSON.stringify({
-                from: 'Glauco Tributário <onboarding@resend.dev>', // Change to verified domain
+                from: 'Glauco Tributário <contato@glaucoramos.com>',
                 to: ['advocacia@glaucoramos.com'],
                 subject: `Novo Lead - ${name} via WhatsApp CTA`,
                 html: `
