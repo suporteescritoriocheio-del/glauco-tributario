@@ -4,7 +4,9 @@ import vercel from '@astrojs/vercel/serverless';
 // https://astro.build/config
 export default defineConfig({
     output: 'hybrid',
-    adapter: vercel(),
+    adapter: vercel({
+        maxDuration: 10,
+    }),
     build: {
         inlineStylesheets: 'auto',
         format: 'file',
