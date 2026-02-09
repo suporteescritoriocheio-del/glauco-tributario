@@ -30,13 +30,6 @@
                     return false;
                 }
 
-                // Google Ads conversion tracking (if configured)
-                if (typeof gtag !== "undefined") {
-                    gtag("event", "conversion", {
-                        send_to: "AW-CONVERSION_ID/CONVERSION_LABEL",
-                    });
-                }
-
                 // Redirect to WhatsApp or submit form
                 const mensagem = document
                     .getElementById("mensagem")
@@ -65,25 +58,34 @@
                     }),
                 })
                     .then((response) => {
-                        // Track conversion in Google Ads
-                        if (typeof gtag !== "undefined") {
-                            gtag("event", "conversion", {
-                                send_to: "AW-11104417748/bqfVCO3iwN4ZENTv_64p",
-                                value: 1.0,
-                                currency: "BRL",
-                            });
-                        }
-
                         if (response.ok) {
-                            alert(
-                                "Recebemos sua mensagem! Em breve entraremos em contato via WhatsApp.",
-                            );
-
-                            // Redirect to WhatsApp as fallback/convenience
-                            const whatsappMsg = encodeURIComponent(
-                                `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\nMensagem: ${mensagem || "Não informado"}`,
-                            );
-                            window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
+                            // Track conversion in Google Ads with callback
+                            if (typeof gtag !== "undefined") {
+                                gtag("event", "conversion", {
+                                    send_to:
+                                        "AW-11104417748/iB56COGH8eEaENTv_64p",
+                                    event_callback: function () {
+                                        // Redirect to WhatsApp after conversion is tracked
+                                        const whatsappMsg = encodeURIComponent(
+                                            `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\nMensagem: ${mensagem || "Não informado"}`,
+                                        );
+                                        window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
+                                    },
+                                });
+                                // Fallback timeout in case callback doesn't fire
+                                setTimeout(() => {
+                                    const whatsappMsg = encodeURIComponent(
+                                        `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\nMensagem: ${mensagem || "Não informado"}`,
+                                    );
+                                    window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
+                                }, 1000);
+                            } else {
+                                // If gtag not available, redirect immediately
+                                const whatsappMsg = encodeURIComponent(
+                                    `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\nMensagem: ${mensagem || "Não informado"}`,
+                                );
+                                window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
+                            }
                         } else {
                             throw new Error("Erro no envio");
                         }

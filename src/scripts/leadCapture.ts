@@ -117,22 +117,25 @@ leadForm?.addEventListener('submit', async (e) => {
             throw new Error('Falha ao enviar dados');
         }
 
-        // Track conversion in Google Ads
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'conversion', {
-                'send_to': 'AW-11104417748/bqfVCO3iwN4ZENTv_64p',
-                'value': 1.0,
-                'currency': 'BRL'
-            });
-        }
-
-        // Success - close modal and redirect to WhatsApp
+        // Success - close modal
         hideModal();
 
-        // Small delay for better UX
-        setTimeout(() => {
+        // Track conversion in Google Ads with callback to ensure event is sent
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'conversion', {
+                'send_to': 'AW-11104417748/iB56COGH8eEaENTv_64p',
+                'event_callback': function () {
+                    window.location.href = targetWhatsAppUrl;
+                }
+            });
+            // Fallback timeout in case callback doesn't fire
+            setTimeout(() => {
+                window.location.href = targetWhatsAppUrl;
+            }, 1000);
+        } else {
+            // If gtag not available, redirect immediately
             window.location.href = targetWhatsAppUrl;
-        }, 300);
+        }
 
     } catch (error) {
         console.error('Error capturing lead:', error);

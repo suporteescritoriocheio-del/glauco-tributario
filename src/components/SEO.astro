@@ -78,21 +78,32 @@ const {
 </script>
 <!-- End Google Tag Manager -->
 
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) - Google Ads -->
 <script
     is:inline
     async
-    src="https://www.googletagmanager.com/gtag/js?id=GT-K58ZV73"></script>
+    src="https://www.googletagmanager.com/gtag/js?id=AW-11104417748"></script>
 <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag() {
         dataLayer.push(arguments);
     }
     gtag("js", new Date());
-    gtag("config", "GT-K58ZV73");
-
-    // Google Ads Conversion Tracking
     gtag("config", "AW-11104417748");
+
+    // Função de conversão do Google Ads para formulários
+    function gtag_report_conversion(url) {
+        var callback = function () {
+            if (typeof url !== "undefined") {
+                window.location = url;
+            }
+        };
+        gtag("event", "conversion", {
+            send_to: "AW-11104417748/iB56COGH8eEaENTv_64p",
+            event_callback: callback,
+        });
+        return false;
+    }
 </script>
 
 <!-- Microsoft Clarity -->
