@@ -39,6 +39,11 @@ whatsappInput?.addEventListener('input', (e) => {
     const newLength = input.value.length;
     const newPos = cursorPos + (newLength - oldLength);
     input.setSelectionRange(newPos, newPos);
+
+    // Clear errors
+    input.style.borderColor = '';
+    const errorMsg = document.getElementById('modal-phone-error');
+    if (errorMsg) errorMsg.style.display = 'none';
 });
 
 // Clean phone number for API (remove formatting)
@@ -51,6 +56,12 @@ function showModal(whatsappUrl: string) {
     targetWhatsAppUrl = whatsappUrl;
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden'; // Prevent background scroll
+
+    // Reset form state in case it was used before
+    leadForm.style.display = 'block';
+    const successMsg = document.getElementById('modal-success-msg');
+    if (successMsg) successMsg.remove();
+    leadForm.reset();
 }
 
 // Hide modal function
@@ -58,6 +69,11 @@ function hideModal() {
     modal.style.display = 'none';
     document.body.style.overflow = ''; // Restore scroll
     leadForm.reset();
+
+    // Reset view
+    leadForm.style.display = 'block';
+    const successMsg = document.getElementById('modal-success-msg');
+    if (successMsg) successMsg.remove();
 }
 
 // Close modal on button click
@@ -77,6 +93,17 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Create error element for modal
+const modalPhoneError = document.createElement('div');
+modalPhoneError.id = 'modal-phone-error';
+modalPhoneError.style.color = 'red';
+modalPhoneError.style.fontSize = '0.8rem';
+modalPhoneError.style.marginTop = '0.25rem';
+modalPhoneError.style.display = 'none';
+if (whatsappInput && whatsappInput.parentNode) {
+    whatsappInput.parentNode.appendChild(modalPhoneError);
+}
+
 // Handle form submission
 leadForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -86,9 +113,34 @@ leadForm?.addEventListener('submit', async (e) => {
     const whatsappRaw = formData.get('whatsapp') as string;
     const whatsapp = cleanPhoneNumber(whatsappRaw);
 
-    // Basic validation
-    if (!name || whatsapp.length < 10) {
-        alert('Por favor, preencha todos os campos corretamente.');
+    // --- Robust Validation ---
+    if (!name) {
+        alert('Por favor, preencha seu nome.');
+        return;
+    }
+
+    let phoneIsValid = true;
+    let phoneError = '';
+
+    if (whatsapp.length < 10 || whatsapp.length > 11) {
+        phoneIsValid = false;
+        phoneError = 'Telefone deve ter 10 ou 11 dígitos.';
+    } else if (/^(\d)\1+$/.test(whatsapp)) {
+        phoneIsValid = false;
+        phoneError = 'Telefone inválido.';
+    } else {
+        const ddd = parseInt(whatsapp.substring(0, 2));
+        if (ddd < 11 || ddd > 99) {
+            phoneIsValid = false;
+            phoneError = 'DDD inválido.';
+        }
+    }
+
+    if (!phoneIsValid) {
+        modalPhoneError.textContent = phoneError;
+        modalPhoneError.style.display = 'block';
+        whatsappInput.style.borderColor = 'red';
+        whatsappInput.focus();
         return;
     }
 
@@ -107,7 +159,7 @@ leadForm?.addEventListener('submit', async (e) => {
             },
             body: JSON.stringify({
                 name,
-                whatsapp,
+                whatsapp: "55" + whatsapp,
                 source: document.title,
                 timestamp: new Date().toISOString(),
             }),
@@ -117,41 +169,64 @@ leadForm?.addEventListener('submit', async (e) => {
             throw new Error('Falha ao enviar dados');
         }
 
-        // Success - close modal
-        hideModal();
-
-        // Track conversion in Google Ads with callback to ensure event is sent
+        // Track conversion
         if (typeof gtag !== 'undefined') {
             gtag('event', 'conversion', {
-                'send_to': 'AW-11104417748/iB56COGH8eEaENTv_64p',
-                'event_callback': function () {
-                    window.location.href = targetWhatsAppUrl;
-                }
+                'send_to': 'AW-11104417748/iB56COGH8eEaENTv_64p'
             });
-            // Fallback timeout in case callback doesn't fire
-            setTimeout(() => {
-                window.location.href = targetWhatsAppUrl;
-            }, 1000);
-        } else {
-            // If gtag not available, redirect immediately
-            window.location.href = targetWhatsAppUrl;
+        }
+
+        // --- Success View ---
+        leadForm.style.display = 'none';
+
+        const successContainer = document.createElement('div');
+        successContainer.id = 'modal-success-msg';
+        successContainer.className = 'text-center';
+        successContainer.style.padding = '1rem 0';
+        successContainer.innerHTML = `
+            <div style="margin-bottom: 1.5rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <h3 style="margin-top: 1rem; color: #333; font-size: 1.25rem;">Tudo certo!</h3>
+                <p style="color: #666; font-size: 0.9rem;">Clique abaixo para iniciar a conversa.</p>
+            </div>
+            <a href="${targetWhatsAppUrl}" target="_blank" class="btn btn-primary btn-large" style="background-color: #25D366; border-color: #25D366; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.996 1.804 1.741-1.602zM8.339 4.696c-.249.125-.516.146-.688.169-.427.056-1.009.245-1.396.632-.569.569-1.579 1.58-1.579 3.791s2.607 5.275 4.093 6.76c1.486 1.487 3.659 3.029 5.883 3.029.563 0 1.442-.218 1.995-.873.493-.585.914-1.554.914-2.152 0-.256-.038-.415-.125-.688-.125-.391-2.909-2.071-3.21-2.164-.326-.101-.623-.1-.904.301-.19.268-1.085 1.565-1.385 1.865-.301.301-.58.335-.904.22-.326-.115-2.083-.794-3.568-2.119-1.157-1.033-1.896-2.28-2.179-2.678-.283-.398-.242-.647-.058-.936.467-.735.859-.974 1.258-1.664.125-.218.157-.468.046-.749-.111-.281-1.396-3.896-1.353-3.794z"/>
+                </svg>
+                FALAR NO WHATSAPP AGORA
+            </a>
+            <button id="modal-success-close" class="btn btn-secondary btn-small" style="margin-top: 1rem; width: 100%; font-size: 0.9rem;">Fechar</button>
+        `;
+
+        // Append to modal content (parent of form)
+        if (leadForm.parentNode) {
+            leadForm.parentNode.appendChild(successContainer);
+
+            // Add close listener to the new button
+            const closeBtn = document.getElementById('modal-success-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', hideModal);
+            }
         }
 
     } catch (error) {
         console.error('Error capturing lead:', error);
-        console.error('Error details:', {
-            message: error instanceof Error ? error.message : 'Unknown error',
-            stack: error instanceof Error ? error.stack : undefined,
-        });
+        // Alert is okay here as fallback
         alert('Erro ao enviar. Redirecionando para o WhatsApp...');
 
-        // Even on error, redirect to WhatsApp (better UX)
+        // Fallback redirect
         setTimeout(() => {
             window.location.href = targetWhatsAppUrl;
         }, 500);
     } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText || 'CONTINUAR PARA O WHATSAPP';
+        // Only reset button if we didn't show the success message
+        if (leadForm.style.display !== 'none') {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText || 'CONTINUAR PARA O WHATSAPP';
+        }
     }
 });
 

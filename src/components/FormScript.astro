@@ -4,40 +4,128 @@
 ---
 
 <script is:inline>
-    // Form validation
     document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("contact-form");
+
         if (form) {
+            const phoneInput = document.getElementById("telefone");
+            const submitBtn = form.querySelector('button[type="submit"]');
+
+            // Create error message element for phone
+            const phoneErrorMock = document.createElement("div");
+            phoneErrorMock.id = "phone-error-msg";
+            phoneErrorMock.style.color = "red";
+            phoneErrorMock.style.fontSize = "0.875rem";
+            phoneErrorMock.style.marginTop = "0.25rem";
+            phoneErrorMock.style.display = "none";
+            if (phoneInput) {
+                phoneInput.parentNode.appendChild(phoneErrorMock);
+            }
+
+            // Phone Masking
+            if (phoneInput) {
+                phoneInput.addEventListener("input", function (e) {
+                    let value = e.target.value.replace(/\D/g, "");
+                    if (value.length > 11) value = value.slice(0, 11);
+
+                    if (value.length > 2) {
+                        value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+                    }
+                    if (value.length > 9) {
+                        value = `${value.slice(0, 10)}-${value.slice(10)}`;
+                    } else if (value.length > 6) {
+                        // Fix for short numbers during typing
+                        // No extra dash if not needed yet, but standard format is (XX) XXXXX-XXXX
+                    }
+
+                    // Simple logic for (XX) XXXXX-XXXX or (XX) XXXX-XXXX
+                    // Re-implementing correctly:
+                    let rawValue = e.target.value.replace(/\D/g, "");
+                    let formattedValue = "";
+
+                    if (rawValue.length > 0) {
+                        formattedValue = "(" + rawValue.substring(0, 2);
+                    }
+                    if (rawValue.length > 2) {
+                        formattedValue += ") " + rawValue.substring(2, 7);
+                    }
+                    if (rawValue.length > 7) {
+                        formattedValue += "-" + rawValue.substring(7, 11);
+                    }
+
+                    e.target.value = formattedValue;
+
+                    // Clear error on type
+                    phoneErrorMock.style.display = "none";
+                    phoneInput.style.borderColor = "";
+                });
+            }
+
             form.addEventListener("submit", function (e) {
                 e.preventDefault();
 
-                // Basic validation
+                // Get values
                 const nome = document.getElementById("nome").value.trim();
                 const email = document.getElementById("email").value.trim();
-                const telefone = document
+                const telefoneRaw = document
                     .getElementById("telefone")
                     .value.trim();
+                const telefone = telefoneRaw.replace(/\D/g, ""); // Numbers only
+                const mensagem = document.getElementById("mensagem")
+                    ? document.getElementById("mensagem").value.trim()
+                    : "";
+                const cidade = document.getElementById("cidade")
+                    ? document.getElementById("cidade").value.trim()
+                    : "";
 
+                // --- Validation ---
+                let isValid = true;
+                let errorMsg = "";
+
+                // 1. Basic empty check
                 if (!nome || !email || !telefone) {
                     alert("Por favor, preencha todos os campos obrigatórios.");
                     return false;
                 }
 
-                // Email validation
+                // 2. Email validation
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
                     alert("Por favor, insira um e-mail válido.");
                     return false;
                 }
 
-                // Redirect to WhatsApp or submit form
-                const mensagem = document
-                    .getElementById("mensagem")
-                    .value.trim();
-                const cidade = document.getElementById("cidade").value.trim();
-                const submitBtn = form.querySelector('button[type="submit"]');
-                const originalText = submitBtn.textContent;
+                // 3. Robust Phone Validation
+                if (telefone.length < 10 || telefone.length > 11) {
+                    isValid = false;
+                    errorMsg =
+                        "O telefone deve ter 10 ou 11 dígitos (DDD + número).";
+                } else {
+                    // Check specifically for repeated digits (e.g. 99999999999)
+                    if (/^(\d)\1+$/.test(telefone)) {
+                        isValid = false;
+                        errorMsg = "Telefone inválido (números repetidos).";
+                    }
 
+                    // Check for invalid area codes (DDD) - simplistic check
+                    const ddd = parseInt(telefone.substring(0, 2));
+                    if (ddd < 11 || ddd > 99) {
+                        isValid = false;
+                        errorMsg = "DDD inválido.";
+                    }
+                }
+
+                if (!isValid) {
+                    phoneErrorMock.textContent = errorMsg;
+                    phoneErrorMock.style.display = "block";
+                    phoneInput.style.borderColor = "red";
+                    // Shake effect or scroll to input could be added here
+                    phoneInput.focus();
+                    return false;
+                }
+
+                // --- Submission ---
+                const originalText = submitBtn.textContent;
                 submitBtn.disabled = true;
                 submitBtn.textContent = "ENVIANDO...";
 
@@ -50,7 +138,7 @@
                     body: JSON.stringify({
                         name: nome,
                         email: email,
-                        whatsapp: telefone,
+                        whatsapp: "55" + telefone,
                         city: cidade,
                         message: mensagem,
                         source: "Formulário de Contato",
@@ -59,55 +147,84 @@
                 })
                     .then((response) => {
                         if (response.ok) {
-                            // Track conversion in Google Ads with callback
+                            // Track conversion
                             if (typeof gtag !== "undefined") {
                                 gtag("event", "conversion", {
                                     send_to:
                                         "AW-11104417748/iB56COGH8eEaENTv_64p",
-                                    event_callback: function () {
-                                        // Redirect to WhatsApp after conversion is tracked
-                                        const whatsappMsg = encodeURIComponent(
-                                            `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\nMensagem: ${mensagem || "Não informado"}`,
-                                        );
-                                        window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
-                                    },
                                 });
-                                // Fallback timeout in case callback doesn't fire
-                                setTimeout(() => {
-                                    const whatsappMsg = encodeURIComponent(
-                                        `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\nMensagem: ${mensagem || "Não informado"}`,
-                                    );
-                                    window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
-                                }, 1000);
-                            } else {
-                                // If gtag not available, redirect immediately
-                                const whatsappMsg = encodeURIComponent(
-                                    `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\nMensagem: ${mensagem || "Não informado"}`,
-                                );
-                                window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
                             }
+
+                            // --- Success UI Transformation ---
+                            // Create WhatsApp URL
+                            const whatsappMsg = encodeURIComponent(
+                                `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefoneRaw}\nMensagem: ${mensagem || "Não informado"}`,
+                            );
+                            const whatsappUrl = `https://wa.me/5543991244440?text=${whatsappMsg}`;
+
+                            // Hide form fields
+                            const formGroups =
+                                form.querySelectorAll(".form-group");
+                            formGroups.forEach(
+                                (group) => (group.style.display = "none"),
+                            );
+                            if (document.querySelector(".form-footer"))
+                                document.querySelector(
+                                    ".form-footer",
+                                ).style.display = "none";
+                            submitBtn.style.display = "none";
+
+                            // Show Success Message & Button
+                            const successContainer =
+                                document.createElement("div");
+                            successContainer.className =
+                                "success-message text-center";
+                            successContainer.style.padding = "2rem 0";
+                            successContainer.innerHTML = `
+                                <div style="margin-bottom: 2rem;">
+                                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                    <h3 style="margin-top: 1rem; color: #333;">Recebemos seus dados!</h3>
+                                    <p style="color: #666;">Para agilizar seu atendimento, clique no botão abaixo para falar agora mesmo no WhatsApp.</p>
+                                </div>
+                                <a href="${whatsappUrl}" target="_blank" class="btn btn-primary btn-large" style="background-color: #25D366; border-color: #25D366; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.996 1.804 1.741-1.602zM8.339 4.696c-.249.125-.516.146-.688.169-.427.056-1.009.245-1.396.632-.569.569-1.579 1.58-1.579 3.791s2.607 5.275 4.093 6.76c1.486 1.487 3.659 3.029 5.883 3.029.563 0 1.442-.218 1.995-.873.493-.585.914-1.554.914-2.152 0-.256-.038-.415-.125-.688-.125-.391-2.909-2.071-3.21-2.164-.326-.101-.623-.1-.904.301-.19.268-1.085 1.565-1.385 1.865-.301.301-.58.335-.904.22-.326-.115-2.083-.794-3.568-2.119-1.157-1.033-1.896-2.28-2.179-2.678-.283-.398-.242-.647-.058-.936.467-.735.859-.974 1.258-1.664.125-.218.157-.468.046-.749-.111-.281-1.396-3.896-1.353-3.794z"/>
+                                    </svg>
+                                    FALAR NO WHATSAPP AGORA
+                                </a>
+                            `;
+                            form.appendChild(successContainer);
                         } else {
                             throw new Error("Erro no envio");
                         }
                     })
                     .catch((error) => {
                         console.error("Erro:", error);
+                        // Even on error, we might want to let them talk on whatsapp?
+                        // But let's keep the alert for now as per plan
                         alert(
-                            "Erro ao enviar mensagem. Redirecionando para o WhatsApp...",
+                            "Erro ao enviar dados. Redirecionando para o WhatsApp...",
                         );
+
                         const whatsappMsg = encodeURIComponent(
-                            `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefone}\nMensagem: ${mensagem || "Não informado"}`,
+                            `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefoneRaw}\nMensagem: ${mensagem || "Não informado"}`,
                         );
                         window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
                     })
                     .finally(() => {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = originalText;
+                        // Only reset button if we didn't show the success message
+                        if (submitBtn.style.display !== "none") {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = originalText;
+                        }
                     });
             });
         }
 
-        // WhatsApp CTA tracking
+        // WhatsApp CTA tracking (kept as is)
         const whatsappLinks = document.querySelectorAll(
             'a[href^="https://wa.me"]',
         );
