@@ -25,21 +25,7 @@
             // Phone Masking
             if (phoneInput) {
                 phoneInput.addEventListener("input", function (e) {
-                    let value = e.target.value.replace(/\D/g, "");
-                    if (value.length > 11) value = value.slice(0, 11);
-
-                    if (value.length > 2) {
-                        value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
-                    }
-                    if (value.length > 9) {
-                        value = `${value.slice(0, 10)}-${value.slice(10)}`;
-                    } else if (value.length > 6) {
-                        // Fix for short numbers during typing
-                        // No extra dash if not needed yet, but standard format is (XX) XXXXX-XXXX
-                    }
-
                     // Simple logic for (XX) XXXXX-XXXX or (XX) XXXX-XXXX
-                    // Re-implementing correctly:
                     let rawValue = e.target.value.replace(/\D/g, "");
                     let formattedValue = "";
 
@@ -95,7 +81,6 @@
                     return false;
                 }
 
-                // 3. Robust Phone Validation
                 if (telefone.length < 10 || telefone.length > 11) {
                     isValid = false;
                     errorMsg =
@@ -119,7 +104,8 @@
                     phoneErrorMock.textContent = errorMsg;
                     phoneErrorMock.style.display = "block";
                     phoneInput.style.borderColor = "red";
-                    // Shake effect or scroll to input could be added here
+                    // Fallback alert to ensure visibility
+                    alert(errorMsg);
                     phoneInput.focus();
                     return false;
                 }
