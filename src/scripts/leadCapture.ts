@@ -40,11 +40,62 @@ whatsappInput?.addEventListener('input', (e) => {
     const newPos = cursorPos + (newLength - oldLength);
     input.setSelectionRange(newPos, newPos);
 
-    // Clear errors
+    // Clear errors initially
     input.style.borderColor = '';
     const errorMsg = document.getElementById('modal-phone-error');
-    if (errorMsg) errorMsg.style.display = 'none';
+    if (errorMsg) {
+        errorMsg.style.display = 'none';
+        errorMsg.style.color = 'red'; // Reset color
+    }
+
+    // Real-time checks
+    const rawValue = input.value.replace(/\D/g, '');
+
+    if (errorMsg) {
+        // Check for invalid DDD
+        if (rawValue.length >= 2) {
+            const ddd = parseInt(rawValue.substring(0, 2));
+            if (ddd < 11 || ddd > 99) {
+                errorMsg.textContent = "DDD inválido.";
+                errorMsg.style.display = "block";
+            }
+        }
+
+        // Check for 10-digit warning
+        if (rawValue.length === 10) {
+            errorMsg.textContent = "Parece faltar um dígito. Celulares têm 11 números.";
+            errorMsg.style.color = "#d97706"; // Warning orange
+            errorMsg.style.display = "block";
+        } else if (rawValue.length === 11) {
+            // Check for leading 9
+            if (rawValue.substring(2, 3) !== '9') {
+                errorMsg.textContent = "Celulares geralmente começam com 9.";
+                errorMsg.style.color = "#d97706";
+                errorMsg.style.display = "block";
+            } else {
+                errorMsg.style.display = 'none';
+            }
+        }
+    }
 });
+
+// Add placeholder
+if (whatsappInput) {
+    whatsappInput.placeholder = "(DDD) 9XXXX-XXXX";
+
+    // Add blur listener for strict check
+    whatsappInput.addEventListener('blur', () => {
+        const rawValue = whatsappInput.value.replace(/\D/g, '');
+        const errorMsg = document.getElementById('modal-phone-error');
+
+        if (rawValue.length > 0 && rawValue.length < 11 && errorMsg) {
+            errorMsg.textContent = "Número incompleto. Verifique o DDD e o 9 extra.";
+            errorMsg.style.color = "red";
+            errorMsg.style.display = "block";
+            whatsappInput.style.borderColor = "red";
+        }
+    });
+}
 
 // Clean phone number for API (remove formatting)
 function cleanPhoneNumber(value: string): string {
@@ -122,12 +173,15 @@ leadForm?.addEventListener('submit', async (e) => {
     let phoneIsValid = true;
     let phoneError = '';
 
-    if (whatsapp.length < 10 || whatsapp.length > 11) {
+    if (whatsapp.length !== 11) {
         phoneIsValid = false;
-        phoneError = 'Telefone deve ter 10 ou 11 dígitos.';
+        phoneError = 'Telefone deve ter exatos 11 dígitos (DDD + 9 + número).';
     } else if (/^(\d)\1+$/.test(whatsapp)) {
         phoneIsValid = false;
         phoneError = 'Telefone inválido.';
+    } else if (whatsapp.substring(2, 3) !== '9') {
+        phoneIsValid = false;
+        phoneError = 'Celulares devem começar com o dígito 9.';
     } else {
         const ddd = parseInt(whatsapp.substring(0, 2));
         if (ddd < 11 || ddd > 99) {
@@ -139,7 +193,9 @@ leadForm?.addEventListener('submit', async (e) => {
     if (!phoneIsValid) {
         modalPhoneError.textContent = phoneError;
         modalPhoneError.style.display = 'block';
+        modalPhoneError.style.color = 'red';
         whatsappInput.style.borderColor = 'red';
+        alert(phoneError);
         whatsappInput.focus();
         return;
     }

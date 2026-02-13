@@ -8,10 +8,11 @@ export const prerender = false;
 export const POST: APIRoute = async ({ request }) => {
     try {
         const body = await request.json();
-        const { name, whatsapp, source, timestamp } = body;
+        const { name, whatsapp, email, city, message, source, timestamp } = body;
 
         // Validate input
         if (!name || !whatsapp) {
+            console.error('Validation error: Missing name or whatsapp', body);
             return new Response(
                 JSON.stringify({ error: 'Nome e WhatsApp são obrigatórios' }),
                 { status: 400, headers: { 'Content-Type': 'application/json' } }
@@ -37,6 +38,8 @@ export const POST: APIRoute = async ({ request }) => {
             );
         }
 
+        console.log(`Sending email for lead: ${name} (${whatsapp})`);
+
         const emailResponse = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
@@ -48,15 +51,18 @@ export const POST: APIRoute = async ({ request }) => {
                 // Change to 'contato@glaucoramos.com' after domain verification
                 from: 'Glauco Tributário <contato@glaucoramos.com.br>',
                 to: ['advocacia@glaucoramos.com', 'higorrodriguest8@gmail.com'],
-                subject: `Novo Lead - ${name} via WhatsApp CTA`,
+                subject: `Novo Lead - ${name} via ${source}`,
                 html: `
                     <h2>Novo Lead Capturado!</h2>
                     <p><strong>Nome:</strong> ${name}</p>
                     <p><strong>WhatsApp:</strong> ${whatsapp}</p>
+                    ${email ? `<p><strong>Email:</strong> ${email}</p>` : ''}
+                    ${city ? `<p><strong>Cidade:</strong> ${city}</p>` : ''}
+                    ${message ? `<p><strong>Mensagem:</strong> ${message}</p>` : ''}
                     <p><strong>Origem:</strong> ${source}</p>
                     <p><strong>Data/Hora:</strong> ${formattedDate}</p>
                     <hr>
-                    <p><em>Lead capturado via modal pré-WhatsApp</em></p>
+                    <p><em>Lead capturado via site</em></p>
                 `,
             }),
         });

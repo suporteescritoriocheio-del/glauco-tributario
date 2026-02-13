@@ -22,10 +22,12 @@
                 phoneInput.parentNode.appendChild(phoneErrorMock);
             }
 
-            // Phone Masking
+            // Phone Masking & Real-time Feedback
             if (phoneInput) {
+                // Set placeholder to guide user
+                phoneInput.placeholder = "(DDD) 9XXXX-XXXX";
+
                 phoneInput.addEventListener("input", function (e) {
-                    // Simple logic for (XX) XXXXX-XXXX or (XX) XXXX-XXXX
                     let rawValue = e.target.value.replace(/\D/g, "");
                     let formattedValue = "";
 
@@ -41,9 +43,53 @@
 
                     e.target.value = formattedValue;
 
-                    // Clear error on type
-                    phoneErrorMock.style.display = "none";
+                    // Real-time validation feedback
+                    const feedback = document.getElementById("phone-error-msg");
                     phoneInput.style.borderColor = "";
+                    feedback.style.display = "none";
+                    feedback.style.color = "red"; // Default error color
+
+                    // Check if user has typed enough to check DDD but not full number
+                    if (rawValue.length >= 2) {
+                        const ddd = parseInt(rawValue.substring(0, 2));
+                        if (ddd < 11 || ddd > 99) {
+                            feedback.textContent = "DDD inválido.";
+                            feedback.style.display = "block";
+                        }
+                    }
+
+                    // Check for 10-digit warning (likely missing 9)
+                    if (rawValue.length === 10) {
+                        feedback.textContent =
+                            "Parece faltar um dígito. Celulares têm 11 números.";
+                        feedback.style.color = "#d97706"; // Orange/Warning
+                        feedback.style.display = "block";
+                    } else if (rawValue.length === 11) {
+                        // Check for leading 9
+                        if (rawValue.substring(2, 3) !== "9") {
+                            feedback.textContent =
+                                "Celulares geralmente começam com 9.";
+                            feedback.style.color = "#d97706"; // Warning
+                            feedback.style.display = "block";
+                        } else {
+                            // Correct length and starts with 9 - Clear warning
+                            feedback.style.display = "none";
+                        }
+                    }
+                });
+
+                // Add blur listener to strictly validate
+                phoneInput.addEventListener("blur", function (e) {
+                    let rawValue = e.target.value.replace(/\D/g, "");
+                    const feedback = document.getElementById("phone-error-msg");
+
+                    if (rawValue.length > 0 && rawValue.length < 11) {
+                        feedback.textContent =
+                            "Número incompleto. Verifique se digitou o DDD e o 9 extra.";
+                        feedback.style.color = "red";
+                        feedback.style.display = "block";
+                        phoneInput.style.borderColor = "red";
+                    }
                 });
             }
 
@@ -81,15 +127,18 @@
                     return false;
                 }
 
-                if (telefone.length < 10 || telefone.length > 11) {
+                if (telefone.length !== 11) {
                     isValid = false;
                     errorMsg =
-                        "O telefone deve ter 10 ou 11 dígitos (DDD + número).";
+                        "O telefone deve ter exatamente 11 dígitos (DDD + 9 + número).";
                 } else {
                     // Check specifically for repeated digits (e.g. 99999999999)
                     if (/^(\d)\1+$/.test(telefone)) {
                         isValid = false;
                         errorMsg = "Telefone inválido (números repetidos).";
+                    } else if (telefone.substring(2, 3) !== "9") {
+                        isValid = false;
+                        errorMsg = "Celulares devem começar com o dígito 9.";
                     }
 
                     // Check for invalid area codes (DDD) - simplistic check

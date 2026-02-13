@@ -526,7 +526,7 @@ p {
 /* 8. ABOUT */
 .about {
   background-color: var(--color-black);
-  background: linear-gradient(rgba(17, 17, 17, 0.95), rgba(17, 17, 17, 0.9)), url('/img/about-bg.png');
+  background: linear-gradient(rgba(17, 17, 17, 0.95), rgba(17, 17, 17, 0.9)), url('/img/about-bg.jpg');
   background-size: cover;
   background-position: center;
   color: var(--color-white);
