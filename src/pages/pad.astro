@@ -1008,7 +1008,14 @@ import FormScript from "../components/FormScript.astro";
 
                         <div class="form-group">
                             <label for="name">Nome completo *</label>
-                            <input type="text" id="name" name="name" required />
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                required
+                                autocomplete="name"
+                                autocapitalize="words"
+                            />
                         </div>
 
                         <div class="form-row">
@@ -1021,6 +1028,7 @@ import FormScript from "../components/FormScript.astro";
                                     id="whatsapp"
                                     name="whatsapp"
                                     required
+                                    autocomplete="tel"
                                 />
                             </div>
                             <div class="form-group">
@@ -1030,6 +1038,7 @@ import FormScript from "../components/FormScript.astro";
                                     id="email"
                                     name="email"
                                     required
+                                    autocomplete="email"
                                 />
                             </div>
                         </div>
