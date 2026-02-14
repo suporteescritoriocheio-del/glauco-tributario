@@ -93,6 +93,9 @@
                 });
             }
 
+            // Track submissions for retry logic
+            let submissionCount = 0;
+
             form.addEventListener("submit", function (e) {
                 e.preventDefault();
 
@@ -182,6 +185,8 @@
                 })
                     .then((response) => {
                         if (response.ok) {
+                            submissionCount++; // Increment successful submission
+
                             // Track conversion
                             if (typeof gtag !== "undefined") {
                                 gtag("event", "conversion", {
@@ -203,11 +208,21 @@
                             formGroups.forEach(
                                 (group) => (group.style.display = "none"),
                             );
-                            if (document.querySelector(".form-footer"))
-                                document.querySelector(
-                                    ".form-footer",
-                                ).style.display = "none";
+                            const formFooter =
+                                document.querySelector(".form-footer");
+                            if (formFooter) formFooter.style.display = "none";
+
                             submitBtn.style.display = "none";
+
+                            // Determine if Retry Button should be shown
+                            const showRetry = submissionCount < 2;
+                            const retryBtnHtml = showRetry
+                                ? `
+                                <button type="button" id="retry-btn" class="btn btn-secondary btn-small" style="margin-top: 1rem; width: 100%; font-size: 0.9rem; background: transparent; border: 1px solid #ccc; color: #666; cursor: pointer;">
+                                    Corrigir dados / Enviar novamente
+                                </button>
+                            `
+                                : "";
 
                             // Show Success Message & Button
                             const successContainer =
@@ -230,8 +245,38 @@
                                     </svg>
                                     FALAR NO WHATSAPP AGORA
                                 </a>
+                                ${retryBtnHtml}
                             `;
                             form.appendChild(successContainer);
+
+                            // Add listener for Retry button
+                            if (showRetry) {
+                                const retryBtn =
+                                    document.getElementById("retry-btn");
+                                if (retryBtn) {
+                                    retryBtn.addEventListener(
+                                        "click",
+                                        function () {
+                                            successContainer.remove();
+                                            // Restore form visibility
+                                            const formGroups =
+                                                form.querySelectorAll(
+                                                    ".form-group",
+                                                );
+                                            formGroups.forEach(
+                                                (group) =>
+                                                    (group.style.display = ""),
+                                            );
+                                            if (formFooter)
+                                                formFooter.style.display = "";
+                                            submitBtn.style.display = "";
+                                            submitBtn.disabled = false;
+                                            submitBtn.textContent =
+                                                originalText;
+                                        },
+                                    );
+                                }
+                            }
                         } else {
                             throw new Error("Erro no envio");
                         }
@@ -250,7 +295,8 @@
                         window.location.href = `https://wa.me/5543991244440?text=${whatsappMsg}`;
                     })
                     .finally(() => {
-                        // Only reset button if we didn't show the success message
+                        // Only reset button if we didn't show the success message (i.e., error or fallback)
+                        // If success message is shown, the button is hidden, so this check works.
                         if (submitBtn.style.display !== "none") {
                             submitBtn.disabled = false;
                             submitBtn.textContent = originalText;

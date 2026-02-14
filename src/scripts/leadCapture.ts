@@ -1,4 +1,8 @@
 // leadCapture.ts - Client-side logic for lead capture modal
+// Imports
+import intlTelInput from 'intl-tel-input';
+import 'intl-tel-input/styles';
+import { parsePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
 
 // Declare gtag as global function
 declare function gtag(...args: any[]): void;
@@ -12,94 +16,30 @@ const whatsappInput = document.getElementById('lead-whatsapp') as HTMLInputEleme
 // Store the WhatsApp URL to redirect to after form submission
 let targetWhatsAppUrl = '';
 
-// Phone mask function - formats as (00) 00000-0000
-function applyPhoneMask(value: string): string {
-    // Remove all non-digits
-    const digits = value.replace(/\D/g, '');
+// Track submission count for retry logic
+let submissionCount = 0;
 
-    // Apply mask based on length
-    if (digits.length <= 2) {
-        return digits.length ? `(${digits}` : '';
-    } else if (digits.length <= 7) {
-        return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-    } else {
-        return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
-    }
-}
-
-// Apply mask on input
-whatsappInput?.addEventListener('input', (e) => {
-    const input = e.target as HTMLInputElement;
-    const cursorPos = input.selectionStart || 0;
-    const oldLength = input.value.length;
-
-    input.value = applyPhoneMask(input.value);
-
-    // Adjust cursor position
-    const newLength = input.value.length;
-    const newPos = cursorPos + (newLength - oldLength);
-    input.setSelectionRange(newPos, newPos);
-
-    // Clear errors initially
-    input.style.borderColor = '';
-    const errorMsg = document.getElementById('modal-phone-error');
-    if (errorMsg) {
-        errorMsg.style.display = 'none';
-        errorMsg.style.color = 'red'; // Reset color
-    }
-
-    // Real-time checks
-    const rawValue = input.value.replace(/\D/g, '');
-
-    if (errorMsg) {
-        // Check for invalid DDD
-        if (rawValue.length >= 2) {
-            const ddd = parseInt(rawValue.substring(0, 2));
-            if (ddd < 11 || ddd > 99) {
-                errorMsg.textContent = "DDD inválido.";
-                errorMsg.style.display = "block";
-            }
-        }
-
-        // Check for 10-digit warning
-        if (rawValue.length === 10) {
-            errorMsg.textContent = "Parece faltar um dígito. Celulares têm 11 números.";
-            errorMsg.style.color = "#d97706"; // Warning orange
-            errorMsg.style.display = "block";
-        } else if (rawValue.length === 11) {
-            // Check for leading 9
-            if (rawValue.substring(2, 3) !== '9') {
-                errorMsg.textContent = "Celulares geralmente começam com 9.";
-                errorMsg.style.color = "#d97706";
-                errorMsg.style.display = "block";
-            } else {
-                errorMsg.style.display = 'none';
-            }
-        }
-    }
-});
-
-// Add placeholder
+// Initialize intl-tel-input
+let iti: any;
 if (whatsappInput) {
-    whatsappInput.placeholder = "(DDD) 9XXXX-XXXX";
-
-    // Add blur listener for strict check
-    whatsappInput.addEventListener('blur', () => {
-        const rawValue = whatsappInput.value.replace(/\D/g, '');
-        const errorMsg = document.getElementById('modal-phone-error');
-
-        if (rawValue.length > 0 && rawValue.length < 11 && errorMsg) {
-            errorMsg.textContent = "Número incompleto. Verifique o DDD e o 9 extra.";
-            errorMsg.style.color = "red";
-            errorMsg.style.display = "block";
-            whatsappInput.style.borderColor = "red";
+    iti = intlTelInput(whatsappInput, {
+        initialCountry: "br",
+        strictMode: true,
+        separateDialCode: true,
+        loadUtils: () => import("intl-tel-input/utils"),
+        i18n: {
+            // Portuguese translations
+            searchPlaceholder: "Pesquisar",
+            br: "Brasil",
+            us: "Estados Unidos",
+            // Add others as needed or rely on defaults
         }
     });
 }
 
 // Clean phone number for API (remove formatting)
 function cleanPhoneNumber(value: string): string {
-    return value.replace(/\D/g, '');
+    return value.replace(/\D/g, ''); // Keep only digits
 }
 
 // Show modal function
@@ -113,6 +53,7 @@ function showModal(whatsappUrl: string) {
     const successMsg = document.getElementById('modal-success-msg');
     if (successMsg) successMsg.remove();
     leadForm.reset();
+    submissionCount = 0; // Reset count on new modal open
 }
 
 // Hide modal function
@@ -170,23 +111,42 @@ leadForm?.addEventListener('submit', async (e) => {
         return;
     }
 
-    let phoneIsValid = true;
+    let phoneIsValid = false;
     let phoneError = '';
+    let fullNumber = '';
 
-    if (whatsapp.length !== 11) {
-        phoneIsValid = false;
-        phoneError = 'Telefone deve ter exatos 11 dígitos (DDD + 9 + número).';
-    } else if (/^(\d)\1+$/.test(whatsapp)) {
-        phoneIsValid = false;
-        phoneError = 'Telefone inválido.';
-    } else if (whatsapp.substring(2, 3) !== '9') {
-        phoneIsValid = false;
-        phoneError = 'Celulares devem começar com o dígito 9.';
+    // Validate using intl-tel-input + libphonenumber-js
+    if (iti) {
+        if (!iti.isValidNumber()) {
+            // Basic check failed, now use strict check from libphonenumber-js to be sure and get detailed error
+            // Actually iti.isValidNumber() uses utils.js if loaded.
+            // Let's also check strict parsing to be double sure about mobile/fixed lines if needed,
+            // but keeping it simple first.
+            phoneError = 'Número de telefone inválido. Verifique o código do país e o número.';
+        } else {
+            // Get number in E.164 format (e.g., +5511999999999)
+            fullNumber = iti.getNumber();
+
+            // Extra validation with libphonenumber-js to ensure it's a mobile number if that's critical?
+            // The user mentioned "Sabe que ... não existem celulares começando com...".
+            // libphonenumber-js does this.
+            if (!isValidPhoneNumber(fullNumber)) {
+                phoneIsValid = false;
+                phoneError = 'Número inválido para esta região.';
+            } else {
+                phoneIsValid = true;
+                // Optionally check if it's mobile using parsePhoneNumber(fullNumber).getType() === 'MOBILE'
+                // but some businesses use WhatsApp on landlines too.
+                // Default to just valid number.
+            }
+        }
     } else {
-        const ddd = parseInt(whatsapp.substring(0, 2));
-        if (ddd < 11 || ddd > 99) {
-            phoneIsValid = false;
-            phoneError = 'DDD inválido.';
+        // Fallback if iti failed to load
+        if (cleanPhoneNumber(whatsappRaw).length < 10) {
+            phoneError = 'Número inválido.';
+        } else {
+            phoneIsValid = true;
+            fullNumber = '55' + cleanPhoneNumber(whatsappRaw);
         }
     }
 
@@ -195,10 +155,14 @@ leadForm?.addEventListener('submit', async (e) => {
         modalPhoneError.style.display = 'block';
         modalPhoneError.style.color = 'red';
         whatsappInput.style.borderColor = 'red';
-        alert(phoneError);
+        // focus
         whatsappInput.focus();
         return;
     }
+
+    // Clear error
+    modalPhoneError.style.display = 'none';
+    whatsappInput.style.borderColor = '';
 
     // Disable submit button
     const submitBtn = leadForm.querySelector('button[type="submit"]') as HTMLButtonElement;
@@ -215,7 +179,8 @@ leadForm?.addEventListener('submit', async (e) => {
             },
             body: JSON.stringify({
                 name,
-                whatsapp: "55" + whatsapp,
+                whatsapp: fullNumber.replace('+', ''), // Send without +
+
                 source: document.title,
                 timestamp: new Date().toISOString(),
             }),
@@ -232,8 +197,20 @@ leadForm?.addEventListener('submit', async (e) => {
             });
         }
 
+        submissionCount++; // Increment count
+
         // --- Success View ---
         leadForm.style.display = 'none';
+
+        // Conditional Retry Button
+        const showRetry = submissionCount < 2;
+        const retryBtnHtml = showRetry ? `
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                <button id="modal-retry-btn" class="btn btn-secondary btn-small" style="width: 100%; font-size: 0.9rem; margin-bottom: 0.5rem;">
+                    Corrigir dados / Enviar novamente
+                </button>
+            </div>
+        ` : '';
 
         const successContainer = document.createElement('div');
         successContainer.id = 'modal-success-msg';
@@ -254,6 +231,7 @@ leadForm?.addEventListener('submit', async (e) => {
                 </svg>
                 FALAR NO WHATSAPP AGORA
             </a>
+            ${retryBtnHtml}
             <button id="modal-success-close" class="btn btn-secondary btn-small" style="margin-top: 1rem; width: 100%; font-size: 0.9rem;">Fechar</button>
         `;
 
@@ -265,6 +243,20 @@ leadForm?.addEventListener('submit', async (e) => {
             const closeBtn = document.getElementById('modal-success-close');
             if (closeBtn) {
                 closeBtn.addEventListener('click', hideModal);
+            }
+
+            // Add retry listener if exists
+            if (showRetry) {
+                const retryBtn = document.getElementById('modal-retry-btn');
+                if (retryBtn) {
+                    retryBtn.addEventListener('click', () => {
+                        const successMsg = document.getElementById('modal-success-msg');
+                        if (successMsg) successMsg.remove();
+                        leadForm.style.display = 'block';
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText || 'CONTINUAR PARA O WHATSAPP';
+                    });
+                }
             }
         }
 
