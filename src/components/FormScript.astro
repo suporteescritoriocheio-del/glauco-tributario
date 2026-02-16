@@ -7,6 +7,14 @@
     document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("contact-form");
 
+        // DDDs brasileiros válidos
+        var VALID_DDDS = [
+            11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 27, 28, 31, 32, 33,
+            34, 35, 37, 38, 41, 42, 43, 44, 45, 46, 47, 48, 49, 51, 53, 54, 55,
+            61, 62, 63, 64, 65, 66, 67, 68, 69, 71, 73, 74, 75, 77, 79, 81, 82,
+            83, 84, 85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+        ];
+
         if (form) {
             const phoneInput = document.getElementById("telefone");
             const submitBtn = form.querySelector('button[type="submit"]');
@@ -29,8 +37,25 @@
 
                 phoneInput.addEventListener("input", function (e) {
                     let rawValue = e.target.value.replace(/\D/g, "");
-                    let formattedValue = "";
 
+                    // Auto-strip prefixo 55 (código do Brasil)
+                    // Se o usuário digitou 55 + DDD válido, remove o 55
+                    if (
+                        rawValue.length >= 4 &&
+                        rawValue.substring(0, 2) === "55"
+                    ) {
+                        var possibleDdd = parseInt(rawValue.substring(2, 4));
+                        if (VALID_DDDS.indexOf(possibleDdd) !== -1) {
+                            rawValue = rawValue.substring(2);
+                        }
+                    }
+
+                    // Limitar a 11 dígitos
+                    if (rawValue.length > 11) {
+                        rawValue = rawValue.substring(0, 11);
+                    }
+
+                    let formattedValue = "";
                     if (rawValue.length > 0) {
                         formattedValue = "(" + rawValue.substring(0, 2);
                     }
@@ -47,33 +72,34 @@
                     const feedback = document.getElementById("phone-error-msg");
                     phoneInput.style.borderColor = "";
                     feedback.style.display = "none";
-                    feedback.style.color = "red"; // Default error color
+                    feedback.style.color = "red";
 
-                    // Check if user has typed enough to check DDD but not full number
+                    // Validar DDD contra lista real
                     if (rawValue.length >= 2) {
                         const ddd = parseInt(rawValue.substring(0, 2));
-                        if (ddd < 11 || ddd > 99) {
-                            feedback.textContent = "DDD inválido.";
+                        if (VALID_DDDS.indexOf(ddd) === -1) {
+                            feedback.textContent =
+                                "DDD inválido. Verifique o código de área.";
                             feedback.style.display = "block";
+                            phoneInput.style.borderColor = "red";
                         }
                     }
 
-                    // Check for 10-digit warning (likely missing 9)
+                    // Aviso de 10 dígitos (faltando o 9)
                     if (rawValue.length === 10) {
                         feedback.textContent =
                             "Parece faltar um dígito. Celulares têm 11 números.";
-                        feedback.style.color = "#d97706"; // Orange/Warning
+                        feedback.style.color = "#d97706";
                         feedback.style.display = "block";
                     } else if (rawValue.length === 11) {
-                        // Check for leading 9
                         if (rawValue.substring(2, 3) !== "9") {
                             feedback.textContent =
                                 "Celulares geralmente começam com 9.";
-                            feedback.style.color = "#d97706"; // Warning
+                            feedback.style.color = "#d97706";
                             feedback.style.display = "block";
                         } else {
-                            // Correct length and starts with 9 - Clear warning
                             feedback.style.display = "none";
+                            phoneInput.style.borderColor = "";
                         }
                     }
                 });
@@ -93,6 +119,50 @@
                 });
             }
 
+            // --- localStorage Lead Backup ---
+            function saveLeadBackup(data, status) {
+                try {
+                    var leads = JSON.parse(
+                        localStorage.getItem("glauco_leads_backup") || "[]",
+                    );
+                    leads.push({
+                        timestamp: new Date().toISOString(),
+                        page: document.title,
+                        url: window.location.pathname,
+                        status: status, // 'success', 'validation_error', 'api_error', 'partial'
+                        data: data,
+                    });
+                    // Keep last 500 entries max
+                    if (leads.length > 500) leads = leads.slice(-500);
+                    localStorage.setItem(
+                        "glauco_leads_backup",
+                        JSON.stringify(leads),
+                    );
+                } catch (e) {
+                    console.warn("Erro ao salvar backup do lead:", e);
+                }
+            }
+
+            // Save partial data on blur (safety net)
+            var partialSaveTimeout;
+            form.addEventListener("focusout", function () {
+                clearTimeout(partialSaveTimeout);
+                partialSaveTimeout = setTimeout(function () {
+                    var nomeEl = document.getElementById("nome");
+                    var emailEl = document.getElementById("email");
+                    var telEl = document.getElementById("telefone");
+                    var partial = {
+                        nome: nomeEl ? nomeEl.value.trim() : "",
+                        email: emailEl ? emailEl.value.trim() : "",
+                        telefone: telEl ? telEl.value.trim() : "",
+                    };
+                    // Only save if at least one field has content
+                    if (partial.nome || partial.email || partial.telefone) {
+                        saveLeadBackup(partial, "partial");
+                    }
+                }, 2000); // Debounce 2s
+            });
+
             // Track submissions for retry logic
             let submissionCount = 0;
 
@@ -105,13 +175,22 @@
                 const telefoneRaw = document
                     .getElementById("telefone")
                     .value.trim();
-                const telefone = telefoneRaw.replace(/\D/g, ""); // Numbers only
+                let telefone = telefoneRaw.replace(/\D/g, ""); // Numbers only
                 const mensagem = document.getElementById("mensagem")
                     ? document.getElementById("mensagem").value.trim()
-                    : "";
+                    : document.getElementById("message")
+                      ? document.getElementById("message").value.trim()
+                      : "";
                 const cidade = document.getElementById("cidade")
                     ? document.getElementById("cidade").value.trim()
                     : "";
+                // PAD-specific fields (optional)
+                const esferaEl = document.getElementById("sphere");
+                const esfera = esferaEl ? esferaEl.value : "";
+                const situacaoEl = document.querySelector(
+                    'input[name="situation"]:checked',
+                );
+                const situacao = situacaoEl ? situacaoEl.value : "";
 
                 // --- Validation ---
                 let isValid = true;
@@ -119,6 +198,19 @@
 
                 // 1. Basic empty check
                 if (!nome || !email || !telefone) {
+                    saveLeadBackup(
+                        {
+                            nome: nome,
+                            email: email,
+                            telefone: telefoneRaw,
+                            mensagem: mensagem,
+                            cidade: cidade,
+                            esfera: esfera,
+                            situacao: situacao,
+                            error: "Campos obrigatórios vazios",
+                        },
+                        "validation_error",
+                    );
                     alert("Por favor, preencha todos os campos obrigatórios.");
                     return false;
                 }
@@ -126,8 +218,29 @@
                 // 2. Email validation
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
+                    saveLeadBackup(
+                        {
+                            nome: nome,
+                            email: email,
+                            telefone: telefoneRaw,
+                            mensagem: mensagem,
+                            cidade: cidade,
+                            esfera: esfera,
+                            situacao: situacao,
+                            error: "Email inválido",
+                        },
+                        "validation_error",
+                    );
                     alert("Por favor, insira um e-mail válido.");
                     return false;
+                }
+
+                // Normalizar: remover prefixo 55 se presente
+                if (
+                    telefone.length >= 13 &&
+                    telefone.substring(0, 2) === "55"
+                ) {
+                    telefone = telefone.substring(2);
                 }
 
                 if (telefone.length !== 11) {
@@ -135,7 +248,7 @@
                     errorMsg =
                         "O telefone deve ter exatamente 11 dígitos (DDD + 9 + número).";
                 } else {
-                    // Check specifically for repeated digits (e.g. 99999999999)
+                    // Números repetidos (ex: 99999999999)
                     if (/^(\d)\1+$/.test(telefone)) {
                         isValid = false;
                         errorMsg = "Telefone inválido (números repetidos).";
@@ -144,11 +257,11 @@
                         errorMsg = "Celulares devem começar com o dígito 9.";
                     }
 
-                    // Check for invalid area codes (DDD) - simplistic check
+                    // Validar DDD contra lista real brasileira
                     const ddd = parseInt(telefone.substring(0, 2));
-                    if (ddd < 11 || ddd > 99) {
+                    if (VALID_DDDS.indexOf(ddd) === -1) {
                         isValid = false;
-                        errorMsg = "DDD inválido.";
+                        errorMsg = "DDD inválido. Verifique o código de área.";
                     }
                 }
 
@@ -156,7 +269,19 @@
                     phoneErrorMock.textContent = errorMsg;
                     phoneErrorMock.style.display = "block";
                     phoneInput.style.borderColor = "red";
-                    // Fallback alert to ensure visibility
+                    saveLeadBackup(
+                        {
+                            nome: nome,
+                            email: email,
+                            telefone: telefoneRaw,
+                            mensagem: mensagem,
+                            cidade: cidade,
+                            esfera: esfera,
+                            situacao: situacao,
+                            error: errorMsg,
+                        },
+                        "validation_error",
+                    );
                     alert(errorMsg);
                     phoneInput.focus();
                     return false;
@@ -178,14 +303,33 @@
                         email: email,
                         whatsapp: "55" + telefone,
                         city: cidade,
-                        message: mensagem,
-                        source: "Formulário de Contato",
+                        message:
+                            [
+                                esfera ? "Esfera: " + esfera : "",
+                                situacao ? "Situação: " + situacao : "",
+                                mensagem,
+                            ]
+                                .filter(Boolean)
+                                .join(" | ") || mensagem,
+                        source: document.title || "Formulário de Contato",
                         timestamp: new Date().toISOString(),
                     }),
                 })
                     .then((response) => {
                         if (response.ok) {
-                            submissionCount++; // Increment successful submission
+                            submissionCount++;
+                            saveLeadBackup(
+                                {
+                                    nome: nome,
+                                    email: email,
+                                    telefone: "55" + telefone,
+                                    mensagem: mensagem,
+                                    cidade: cidade,
+                                    esfera: esfera,
+                                    situacao: situacao,
+                                },
+                                "success",
+                            );
 
                             // Track conversion
                             if (typeof gtag !== "undefined") {
@@ -198,7 +342,7 @@
                             // --- Success UI Transformation ---
                             // Create WhatsApp URL
                             const whatsappMsg = encodeURIComponent(
-                                `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefoneRaw}\nMensagem: ${mensagem || "Não informado"}`,
+                                `Olá! Gostaria de agendar uma consultoria.\n\nNome: ${nome}\nEmail: ${email}\nTelefone: ${telefoneRaw}${esfera ? "\nEsfera: " + esfera : ""}${situacao ? "\nSituação: " + situacao : ""}\nMensagem: ${mensagem || "Não informado"}`,
                             );
                             const whatsappUrl = `https://wa.me/5543991244440?text=${whatsappMsg}`;
 
@@ -283,8 +427,19 @@
                     })
                     .catch((error) => {
                         console.error("Erro:", error);
-                        // Even on error, we might want to let them talk on whatsapp?
-                        // But let's keep the alert for now as per plan
+                        saveLeadBackup(
+                            {
+                                nome: nome,
+                                email: email,
+                                telefone: "55" + telefone,
+                                mensagem: mensagem,
+                                cidade: cidade,
+                                esfera: esfera,
+                                situacao: situacao,
+                                error: error.message,
+                            },
+                            "api_error",
+                        );
                         alert(
                             "Erro ao enviar dados. Redirecionando para o WhatsApp...",
                         );

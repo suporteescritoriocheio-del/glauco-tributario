@@ -19,6 +19,24 @@ let targetWhatsAppUrl = '';
 // Track submission count for retry logic
 let submissionCount = 0;
 
+// --- localStorage Lead Backup (same key as FormScript) ---
+function saveLeadBackup(data: Record<string, any>, status: string) {
+    try {
+        const leads = JSON.parse(localStorage.getItem('glauco_leads_backup') || '[]');
+        leads.push({
+            timestamp: new Date().toISOString(),
+            page: document.title,
+            url: window.location.pathname,
+            source: 'modal',
+            status,
+            data
+        });
+        // Keep last 500 entries
+        const trimmed = leads.length > 500 ? leads.slice(-500) : leads;
+        localStorage.setItem('glauco_leads_backup', JSON.stringify(trimmed));
+    } catch (e) { console.warn('Erro ao salvar backup do lead:', e); }
+}
+
 // Initialize intl-tel-input
 let iti: any;
 if (whatsappInput) {
@@ -155,7 +173,7 @@ leadForm?.addEventListener('submit', async (e) => {
         modalPhoneError.style.display = 'block';
         modalPhoneError.style.color = 'red';
         whatsappInput.style.borderColor = 'red';
-        // focus
+        saveLeadBackup({ name, whatsapp: whatsappRaw, error: phoneError }, 'validation_error');
         whatsappInput.focus();
         return;
     }
@@ -197,7 +215,8 @@ leadForm?.addEventListener('submit', async (e) => {
             });
         }
 
-        submissionCount++; // Increment count
+        submissionCount++;
+        saveLeadBackup({ name, whatsapp: fullNumber.replace('+', '') }, 'success');
 
         // --- Success View ---
         leadForm.style.display = 'none';
@@ -262,7 +281,8 @@ leadForm?.addEventListener('submit', async (e) => {
 
     } catch (error) {
         console.error('Error capturing lead:', error);
-        // Alert is okay here as fallback
+        const formData = new FormData(leadForm);
+        saveLeadBackup({ name: formData.get('name'), whatsapp: formData.get('whatsapp'), error: String(error) }, 'api_error');
         alert('Erro ao enviar. Redirecionando para o WhatsApp...');
 
         // Fallback redirect
@@ -278,11 +298,26 @@ leadForm?.addEventListener('submit', async (e) => {
     }
 });
 
-// Intercept all WhatsApp CTA clicks
+// Intercept WhatsApp CTA clicks — EXCEPT floating button (goes direct)
 document.addEventListener('DOMContentLoaded', () => {
     const whatsappButtons = document.querySelectorAll('a[href*="whatsapp.com"]');
 
     whatsappButtons.forEach((button) => {
+        // Floating WhatsApp button → direct to WhatsApp, no modal
+        if (button.classList.contains('floating-whatsapp')) {
+            button.addEventListener('click', () => {
+                // Fire Google Ads conversion before redirect
+                if (typeof (window as any).gtag !== 'undefined') {
+                    (window as any).gtag('event', 'conversion', {
+                        send_to: 'AW-11104417748/iB56COGH8eEaENTv_64p',
+                    });
+                }
+                // Let the default href action proceed (opens WhatsApp)
+            });
+            return; // Skip modal intercept for this button
+        }
+
+        // All other WhatsApp buttons → show modal form
         button.addEventListener('click', (e) => {
             e.preventDefault();
             const url = (button as HTMLAnchorElement).href;
