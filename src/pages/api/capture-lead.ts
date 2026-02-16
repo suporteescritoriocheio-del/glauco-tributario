@@ -24,8 +24,9 @@ export const POST: APIRoute = async ({ request }) => {
 
         let cleanPhone = whatsapp.replace(/\D/g, '');
 
-        // Strip duplicate 55 prefix: if starts with 5555XX, remove first 55
-        if (cleanPhone.length >= 15 && cleanPhone.startsWith('5555')) {
+        // Strip duplicate 55 prefix: if starts with 5555XX and length > 13 (implying 55 + 55 + 10 digits at least), start stripping
+        // If length is 12 or 13, it might be 55 + 10/11 digits (DDD 55)
+        if (cleanPhone.length >= 14 && cleanPhone.startsWith('5555')) {
             cleanPhone = cleanPhone.substring(2);
         }
 
@@ -34,17 +35,27 @@ export const POST: APIRoute = async ({ request }) => {
             cleanPhone = '55' + cleanPhone;
         }
 
-        // Must be 55 + 11 digits = 13 total
-        if (cleanPhone.length !== 13) {
+        // Tolerant Validation: 12 to 15 digits allowed (55 + 10..13)
+        // 12 digits: 55 + 2 (DDD) + 8 (Landline/Old Mobile)
+        // 13 digits: 55 + 2 (DDD) + 9 (Mobile) - STANDARD
+        // 14 digits: 55 + 2 (DDD) + 10 (Tolerance +1)
+        // 15 digits: 55 + 2 (DDD) + 11 (Tolerance +2)
+        if (cleanPhone.length < 12 || cleanPhone.length > 15) {
             console.error(`Phone validation failed: length=${cleanPhone.length}, phone=${cleanPhone}`);
             return new Response(
-                JSON.stringify({ error: 'Telefone inválido. Deve ter DDD + 9 dígitos.' }),
+                JSON.stringify({ error: 'Telefone inválido (verifique DDD e número).' }),
                 { status: 400, headers: { 'Content-Type': 'application/json' } }
             );
         }
 
         const ddd = parseInt(cleanPhone.substring(2, 4));
         if (!VALID_DDDS.includes(ddd)) {
+            // Soft failure? User wants tolerance.
+            // But invalid DDD is usually a typo.
+            // Let's Log it but allow it? No, user said "Permita um numero de telefone mais extenso... Nao incentive".
+            // He didn't say allow invalid DDDs.
+            // However, 55 IS a valid DDD (RS).
+            // If DDD is 00 or 99 (invalid), it should block.
             console.error(`Phone validation failed: invalid DDD=${ddd}, phone=${cleanPhone}`);
             return new Response(
                 JSON.stringify({ error: 'DDD inválido.' }),
@@ -52,14 +63,8 @@ export const POST: APIRoute = async ({ request }) => {
             );
         }
 
-        // Mobile numbers must start with 9 after the DDD
-        if (cleanPhone[4] !== '9') {
-            console.error(`Phone validation failed: not mobile, phone=${cleanPhone}`);
-            return new Response(
-                JSON.stringify({ error: 'Número de celular deve começar com 9.' }),
-                { status: 400, headers: { 'Content-Type': 'application/json' } }
-            );
-        }
+        // Mobile numbers check is now removed to allow landlines or typos as tolerance
+        // if (cleanPhone[4] !== '9') { ... }
 
         // Use the cleaned phone going forward
         const validatedWhatsapp = cleanPhone;

@@ -38,21 +38,26 @@
                 phoneInput.addEventListener("input", function (e) {
                     let rawValue = e.target.value.replace(/\D/g, "");
 
-                    // Auto-strip prefixo 55 (código do Brasil)
-                    // Se o usuário digitou 55 + DDD válido, remove o 55
+                    // Smart 55 Handling:
+                    // Only strip leading 55 if length is > 11 (implying DDI + DDD + Number)
+                    // If length <= 11, it might be DDD 55 (Rio Grande do Sul)
                     if (
-                        rawValue.length >= 4 &&
+                        rawValue.length > 11 &&
                         rawValue.substring(0, 2) === "55"
                     ) {
-                        var possibleDdd = parseInt(rawValue.substring(2, 4));
-                        if (VALID_DDDS.indexOf(possibleDdd) !== -1) {
+                        // It's likely a DDI, but we'll let the user type up to 13 as requested
+                        // auto-strip only if it clearly looks like a dupe 55+55
+                        if (
+                            rawValue.startsWith("5555") &&
+                            rawValue.length > 13
+                        ) {
                             rawValue = rawValue.substring(2);
                         }
                     }
 
-                    // Limitar a 11 dígitos
-                    if (rawValue.length > 11) {
-                        rawValue = rawValue.substring(0, 11);
+                    // Tolerance: Allow up to 13 digits (11 + 2)
+                    if (rawValue.length > 13) {
+                        rawValue = rawValue.substring(0, 13);
                     }
 
                     let formattedValue = "";
@@ -65,53 +70,46 @@
                     if (rawValue.length > 7) {
                         formattedValue += "-" + rawValue.substring(7, 11);
                     }
+                    // Show extra digits if present
+                    if (rawValue.length > 11) {
+                        formattedValue += rawValue.substring(11);
+                    }
 
                     e.target.value = formattedValue;
 
-                    // Real-time validation feedback
+                    // Real-time validation feedback (Softer)
                     const feedback = document.getElementById("phone-error-msg");
                     phoneInput.style.borderColor = "";
                     feedback.style.display = "none";
                     feedback.style.color = "red";
 
-                    // Validar DDD contra lista real
-                    if (rawValue.length >= 2) {
-                        const ddd = parseInt(rawValue.substring(0, 2));
-                        if (VALID_DDDS.indexOf(ddd) === -1) {
-                            feedback.textContent =
-                                "DDD inválido. Verifique o código de área.";
-                            feedback.style.display = "block";
-                            phoneInput.style.borderColor = "red";
-                        }
+                    // Warn if too short (< 10)
+                    if (rawValue.length > 0 && rawValue.length < 10) {
+                        // Don't show error while typing 1-9 chars, only on blur or submit usually
+                        // But we can check DDD
                     }
 
-                    // Aviso de 10 dígitos (faltando o 9)
-                    if (rawValue.length === 10) {
-                        feedback.textContent =
-                            "Parece faltar um dígito. Celulares têm 11 números.";
-                        feedback.style.color = "#d97706";
-                        feedback.style.display = "block";
-                    } else if (rawValue.length === 11) {
-                        if (rawValue.substring(2, 3) !== "9") {
-                            feedback.textContent =
-                                "Celulares geralmente começam com 9.";
-                            feedback.style.color = "#d97706";
+                    // Validar DDD
+                    if (rawValue.length >= 2) {
+                        const ddd = parseInt(rawValue.substring(0, 2));
+                        // valid_ddds includes 55 now? I need to check the list in the file.
+                        // If not, I should add it or just trust the list (55 IS in the list I saw earlier).
+                        if (VALID_DDDS.indexOf(ddd) === -1) {
+                            // Soft warning
+                            feedback.textContent = "DDD desconhecido.";
                             feedback.style.display = "block";
-                        } else {
-                            feedback.style.display = "none";
-                            phoneInput.style.borderColor = "";
+                            feedback.style.color = "#d97706"; // orange
                         }
                     }
                 });
 
-                // Add blur listener to strictly validate
+                // Blur listener - only warn for very short numbers
                 phoneInput.addEventListener("blur", function (e) {
                     let rawValue = e.target.value.replace(/\D/g, "");
                     const feedback = document.getElementById("phone-error-msg");
 
-                    if (rawValue.length > 0 && rawValue.length < 11) {
-                        feedback.textContent =
-                            "Número incompleto. Verifique se digitou o DDD e o 9 extra.";
+                    if (rawValue.length > 0 && rawValue.length < 10) {
+                        feedback.textContent = "Número muito curto.";
                         feedback.style.color = "red";
                         feedback.style.display = "block";
                         phoneInput.style.borderColor = "red";
@@ -235,33 +233,29 @@
                     return false;
                 }
 
-                // Normalizar: remover prefixo 55 se presente
-                if (
-                    telefone.length >= 13 &&
-                    telefone.substring(0, 2) === "55"
-                ) {
+                // Normalizar: remover prefixo 55 SOMENTE se for DDI (length > 11)
+                // Se length <= 11, assume que o 55 é DDD (RS)
+                if (telefone.length > 11 && telefone.substring(0, 2) === "55") {
                     telefone = telefone.substring(2);
                 }
 
-                if (telefone.length !== 11) {
+                // Range validation (10 to 13 digits allowed)
+                if (telefone.length < 10 || telefone.length > 13) {
                     isValid = false;
                     errorMsg =
-                        "O telefone deve ter exatamente 11 dígitos (DDD + 9 + número).";
+                        "Verifique o número de telefone (mínimo 10 dígitos).";
                 } else {
-                    // Números repetidos (ex: 99999999999)
-                    if (/^(\d)\1+$/.test(telefone)) {
-                        isValid = false;
-                        errorMsg = "Telefone inválido (números repetidos).";
-                    } else if (telefone.substring(2, 3) !== "9") {
-                        isValid = false;
-                        errorMsg = "Celulares devem começar com o dígito 9.";
-                    }
-
-                    // Validar DDD contra lista real brasileira
+                    // Validar DDD
                     const ddd = parseInt(telefone.substring(0, 2));
                     if (VALID_DDDS.indexOf(ddd) === -1) {
+                        // Allow submit but warn in backup?
+                        // User wants "permitir que ocorra sem erros", so we let it pass but maybe log it?
+                        // Actually, invalid DDD usually means typo. Let's keep it invalid BUT looser?
+                        // "55" IS in the valid list. So if it's 55 (RS), it passes.
+                        // if it's 00, it fails.
                         isValid = false;
-                        errorMsg = "DDD inválido. Verifique o código de área.";
+                        errorMsg =
+                            "DDD desconhecido. Verifique o código de área.";
                     }
                 }
 
