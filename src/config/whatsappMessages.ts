@@ -46,5 +46,5 @@ export function escapeWhatsAppText(text: string): string {
 export function buildWhatsAppUrl(phone: string, message: string): string {
   const cleanPhone = phone.replace(/\D/g, '');
   const encodedMessage = escapeWhatsAppText(message);
-  return `https://web.whatsapp.com/send?phone=${cleanPhone}&text=${encodedMessage}`;
+  return `https://api.whatsapp.com/send/?phone=${cleanPhone}&text=${encodedMessage}`;
 }
