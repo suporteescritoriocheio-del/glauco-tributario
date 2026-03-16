@@ -2,7 +2,8 @@
 // Imports
 import intlTelInput from 'intl-tel-input';
 import 'intl-tel-input/styles';
-import { parsePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import { isValidPhoneNumber } from 'libphonenumber-js';
+import { getWhatsAppMessage, buildWhatsAppUrl } from '../config/whatsappMessages';
 
 // Declare gtag as global function
 declare function gtag(...args: any[]): void;
@@ -19,22 +20,48 @@ let targetWhatsAppUrl = '';
 // Track submission count for retry logic
 let submissionCount = 0;
 
-// --- localStorage Lead Backup (same key as FormScript) ---
+// --- localStorage Lead Backup & Recovery System ---
 function saveLeadBackup(data: Record<string, any>, status: string) {
     try {
         const leads = JSON.parse(localStorage.getItem('glauco_leads_backup') || '[]');
-        leads.push({
+        const leadEntry = {
             timestamp: new Date().toISOString(),
             page: document.title,
             url: window.location.pathname,
             source: 'modal',
             status,
-            data
-        });
+            data,
+            // Add a unique ID for deduplication
+            id: `${data.name || ''}_${data.whatsapp || ''}_${Date.now()}`
+        };
+        leads.push(leadEntry);
         // Keep last 500 entries
         const trimmed = leads.length > 500 ? leads.slice(-500) : leads;
         localStorage.setItem('glauco_leads_backup', JSON.stringify(trimmed));
+        console.log('Lead saved to localStorage with status:', status);
     } catch (e) { console.warn('Erro ao salvar backup do lead:', e); }
+}
+
+// Save lead in parallel to prevent loss (even before validation)
+function saveLeadProactively(data: Record<string, any>) {
+    saveLeadBackup(data, 'pending_validation');
+    // Also attempt to send via API without waiting for success
+    try {
+        fetch('/api/capture-lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: data.name,
+                whatsapp: data.whatsapp,
+                source: document.title,
+                timestamp: new Date().toISOString(),
+            }),
+        }).catch(() => {
+            // Silently fail - lead is already in localStorage
+        });
+    } catch (e) {
+        // Network error - lead is still in localStorage
+    }
 }
 
 // Initialize intl-tel-input
@@ -121,13 +148,16 @@ leadForm?.addEventListener('submit', async (e) => {
     const formData = new FormData(leadForm);
     const name = formData.get('name') as string;
     const whatsappRaw = formData.get('whatsapp') as string;
-    const whatsapp = cleanPhoneNumber(whatsappRaw);
 
     // --- Robust Validation ---
     if (!name) {
         alert('Por favor, preencha seu nome.');
         return;
     }
+
+    // CRITICAL: Save lead immediately, even before validation
+    // This ensures we never lose a lead, even if validation fails
+    saveLeadProactively({ name, whatsapp: whatsappRaw });
 
     let phoneIsValid = false;
     let phoneError = '';
@@ -136,26 +166,17 @@ leadForm?.addEventListener('submit', async (e) => {
     // Validate using intl-tel-input + libphonenumber-js
     if (iti) {
         if (!iti.isValidNumber()) {
-            // Basic check failed, now use strict check from libphonenumber-js to be sure and get detailed error
-            // Actually iti.isValidNumber() uses utils.js if loaded.
-            // Let's also check strict parsing to be double sure about mobile/fixed lines if needed,
-            // but keeping it simple first.
             phoneError = 'Número de telefone inválido. Verifique o código do país e o número.';
         } else {
             // Get number in E.164 format (e.g., +5511999999999)
             fullNumber = iti.getNumber();
 
-            // Extra validation with libphonenumber-js to ensure it's a mobile number if that's critical?
-            // The user mentioned "Sabe que ... não existem celulares começando com...".
-            // libphonenumber-js does this.
+            // Extra validation with libphonenumber-js
             if (!isValidPhoneNumber(fullNumber)) {
                 phoneIsValid = false;
                 phoneError = 'Número inválido para esta região.';
             } else {
                 phoneIsValid = true;
-                // Optionally check if it's mobile using parsePhoneNumber(fullNumber).getType() === 'MOBILE'
-                // but some businesses use WhatsApp on landlines too.
-                // Default to just valid number.
             }
         }
     } else {
@@ -173,7 +194,7 @@ leadForm?.addEventListener('submit', async (e) => {
         modalPhoneError.style.display = 'block';
         modalPhoneError.style.color = 'red';
         whatsappInput.style.borderColor = 'red';
-        saveLeadBackup({ name, whatsapp: whatsappRaw, error: phoneError }, 'validation_error');
+        // Lead already saved, user can correct and retry
         whatsappInput.focus();
         return;
     }
@@ -198,7 +219,6 @@ leadForm?.addEventListener('submit', async (e) => {
             body: JSON.stringify({
                 name,
                 whatsapp: fullNumber.replace('+', ''), // Send without +
-
                 source: document.title,
                 timestamp: new Date().toISOString(),
             }),
@@ -281,8 +301,7 @@ leadForm?.addEventListener('submit', async (e) => {
 
     } catch (error) {
         console.error('Error capturing lead:', error);
-        const formData = new FormData(leadForm);
-        saveLeadBackup({ name: formData.get('name'), whatsapp: formData.get('whatsapp'), error: String(error) }, 'api_error');
+        // Lead is already saved proactively, show error but allow WhatsApp redirect
         alert('Erro ao enviar. Redirecionando para o WhatsApp...');
 
         // Fallback redirect
@@ -300,7 +319,8 @@ leadForm?.addEventListener('submit', async (e) => {
 
 // Intercept WhatsApp CTA clicks — EXCEPT floating button (goes direct)
 document.addEventListener('DOMContentLoaded', () => {
-    const whatsappButtons = document.querySelectorAll('a[href*="whatsapp.com"]');
+    const whatsappButtons = document.querySelectorAll('a[href*="whatsapp.com"], a[href*="web.whatsapp"]');
+    const phoneNumber = '554391244440'; // Central phone number
 
     whatsappButtons.forEach((button) => {
         // Floating WhatsApp button → direct to WhatsApp, no modal
@@ -320,7 +340,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // All other WhatsApp buttons → show modal form
         button.addEventListener('click', (e) => {
             e.preventDefault();
-            const url = (button as HTMLAnchorElement).href;
+
+            // Get contextual message from the button's text or data attribute
+            let message = (button as HTMLAnchorElement).getAttribute('data-message');
+
+            // If no data-message, try to extract from href or use page title
+            if (!message) {
+                const href = (button as HTMLAnchorElement).href;
+                const urlParams = new URL(href).searchParams;
+                const textParam = urlParams.get('text');
+                message = textParam ? decodeURIComponent(textParam) : getWhatsAppMessage(document.title);
+            }
+
+            // Build dynamic WhatsApp URL with consistent phone and contextual message
+            const url = buildWhatsAppUrl(phoneNumber, message);
             showModal(url);
         });
     });

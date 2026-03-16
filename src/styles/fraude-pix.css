@@ -798,6 +798,114 @@ p {
     margin-bottom: var(--space-md);
 }
 
+/* ===========================
+   NEW SECTIONS STYLES
+   =========================== */
+.evidence-checklist {
+    background: var(--color-white);
+    padding: var(--space-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-top: var(--space-md);
+}
+
+.evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+.evidence-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.evidence-check {
+    width: 50px;
+    height: 50px;
+    background: var(--color-success-light);
+    color: var(--color-success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+.viability-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--space-md);
+    background: var(--color-white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.viability-table th,
+.viability-table td {
+    padding: 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.viability-table th {
+    background: var(--color-black);
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 1.25rem;
+}
+
+.viability-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.status-high {
+    background: var(--color-success-light);
+    color: var(--color-success);
+}
+
+.status-med {
+    background: var(--color-warning-light);
+    color: var(--color-warning);
+}
+
+.legal-argument-card {
+    background: var(--color-white);
+    padding: var(--space-md);
+    border-radius: var(--border-radius);
+    border-top: 4px solid var(--color-gold);
+    box-shadow: var(--shadow);
+    height: 100%;
+}
+
+.legal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+}
+
+@media (max-width: 768px) {
+
+    .legal-grid,
+    .situation-grid,
+    .risks-grid,
+    .comparison-grid,
+    .about-grid,
+    .services-grid,
+    .testimonials {
+        grid-template-columns: 1fr;
+    }
+}
+
 .testimonial-card {
     background: var(--color-white);
     padding: var(--space-md);
