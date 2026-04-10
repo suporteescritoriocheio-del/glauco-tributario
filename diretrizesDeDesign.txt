@@ -1,0 +1,174 @@
+Guia de Estilo Visual e Arquitetura de Conversão
+Versão 1.1 — Atualizado em 10/04/2026
+
+Cliente: Glauco Ramos Advogados
+Público-Alvo: Empresários, Alta Renda, Consultoria Jurídica Premium
+Objetivo: Transmitir autoridade inquestionável, classe e gerar conversões (Leads qualificados).
+
+─────────────────────────────────────────────────────────
+1. Princípios Fundamentais (Direção de Arte)
+─────────────────────────────────────────────────────────
+
+Luxo através do Espaço: A sofisticação se dá pelo respiro entre os elementos (Whitespace), não pelo preenchimento excessivo.
+
+Sobriedade Rigorosa: É terminantemente proibido o uso de emojis em qualquer parte da página (textos, botões ou títulos). Substituir sempre por ícones SVG vetoriais.
+
+Escassez do Dourado: O dourado da marca é a nossa cor de conversão. Ele não deve ser usado como decoração banal, mas sim como o guia visual para onde o usuário deve clicar (botões primários, ícones minimalistas e linhas divisórias de 1px).
+
+─────────────────────────────────────────────────────────
+2. Paleta de Cores (Premium Light)
+─────────────────────────────────────────────────────────
+
+O fundo não deve ser branco puro (que cansa a visão), mas sim tons "off-white" de papelaria fina. Os textos devem evitar o preto absoluto, optando por grafite.
+
+Fundo Principal (Background):          #FDFDFD (Branco Gelo)
+Fundo Alternativo (seções alternadas):  #F9F9F6 (Creme muito sutil)
+Fundo de Destaque (Seção Fundador):    #F2F2F2 (Cinza suave — quebra visual)
+
+Texto Principal (H1, H2):  #1A1A1A (Quase preto)
+Texto Corpo (Parágrafos):  #2B2B2B (Cinza Antracite)
+Texto Auxiliar (labels):   #6B6B6B
+
+Cor de Ação / CTA (Dourado):   #C5A059
+Hover do Dourado:               #B38D45
+Texto sobre Botão Dourado:      #FFFFFF
+
+Divisória sutil:  1px solid #EAEAEA
+WhatsApp:         #25D366
+
+─────────────────────────────────────────────────────────
+3. Tipografia e Hierarquia — DECISÃO FINAL
+─────────────────────────────────────────────────────────
+
+Combinação que equilibra tradição jurídica (serifa de tela) e modernidade institucional (sem serifa).
+
+IMPORTANTE: Cormorant Garamond foi testado e descartado por prejudicar a legibilidade em tela.
+A fonte aprovada para títulos é PLAYFAIR DISPLAY — projetada especificamente para telas digitais,
+com contraste de haste equilibrado e excelente legibilidade em todos os tamanhos.
+
+Fonte de Títulos H1/H2 (Google Fonts):
+  → Playfair Display — peso 400, 500, 600, 700 (itálico quando necessário)
+  → Fallback: 'Georgia', serif
+
+Fonte de H3 e menores (Google Fonts):
+  → Inter — peso 600
+  → Motivo: H3 aparece em cards e contextos menores onde a serifa reduz legibilidade.
+
+Fonte de Corpo / Botões / FAQ / Labels (Google Fonts):
+  → Inter — pesos 300, 400, 500, 600, 700
+  → Fallback: 'Helvetica Neue', sans-serif
+
+Tamanhos Padrão (Desktop / Mobile):
+
+  H1 (Hero):              ~44px / ~30px  | Peso: 600 | Line-height: 1.18
+  H2 (Títulos de Seção):  ~36px / ~28px  | Peso: 600 | Line-height: 1.28
+  H3 (Cards, Artigos):    ~24px / ~20px  | Peso: 600 | Line-height: 1.35  | Fonte: Inter
+  Corpo (P):               17px           | Peso: 400 | Line-height: 1.72
+  Small / Labels:          15px / 13px   | Peso: 600 | Letter-spacing: 0.1em | UPPERCASE
+
+Botões (CTA):  15–16px | Peso: 600 | Letter-spacing: 0.5px
+
+─────────────────────────────────────────────────────────
+4. Formas, Bordas e Sombras
+─────────────────────────────────────────────────────────
+
+Bordas (Border-Radius): Evite botões redondos em formato de "pílula". Use cantos retos (0px) ou levemente arredondados (2px a 4px) para manter a seriedade.
+
+Sombras (Box-Shadow): Proibido sombras duras e escuras. Utilizar apenas sombras extremamente difusas e elegantes para destacar botões ou cards sutis.
+  Exemplo CSS: box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+Linhas Divisórias: Use linhas horizontais super finas (1px solid #EAEAEA) para separar itens do FAQ ou áreas de atuação.
+
+─────────────────────────────────────────────────────────
+5. Diretrizes de Imagens e Mídia
+─────────────────────────────────────────────────────────
+
+A Foto do Fundador (Hero Section)
+  - Qualidade editorial: iluminação profissional, postura assertiva e contato visual.
+  - Recorte limpo com fundo transparente OU foto em escritório premium com bokeh.
+  - NUNCA usar fotos amadoras ou genéricas de banco de imagens.
+  - Filtro: leve grayscale (8–12%) para padronizar o tom e harmonizar com o design light.
+
+O Vídeo no YouTube (Gerador de Autoridade)
+  - URL oficial: https://youtu.be/mOZtKBFkCAY
+  - ID do vídeo: mOZtKBFkCAY
+  - Localização: logo abaixo do Hero (seção de Manifesto/Vídeo).
+  - Técnica OBRIGATÓRIA (Lazy Load): NÃO inserir iframe direto na página.
+    Exibir thumbnail de alta qualidade + botão Play dourado SVG.
+    O iframe só é carregado quando o usuário clica.
+  - Thumbnail: https://img.youtube.com/vi/mOZtKBFkCAY/maxresdefault.jpg
+  - Forma: border-radius 4px, sombra difusa.
+
+─────────────────────────────────────────────────────────
+6. Arquitetura da Informação (Cadência de Conversão)
+─────────────────────────────────────────────────────────
+
+A página deve seguir exatamente esta ordem de seções:
+
+1. Hero Section (Primeira Impressão)
+   - Esquerda: H1 + subtítulo + botão CTA dourado ("Agendar Consulta Estratégica")
+   - Direita: Foto editorial do Dr. Glauco
+
+2. Faixa de Confiança (Trust Bar)
+   - Google 4.5/5 · OAB/PR · 3 escritórios · Ex-Procurador
+   - Faixa fina, discreta, sem emojis (apenas SVG icons)
+
+3. Manifesto / Identificação da Dor
+   - 2 parágrafos explicando como o escritório age como escudo do negócio
+
+4. Vídeo (Lazy Load)
+   - Layout 2 colunas: texto à esquerda, player à direita
+
+5. Áreas de Atuação (Serviços)
+   - Grid de cards com ícone SVG dourado + H3 (Inter) + 2 linhas de resumo
+   - 3 colunas no desktop, 1 coluna no mobile
+
+6. Fundador / Equipe
+   - Fundo #F2F2F2
+   - Foto com grayscale sutil + credenciais com pontos dourados
+   - Citação em bloco com borda dourada à esquerda
+
+7. Depoimentos (Prova Social)
+   - Sóbrios: aspas tipográficas, texto, nome, data
+   - Estrelas como SVG dourado (nunca emoji)
+
+8. Artigos e Insights
+   - Máximo 3 artigos, grid 3 colunas (carrossel no mobile)
+   - Card: imagem + tag categoria (dourada) + H3 (Inter) + "Ler artigo completo →"
+   - Links reais do blog: https://glaucoramos.com.br/blog/
+
+9. FAQ (Accordion)
+   - Divisórias finas (1px #EAEAEA)
+   - Min-height 56px por linha (touch-friendly)
+
+10. Formulário de Contato
+    - 2 colunas: formulário + informações de contato
+    - Borda superior dourada no card do formulário
+
+11. Footer
+    - Grid 4 colunas: marca, áreas, links, contato
+    - Links tel: e mailto: obrigatórios
+
+─────────────────────────────────────────────────────────
+7. Mobile-First e Usabilidade
+─────────────────────────────────────────────────────────
+
+Zonas de Toque: Todo botão, link ou linha de FAQ deve ter no mínimo 48px de altura.
+
+Empilhamento: Grids de 3 colunas (serviços, artigos) → 1 coluna no mobile.
+
+Botão Fixo (Sticky CTA Mobile): Após rolar a primeira tela, barra dourada + verde WhatsApp fixada no bottom. Sempre visível para conversão imediata.
+
+Floating WhatsApp (Desktop): Botão verde pulsante no canto inferior direito.
+
+─────────────────────────────────────────────────────────
+8. Links e Referências do Projeto
+─────────────────────────────────────────────────────────
+
+Blog / Artigos:   https://glaucoramos.com.br/blog/
+Sobre o Fundador: https://glaucoramos.com.br/sobre-nos/
+Vídeo YouTube:    https://youtu.be/mOZtKBFkCAY
+WhatsApp:         https://api.whatsapp.com/send/?phone=554391244440
+E-mail:           advocacia@glaucoramos.com
+Telefone:         (43) 9 9124-4440
+Endereço:         Av. Ayrton Senna da Silva, 200 - Gleba Fazenda Palhano, Londrina - PR
