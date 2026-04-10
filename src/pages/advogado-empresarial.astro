@@ -7,803 +7,775 @@ import "../styles/advogado-empresarial.css";
 
 const pageTitle = "Advocacia Empresarial Estratégica | Glauco Ramos Advocacia";
 const pageDescription =
-    "Soluções jurídicas completas para empresários: direito empresarial, societário e tributário. +30 anos de experiência. Atendimento em todo o Brasil. Consultoria gratuita.";
+  "Soluções jurídicas completas para empresários: direito empresarial, societário e tributário. +30 anos de experiência. Atendimento em todo o Brasil. Consultoria gratuita.";
+
+const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
+const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
 ---
 
 <!doctype html>
 <html lang="pt-BR">
-    <head>
-        <SEO title={pageTitle} description={pageDescription} />
-        <StructuredData />
-    </head>
+  <head>
+    <SEO title={pageTitle} description={pageDescription} />
+    <StructuredData />
+  </head>
 
-    <body>
-        <!-- Google Tag Manager (noscript) -->
-        <noscript
-            ><iframe
-                src="https://www.googletagmanager.com/ns.html?id=GTM-58XT4LRL"
-                height="0"
-                width="0"
-                style="display:none;visibility:hidden"></iframe></noscript
-        >
-        <!-- End Google Tag Manager (noscript) -->
+  <body>
+    <!-- GTM noscript -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-58XT4LRL"
+        height="0" width="0"
+        style="display:none;visibility:hidden"></iframe>
+    </noscript>
 
-        <!-- 1. HERO SECTION -->
-        <section class="hero">
-            <div class="container">
-                <img src="/img/logo-glauco-ramos.webp" alt="Glauco Ramos Advocacia" class="hero-logo" width="80" height="80" />
-                <div class="urgency-badge" style="background: var(--color-gold); color: #111;">
-                    ⚖️ +30 anos de experiência | Ex-Procurador Jurídico
-                </div>
-                <h1>
-                    Sua Empresa Está Exposta? Proteja Seu Patrimônio com Advocacia Estratégica
-                </h1>
-                <p class="hero-subtitle">
-                    Problemas societários, fiscais ou contratuais podem custar milhões. +30 anos de experiência protegendo empresários em todo o Brasil.
-                </p>
-                <a
-                    href="https://api.whatsapp.com/send/?phone=554391244440&text=Olá,%20gostaria%20de%20agendar%20uma%20consultoria"
-                    class="btn btn-primary btn-large"
-                    data-message="Olá, gostaria de agendar uma consultoria"
-                    >AGENDE SUA CONSULTORIA GRATUITA</a
-                >
-                <p class="hero-urgency">
-                    ✓ Consultoria gratuita | ✓ Atendimento em todo o Brasil | ✓ Ex-Procurador Jurídico
-                </p>
-                <div class="hero-trust">
-                    <span>⭐⭐⭐⭐⭐ 4.5 no Google (31 avaliações)</span>
-                    <span>•</span>
-                    <span>OAB/PR</span>
-                    <span>•</span>
-                    <span>Ex-Procurador Jurídico Municipal</span>
-                </div>
+    <!-- ================================================
+         1. HERO
+         ================================================ -->
+    <section class="hero">
+      <div class="container">
+        <img
+          src="/img/logo-glauco-ramos.webp"
+          alt="Glauco Ramos Advocacia"
+          class="hero-logo"
+          width="72" height="72"
+          loading="eager"
+        />
+
+        <div class="urgency-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          +30 anos de experiência · Ex-Procurador Jurídico
+        </div>
+
+        <h1>
+          Sua Empresa Está Exposta?
+          <span>Proteja Seu Patrimônio com Advocacia Estratégica.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Problemas societários, fiscais ou contratuais podem custar milhões.
+          +30 anos defendendo empresários em todo o Brasil com estratégia e resultado.
+        </p>
+
+        <div class="hero-ctas">
+          <a
+            href={WPP("Olá, gostaria de agendar uma consultoria gratuita")}
+            class="btn btn-primary btn-large"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            Agende sua Consultoria Gratuita
+          </a>
+          <a href="#contato" class="btn btn-secondary">Ver Formulário de Contato</a>
+        </div>
+
+        <p class="hero-urgency">
+          ✓ Consultoria gratuita &nbsp;·&nbsp; ✓ Atendimento remoto em todo o Brasil &nbsp;·&nbsp; ✓ Resposta em até 24h
+        </p>
+
+        <div class="hero-trust">
+          <span class="hero-trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            4.5 · 31 avaliações Google
+          </span>
+          <span>·</span>
+          <span class="hero-trust-item">⚖️ OAB/PR</span>
+          <span>·</span>
+          <span class="hero-trust-item">🏛️ Ex-Procurador Jurídico Municipal</span>
+          <span>·</span>
+          <span class="hero-trust-item">📍 SP · Curitiba · Londrina</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         2. CREDIBILITY BAR
+         ================================================ -->
+    <section class="credibility">
+      <div class="container">
+        <div class="credibility-grid">
+          <div class="credibility-item">
+            <span class="credibility-icon">⭐</span>
+            <div class="credibility-text">
+              <strong>4.5 estrelas</strong>
+              31 avaliações no Google
             </div>
-        </section>
-
-        <!-- 2. CREDIBILITY BAR -->
-        <section class="credibility">
-            <div class="container">
-                <p class="text-center mb-md">
-                    <strong>Reconhecido por empresários de todo o Brasil</strong
-                    >
-                </p>
-                <div class="credibility-grid">
-                    <div class="credibility-item">
-                        <div class="credibility-icon">⭐</div>
-                        <div class="credibility-text">
-                            <strong>4.5 estrelas</strong><br />31 avaliações no
-                            Google
-                        </div>
-                    </div>
-                    <div class="credibility-item">
-                        <div class="credibility-icon">📍</div>
-                        <div class="credibility-text">
-                            <strong>3 Escritórios</strong><br />São Paulo,
-                            Curitiba e Londrina
-                        </div>
-                    </div>
-                    <div class="credibility-item">
-                        <div class="credibility-icon">⚖️</div>
-                        <div class="credibility-text">
-                            <strong>+30 anos</strong><br />De experiência
-                            jurídica
-                        </div>
-                    </div>
-                    <div class="credibility-item">
-                        <div class="credibility-icon">🏆</div>
-                        <div class="credibility-text">
-                            <strong>Ex-Procurador</strong><br />Jurídico
-                            Municipal
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-lg">
-                    <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Olá,%20gostaria%20de%20falar%20sobre%20advocacia%20empresarial"
-                        class="btn btn-primary"
-                        data-message="Olá, gostaria de falar sobre advocacia empresarial">FALE CONOSCO NO WHATSAPP</a
-                    >
-                </div>
+          </div>
+          <div class="credibility-item">
+            <span class="credibility-icon">📍</span>
+            <div class="credibility-text">
+              <strong>3 Escritórios</strong>
+              SP, Curitiba e Londrina
             </div>
-        </section>
-
-        <!-- 3. PROBLEMS SECTION -->
-        <section class="section">
-            <div class="container">
-                <h2 class="text-center">
-                    Seu Negócio Enfrenta Algum Desses Desafios?
-                </h2>
-                <ul class="checklist">
-                    <li>
-                        Conflitos societários entre sócios que ameaçam a
-                        continuidade da empresa
-                    </li>
-                    <li>
-                        Problemas tributários com multas e autuações fiscais
-                    </li>
-                    <li>
-                        Contratos mal elaborados que geram prejuízos e
-                        insegurança jurídica
-                    </li>
-                    <li>
-                        Processos trabalhistas que comprometem o caixa da
-                        empresa
-                    </li>
-                    <li>
-                        Dúvidas sobre fusões e aquisições sem assessoria
-                        especializada
-                    </li>
-                    <li>
-                        Falta de planejamento sucessório que coloca o patrimônio
-                        em risco
-                    </li>
-                    <li>
-                        Disputas comerciais com fornecedores, clientes ou
-                        parceiros
-                    </li>
-                </ul>
-                <div class="text-center mt-lg">
-                    <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Olá,%20preciso%20falar%20com%20um%20especialista%20em%20direito%20empresarial"
-                        class="btn btn-secondary"
-                        data-message="Olá, preciso falar com um especialista em direito empresarial"
-                        >FALE COM UM ESPECIALISTA AGORA</a
-                    >
-                </div>
+          </div>
+          <div class="credibility-item">
+            <span class="credibility-icon">⚖️</span>
+            <div class="credibility-text">
+              <strong>+30 anos</strong>
+              De experiência jurídica
             </div>
-        </section>
-
-        <!-- 4. SOLUTIONS SECTION -->
-        <section class="section section-alt">
-            <div class="container">
-                <h2 class="text-center">
-                    Advocacia Empresarial Completa para Proteger e Fazer Seu
-                    Negócio Crescer
-                </h2>
-
-                <div class="services-grid">
-                    <div class="service-card">
-                        <svg
-                            class="service-icon"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <path
-                                d="M9 12h6m-3-3v6m-7 4V5a2 2 0 012-2h10a2 2 0 012 2v14l-7-3-7 3z"
-                            ></path>
-                        </svg>
-                        <h3>1. Consultoria Empresarial Estratégica</h3>
-                        <p>
-                            Análise completa da sua empresa para identificar
-                            riscos e oportunidades jurídicas antes que se tornem
-                            problemas.
-                        </p>
-                    </div>
-
-                    <div class="service-card">
-                        <svg
-                            class="service-icon"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"
-                            ></path><circle cx="9" cy="7" r="4"></circle><path
-                                d="M23 21v-2a4 4 0 00-3-3.87"></path><path
-                                d="M16 3.13a4 4 0 010 7.75"></path>
-                        </svg>
-                        <h3>2. Direito Societário</h3>
-                        <p>
-                            Estruturação de sociedades, acordo entre sócios,
-                            entrada e saída de sócios, governança corporativa e
-                            planejamento sucessório.
-                        </p>
-                    </div>
-
-                    <div class="service-card">
-                        <svg
-                            class="service-icon"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <path
-                                d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
-                            ></path><polyline points="14 2 14 8 20 8"
-                            ></polyline><line x1="16" y1="13" x2="8" y2="13"
-                            ></line><line x1="16" y1="17" x2="8" y2="17"
-                            ></line><polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                        <h3>3. Contratos Empresariais</h3>
-                        <p>
-                            Elaboração, análise e negociação de contratos que
-                            protegem seus interesses e evitam litígios futuros.
-                        </p>
-                    </div>
-
-                    <div class="service-card">
-                        <svg
-                            class="service-icon"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <line x1="12" y1="1" x2="12" y2="23"></line><path
-                                d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"
-                            ></path>
-                        </svg>
-                        <h3>4. Planejamento e Contencioso Tributário</h3>
-                        <p>
-                            Redução legal da carga tributária e defesa em
-                            autuações fiscais com estratégias personalizadas.
-                        </p>
-                    </div>
-
-                    <div class="service-card">
-                        <svg
-                            class="service-icon"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <circle cx="18" cy="5" r="3"></circle><circle
-                                cx="6"
-                                cy="12"
-                                r="3"></circle><circle cx="18" cy="19" r="3"
-                            ></circle><line
-                                x1="8.59"
-                                y1="13.51"
-                                x2="15.42"
-                                y2="17.49"></line><line
-                                x1="15.41"
-                                y1="6.51"
-                                x2="8.59"
-                                y2="10.49"></line>
-                        </svg>
-                        <h3>5. Fusões e Aquisições</h3>
-                        <p>
-                            Assessoria completa em operações de M&A, due
-                            diligence e reestruturações societárias.
-                        </p>
-                    </div>
-
-                    <div class="service-card">
-                        <svg
-                            class="service-icon"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <path d="M21.21 15.89A10 10 0 118 2.83"></path><path
-                                d="M22 12A10 10 0 0012 2v10z"></path>
-                        </svg>
-                        <h3>6. Recuperação Judicial</h3>
-                        <p>
-                            Defesa e estratégias para superar crises financeiras
-                            e manter sua empresa operando.
-                        </p>
-                    </div>
-                </div>
-                <div class="text-center mt-lg">
-                    <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Olá,%20preciso%20de%20ajuda%20com%20direito%20empresarial"
-                        class="btn btn-primary"
-                        data-message="Olá, preciso de ajuda com direito empresarial"
-                        >SOLICITE SUA CONSULTORIA GRATUITA</a
-                    >
-                </div>
+          </div>
+          <div class="credibility-item">
+            <span class="credibility-icon">🏆</span>
+            <div class="credibility-text">
+              <strong>Ex-Procurador</strong>
+              Jurídico Municipal
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- 5. WHY CHOOSE US -->
-        <section class="section section-dark">
-            <div class="container">
-                <h2 class="text-center">
-                    A Escolha de Empresários que Não Aceitam Improviso
-                </h2>
+    <!-- ================================================
+         3. VIDEO SECTION (Lazy Load)
+         ================================================ -->
+    <section class="video-section section">
+      <div class="container">
+        <div class="video-layout">
+          <div class="video-content">
+            <span class="video-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Assista ao vídeo
+            </span>
+            <h2 class="section-heading" style="text-align:left; margin-bottom:1rem;">
+              Conheça Nossa Abordagem Jurídica
+            </h2>
+            <p>
+              Antes de acionar um advogado, entenda como trabalhamos. Nossa metodologia combina
+              <strong>estratégia preventiva</strong> com atuação ágil em contencioso — assim sua
+              empresa nunca é pega de surpresa.
+            </p>
+            <p>
+              Dr. Glauco Ramos explica em detalhes como proteger o patrimônio da sua empresa,
+              evitar autuações fiscais e estruturar contratos que realmente funcionam.
+            </p>
+            <a href={WPP("Vi o vídeo e gostaria de conversar")} class="btn btn-primary">
+              Falar com o Dr. Glauco
+            </a>
+          </div>
 
-                <div class="diff-grid">
-                    <div class="diff-item">
-                        <svg
-                            class="diff-icon-img"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"
-                            ></path><polyline points="22 4 12 14.01 9 11.01"
-                            ></polyline>
-                        </svg>
-                        <h3>Especialização Comprovada</h3>
-                        <p>
-                            Especialização em Direito Tributário pelo IBET e
-                            experiência como Procurador Jurídico Municipal.
-                            Conhecimento profundo do funcionamento público e
-                            privado.
-                        </p>
-                    </div>
-
-                    <div class="diff-item">
-                        <svg
-                            class="diff-icon-img"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <circle cx="12" cy="12" r="10"></circle><line
-                                x1="2"
-                                y1="12"
-                                x2="22"
-                                y2="12"></line><path
-                                d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
-                            ></path>
-                        </svg>
-                        <h3>Visão Nacional com Atendimento Local</h3>
-                        <p>
-                            Escritórios em São Paulo, Curitiba e Londrina, com
-                            atendimento digital para todo o Brasil. Onde você
-                            estiver, estamos prontos para atender.
-                        </p>
-                    </div>
-
-                    <div class="diff-item">
-                        <svg
-                            class="diff-icon-img"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <polygon
-                                points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-                            ></polygon>
-                        </svg>
-                        <h3>Resposta Rápida e Disponibilidade</h3>
-                        <p>
-                            Plantão 24h e primeira resposta em até 24 horas. Seu
-                            problema empresarial não pode esperar, e nós
-                            entendemos isso.
-                        </p>
-                    </div>
-
-                    <div class="diff-item">
-                        <svg
-                            class="diff-icon-img"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <path
-                                d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
-                            ></path>
-                        </svg>
-                        <h3>Relacionamento Personalizado</h3>
-                        <p>
-                            Você não será apenas mais um número. Atendimento
-                            direto com advogados experientes que entendem
-                            profundamente seu negócio.
-                        </p>
-                    </div>
-                </div>
-                <div class="text-center mt-lg">
-                    <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Quero%20falar%20com%20um%20especialista"
-                        class="btn btn-primary"
-                        data-message="Quero falar com um especialista">AGENDE UMA CONVERSA</a
-                    >
-                </div>
+          <div class="video-player-wrapper" id="video-player" data-video-id="dQw4w9WgXcQ" role="button" tabindex="0" aria-label="Assistir vídeo">
+            <!-- Thumbnail (substitua pelo ID do vídeo real do YouTube) -->
+            <img
+              src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+              alt="Vídeo de apresentação — Dr. Glauco Ramos"
+              class="video-thumbnail"
+              loading="lazy"
+            />
+            <div class="video-play-btn">
+              <div class="play-icon-circle">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="video-play-label">Assistir Apresentação</span>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- 6. TESTIMONIALS -->
-        <section class="section section-alt">
-            <div class="container">
-                <h2 class="text-center">
-                    O Que Dizem Empresários que Confiaram em Nós
-                </h2>
+    <!-- ================================================
+         4. PROBLEMS
+         ================================================ -->
+    <section class="section problems-section section-alt">
+      <div class="container">
+        <h2 class="section-heading">Seu Negócio Enfrenta Algum Desses Desafios?</h2>
+        <ul class="checklist">
+          <li>Conflitos societários entre sócios que ameaçam a continuidade da empresa</li>
+          <li>Problemas tributários com multas e autuações fiscais indevidas</li>
+          <li>Contratos mal elaborados que geram prejuízos e insegurança jurídica</li>
+          <li>Processos trabalhistas que comprometem o caixa da empresa</li>
+          <li>Dúvidas sobre fusões e aquisições sem assessoria especializada</li>
+          <li>Falta de planejamento sucessório que coloca o patrimônio em risco</li>
+          <li>Disputas comerciais com fornecedores, clientes ou parceiros</li>
+        </ul>
+        <div class="text-center">
+          <a href={WPP("Preciso de um especialista em direito empresarial")} class="btn btn-primary">
+            Fale com um Especialista Agora
+          </a>
+        </div>
+      </div>
+    </section>
 
-                <div class="testimonials">
-                    <div class="testimonial">
-                        <p class="testimonial-text">
-                            "Excelente! Muito competente e comprometido com o
-                            cliente. Me atendeu super bem. Mesmo sendo de outro
-                            estado, um caso pequeno, me prestou esclarecimentos
-                            do início ao fim. Fiquei muito satisfeita."
-                        </p>
-                        <p class="testimonial-author">— Cíntia Santos</p>
-                        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    </div>
+    <!-- ================================================
+         5. SOLUTIONS
+         ================================================ -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-heading">Advocacia Empresarial Completa</h2>
+        <p class="section-subheading">Soluções integradas para proteger e fazer seu negócio crescer</p>
 
-                    <div class="testimonial">
-                        <p class="testimonial-text">
-                            "Ética e comprometimento. Demonstrou segurança e
-                            teve soluções inovadoras. Grande especialista na
-                            área tributária."
-                        </p>
-                        <p class="testimonial-author">— Lourdes Serri</p>
-                        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-3-3v6m-7 4V5a2 2 0 012-2h10a2 2 0 012 2v14l-7-3-7 3z"/></svg>
+            <h3>Consultoria Empresarial</h3>
+            <p>Análise completa para identificar riscos e oportunidades jurídicas antes que se tornem problemas.</p>
+          </div>
 
-                    <div class="testimonial">
-                        <p class="testimonial-text">
-                            "Por 3 gerações fomos agraciados em termos como
-                            patrono em nossas causas judiciais o Dr. Glauco
-                            Ramos. Além de excelente advogado, um grande mestre
-                            e amigo. De caráter sem igual."
-                        </p>
-                        <p class="testimonial-author">— Adyr Neto</p>
-                        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    </div>
-                </div>
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            <h3>Direito Societário</h3>
+            <p>Acordo entre sócios, entrada e saída, governança corporativa e planejamento sucessório.</p>
+          </div>
 
-                <div class="text-center mt-lg">
-                    <p>
-                        <strong>4.5 ⭐ no Google</strong> | 31 avaliações verificadas
-                    </p>
-                    <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Vi%20os%20depoimentos%20e%20gostaria%20de%20conversar"
-                        class="btn btn-primary"
-                        style="margin-top: 1.5rem;"
-                        data-message="Vi os depoimentos e gostaria de conversar"
-                        >QUERO RESULTADOS COMO ESSES</a
-                    >
-                </div>
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <h3>Contratos Empresariais</h3>
+            <p>Elaboração, análise e negociação de contratos que protegem seus interesses e evitam litígios.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            <h3>Planejamento Tributário</h3>
+            <p>Redução legal da carga tributária e defesa em autuações fiscais com estratégias personalizadas.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <h3>Fusões e Aquisições</h3>
+            <p>Assessoria completa em M&A, due diligence e reestruturações societárias.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21.21 15.89A10 10 0 118 2.83"/><path d="M22 12A10 10 0 0012 2v10z"/></svg>
+            <h3>Recuperação Judicial</h3>
+            <p>Estratégias para superar crises financeiras e manter sua empresa operando.</p>
+          </div>
+        </div>
+
+        <div class="text-center mt-lg">
+          <a href={WPP("Preciso de ajuda com direito empresarial")} class="btn btn-primary btn-large">
+            Solicite sua Consultoria Gratuita
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         6. WHY CHOOSE US
+         ================================================ -->
+    <section class="section section-alt">
+      <div class="container">
+        <h2 class="section-heading">A Escolha de Empresários que Não Aceitam Improviso</h2>
+
+        <div class="diff-grid">
+          <div class="diff-item">
+            <div class="diff-icon-wrapper">
+              <svg class="diff-icon-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
-        </section>
-
-        <!-- 7. PROCESS -->
-        <section class="section">
-            <div class="container">
-                <h2 class="text-center">
-                    Como Funciona: Do Primeiro Contato à Solução
-                </h2>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-number">1</div>
-                        <div class="timeline-content">
-                            <h3>Contato Inicial</h3>
-                            <p>
-                                Você entra em contato por WhatsApp, telefone ou
-                                formulário. Respondemos em até 24h para agendar
-                                sua consultoria.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-number">2</div>
-                        <div class="timeline-content">
-                            <h3>Análise Estratégica</h3>
-                            <p>
-                                Reunião inicial (presencial ou online) para
-                                entender profundamente seu caso e identificar a
-                                melhor estratégia jurídica.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-number">3</div>
-                        <div class="timeline-content">
-                            <h3>Proposta Transparente</h3>
-                            <p>
-                                Apresentamos um plano de ação claro, com prazos,
-                                valores e expectativas realistas. Sem surpresas.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-number">4</div>
-                        <div class="timeline-content">
-                            <h3>Execução e Acompanhamento</h3>
-                            <p>
-                                Colocamos a estratégia em prática com
-                                comunicação constante. Você sempre saberá o
-                                status do seu caso.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-lg">
-                    <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Gostaria%20de%20iniciar%20o%20processo"
-                        class="btn btn-primary"
-                        data-message="Gostaria de iniciar o processo">COMECE AGORA</a
-                    >
-                </div>
+            <div>
+              <h3>Especialização Comprovada</h3>
+              <p>Especialização em Direito Tributário pelo IBET e experiência como Procurador Jurídico Municipal. Domínio profundo do setor público e privado.</p>
             </div>
-        </section>
+          </div>
 
-        <!-- 8. ABOUT FOUNDER -->
-        <section class="section section-dark about">
-            <div class="container">
-                <div class="about-inner">
-                <div class="about-photo">
-                    <img src="/img/glauco-ramos-advogado.jpg" alt="Dr. Glauco Ramos — Advogado" width="260" />
-                    <div class="photo-caption">
-                        <strong>Dr. Glauco Ramos</strong>
-                        Ex-Procurador Jurídico • OAB/PR
-                    </div>
-                </div>
-                <div class="about-content">
-                    <h2>Conheça Dr. Glauco Ramos</h2>
-                    <p>
-                        Advogado formado pela UEL com especializações em Direito
-                        Civil, Processual Civil e Direito Tributário pelo IBET.
-                    </p>
-                    <p>
-                        Com experiência como Procurador Jurídico do Município de
-                        Rolândia-PR e da CMTU de Londrina, Dr. Glauco Ramos
-                        possui mais de 30 anos de carreira dedicados a defender
-                        empresários e empresas em suas demandas mais complexas.
-                    </p>
-                    <p>
-                        Sua expertise em direito tributário e administrativo,
-                        combinada com profundo conhecimento em direito
-                        empresarial, fazem dele uma referência para empresários
-                        que buscam segurança jurídica e estratégia.
-                    </p>
-                    <blockquote class="about-quote">
-                        "Meu compromisso é transformar desafios jurídicos em
-                        oportunidades para o crescimento do seu negócio."
-                        <br /><strong>— Dr. Glauco Ramos</strong>
-                    </blockquote>
-                    <div class="text-center mt-lg">
-                        <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Gostaria%20de%20falar%20com%20Dr.%20Glauco%20Ramos"
-                            class="btn btn-primary"
-                            data-message="Gostaria de falar com Dr. Glauco Ramos">FALE COM DR. GLAUCO</a
-                        >
-                    </div>
-                </div>
-                </div>
+          <div class="diff-item">
+            <div class="diff-icon-wrapper">
+              <svg class="diff-icon-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
             </div>
-        </section>
-
-        <!-- 9. FAQ -->
-        <section class="section section-alt">
-            <div class="container">
-                <h2 class="text-center">Perguntas Frequentes</h2>
-
-                <div class="faq">
-                    <div class="faq-item">
-                        <p class="faq-question">
-                            Vocês atuam como um escritório completo de advocacia empresarial?
-                        </p>
-                        <p class="faq-answer">
-                            Sim. Nossa <strong>advocacia empresarial</strong> funciona de forma integrada. Se você procura um <strong>advogado de empresas</strong> para defender seu balanço patronal e evitar condenações agressivas, nós prestamos desde a <strong>consultoria tributária</strong> aprofundada contra impostos indevidos até atuações preventivas em grandes contratos corporativos, agindo ativamente no papel diário de <strong>advogado para empresa</strong>.
-                        </p>
-                    </div>
-
-                    <div class="faq-item">
-                        <p class="faq-question">
-                            Como o advogado direito empresarial ajuda nas rotinas de empregatícias?
-                        </p>
-                        <p class="faq-answer">
-                            A defesa em ações da Justiça do Trabalho exige um olhar patronal que apenas um <strong>advogado direito empresarial</strong> focado nos negócios possui. Por atuarmos diretamente como <strong>advogado trabalhista pj</strong> (defendido teses exclusivas pró-negócios), somos autoridade no papel de <strong>adv. trabalhista empresarial</strong> e reduzimos processos destrutivos e multas da DRT para o seu CNPJ, como o seu verdadeiro <strong>adv. trabalhista para empresas</strong>.
-                        </p>
-                    </div>
-
-                    <div class="faq-item">
-                        <p class="faq-question">
-                            Minha empresa fica fora de Londrina/SP. Um advogado empresarial atende outras cidades?
-                        </p>
-                        <p class="faq-answer">
-                            Com certeza! A estratégia de um ótimo <strong>advogado empresarial</strong> atua nas áreas consultivas e processos totalmente digitais de forma remota. Através de nossa infraestrutura digitalizada <strong>atendemos brasil todo</strong>, conferindo extrema agilidade nas defesas que a sua marca precisa.
-                        </p>
-                    </div>
-                </div>
-                <div class="text-center mt-lg">
-                    <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Tenho%20algumas%20dúvidas"
-                        class="btn btn-primary"
-                        data-message="Tenho algumas dúvidas">TIRE SUAS DÚVIDAS AGORA</a
-                    >
-                </div>
+            <div>
+              <h3>Visão Nacional</h3>
+              <p>Escritórios em SP, Curitiba e Londrina, com atendimento digital para todo o Brasil. Onde você estiver, estamos prontos.</p>
             </div>
-        </section>
+          </div>
 
-        <!-- 10. CTA FINAL / CONTACT FORM -->
-        <section id="contato" class="section">
-            <div class="container">
-                <h2 class="text-center">
-                    Proteja Seu Negócio Agora. Agende sua Consultoria Gratuita
-                </h2>
-                <p class="text-center mb-lg">
-                    Não deixe problemas jurídicos comprometerem o futuro da sua
-                    empresa. Fale com especialistas que entendem os desafios do
-                    empresário brasileiro.
-                </p>
-
-                <form id="contact-form" class="contact-form">
-                    <div class="form-group">
-                        <label for="nome">Nome Completo *</label>
-                        <input
-                            type="text"
-                            id="nome"
-                            name="nome"
-                            required
-                            autocomplete="name"
-                            autocapitalize="words"
-                        />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">E-mail *</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            required
-                            autocomplete="email"
-                        />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="telefone">Telefone (WhatsApp) *</label>
-                        <input
-                            type="tel"
-                            id="telefone"
-                            name="telefone"
-                            required
-                            autocomplete="tel"
-                            inputmode="numeric"
-                            maxlength="16"
-                        />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="cidade">Cidade/Estado</label>
-                        <input
-                            type="text"
-                            id="cidade"
-                            name="cidade"
-                            autocomplete="address-level2"
-                            autocapitalize="words"
-                        />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="mensagem"
-                            >Conte brevemente sobre seu desafio empresarial</label
-                        >
-                        <textarea id="mensagem" name="mensagem"></textarea>
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary btn-large"
-                        style="width: 100%;"
-                    >
-                        QUERO MINHA CONSULTORIA GRATUITA
-                    </button>
-
-                    <div class="form-footer">
-                        <p class="form-footer-item">
-                            🔒 Suas informações estão seguras e protegidas
-                        </p>
-                        <p class="form-footer-item">
-                            ✓ Resposta em até 24 horas
-                        </p>
-                        <p class="form-footer-item">
-                            ✓ Sem compromisso inicial
-                        </p>
-                    </div>
-                </form>
-
-                <div class="contact-alternatives">
-                    <h3>Ou entre em contato diretamente:</h3>
-                    <p>
-                        📱 WhatsApp: <a href="https://wa.me/5543991244440"
-                            >(43) 9 9124-4440</a
-                        >
-                    </p>
-                    <p>
-                        📧 E-mail: <a href="mailto:advocacia@glaucoramos.com"
-                            >advocacia@glaucoramos.com</a
-                        >
-                    </p>
-                    <p>📍 Escritórios em São Paulo, Curitiba e Londrina</p>
-                </div>
+          <div class="diff-item">
+            <div class="diff-icon-wrapper">
+              <svg class="diff-icon-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
-        </section>
-
-        <!-- 11. FOOTER -->
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-grid">
-                    <div>
-                        <h4>Glauco Ramos Advocacia</h4>
-                        <p>
-                            Advocacia empresarial com excelência e compromisso
-                        </p>
-                    </div>
-
-                    <div>
-                        <h4>Áreas de Atuação</h4>
-                        <ul>
-                            <li>
-                                <a href="#solucoes">Consultoria Empresarial</a>
-                            </li>
-                            <li><a href="#solucoes">Direito Societário</a></li>
-                            <li><a href="#solucoes">Direito Tributário</a></li>
-                            <li><a href="#solucoes">Fusões e Aquisições</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4>Links Rápidos</h4>
-                        <ul>
-                            <li><a href="#sobre">Sobre</a></li>
-                            <li><a href="#contato">Contato</a></li>
-                            <li><a href="#faq">Perguntas Frequentes</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4>Contato</h4>
-                        <ul>
-                            <li>📞 (43) 9 9124-4440</li>
-                            <li>✉️ advocacia@glaucoramos.com</li>
-                            <li>🌐 glaucoramos.com.br</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="footer-bottom">
-                    <p>
-                        &copy; 2026 Glauco Ramos Advocacia. Todos os direitos
-                        reservados. | OAB/PR | LGPD Compliance
-                    </p>
-                </div>
+            <div>
+              <h3>Resposta Rápida 24h</h3>
+              <p>Plantão 24h e primeira resposta em até 24 horas. Seu problema empresarial não pode esperar — e nós entendemos isso.</p>
             </div>
-        </footer>
+          </div>
 
-        <LeadCaptureModal />
+          <div class="diff-item">
+            <div class="diff-icon-wrapper">
+              <svg class="diff-icon-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </div>
+            <div>
+              <h3>Atendimento Personalizado</h3>
+              <p>Você não é mais um número. Acesso direto a advogados sênior com conhecimento profundo do seu negócio.</p>
+            </div>
+          </div>
+        </div>
 
-        <!-- Floating WhatsApp Button -->
-        <a
-            href="https://api.whatsapp.com/send/?phone=554391244440&text=Olá,%20gostaria%20de%20falar%20com%20um%20especialista"
-            class="floating-whatsapp"
-            aria-label="Fale conosco no WhatsApp"
-            data-message="Olá, gostaria de falar com um especialista"
-        >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="currentColor"
-                class="whatsapp-icon"
-            >
-                <path
-                    d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732 0.737 5.291 2.022 7.491l-0.038-0.070-2.109 7.702 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h0.006c8.209-0.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507l0 0zM16.062 28.228h-0.005c-0 0-0.001 0-0.001 0-2.319 0-4.489-0.64-6.342-1.753l0.056 0.031-0.451-0.267-4.675 1.227 1.247-4.559-0.294-0.467c-1.185-1.862-1.889-4.131-1.889-6.565 0-6.822 5.531-12.353 12.353-12.353s12.353 5.531 12.353 12.353c0 6.822-5.53 12.353-12.353 12.353h-0zM22.838 18.977c-0.371-0.186-2.197-1.083-2.537-1.208-0.341-0.124-0.589-0.185-0.837 0.187-0.246 0.371-0.958 1.207-1.175 1.455-0.216 0.249-0.434 0.279-0.805 0.094-1.15-0.466-2.138-1.087-2.997-1.852l0.010 0.009c-0.799-0.74-1.484-1.587-2.037-2.521l-0.028-0.052c-0.216-0.371-0.023-0.572 0.162-0.757 0.167-0.166 0.372-0.434 0.557-0.65 0.146-0.179 0.271-0.384 0.366-0.604l0.006-0.017c0.043-0.087 0.068-0.188 0.068-0.296 0-0.131-0.037-0.253-0.101-0.357l0.002 0.003c-0.094-0.186-0.836-2.014-1.145-2.758-0.302-0.724-0.609-0.625-0.836-0.637-0.216-0.010-0.464-0.012-0.712-0.012-0.395 0.010-0.746 0.188-0.988 0.463l-0.001 0.002c-0.802 0.761-1.3 1.834-1.3 3.023 0 0.026 0 0.053 0.001 0.079l-0-0.004c0.131 1.467 0.681 2.784 1.527 3.857l-0.012-0.015c1.604 2.379 3.742 4.282 6.251 5.564l0.094 0.043c0.548 0.248 1.25 0.513 1.968 0.74l0.149 0.041c0.442 0.14 0.951 0.221 1.479 0.221 0.303 0 0.601-0.027 0.889-0.078l-0.031 0.004c1.069-0.223 1.956-0.868 2.497-1.749l0.009-0.017c0.165-0.366 0.261-0.793 0.261-1.242 0-0.185-0.016-0.366-0.047-0.542l0.003 0.019c-0.092-0.155-0.34-0.247-0.712-0.434z"
-                ></path>
-            </svg>
-        </a>
+        <div class="text-center mt-lg">
+          <a href={WPP("Quero falar com um especialista em advocacia empresarial")} class="btn btn-primary">
+            Agende uma Conversa
+          </a>
+        </div>
+      </div>
+    </section>
 
-        <FormScript />
-    </body>
+    <!-- ================================================
+         7. TESTIMONIALS + SOCIAL PROOF
+         ================================================ -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-heading">O Que Dizem Empresários que Confiaram em Nós</h2>
+
+        <div class="testimonials">
+          <div class="testimonial">
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">
+              "Excelente! Muito competente e comprometido. Mesmo sendo de outro estado, me prestou esclarecimentos do início ao fim. Fiquei muito satisfeita."
+            </p>
+            <p class="testimonial-author">— Cíntia Santos</p>
+          </div>
+
+          <div class="testimonial">
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">
+              "Ética e comprometimento. Demonstrou segurança e teve soluções inovadoras. Grande especialista na área tributária."
+            </p>
+            <p class="testimonial-author">— Lourdes Serri</p>
+          </div>
+
+          <div class="testimonial">
+            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">
+              "Por 3 gerações fomos agraciados em ter o Dr. Glauco Ramos como patrono. Além de excelente advogado, um grande mestre e amigo."
+            </p>
+            <p class="testimonial-author">— Adyr Neto</p>
+          </div>
+        </div>
+
+        <div class="text-center mt-lg">
+          <p class="social-proof-row">
+            <span>⭐ <strong style="color:#fff">4.5</strong> no Google</span>
+            <span>·</span>
+            <span>31 avaliações verificadas</span>
+          </p>
+          <a
+            href={WPP("Vi os depoimentos e gostaria de conversar")}
+            class="btn btn-primary"
+            style="margin-top:1.5rem"
+          >
+            Quero Resultados Como Esses
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         8. PROCESS
+         ================================================ -->
+    <section class="section section-alt">
+      <div class="container">
+        <h2 class="section-heading">Do Primeiro Contato à Solução</h2>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-number">1</div>
+            <div class="timeline-content">
+              <h3>Contato Inicial</h3>
+              <p>Entre em contato por WhatsApp, telefone ou formulário. Respondemos em até 24h para agendar sua consultoria gratuita.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-number">2</div>
+            <div class="timeline-content">
+              <h3>Análise Estratégica</h3>
+              <p>Reunião presencial ou online para entender profundamente seu caso e identificar a melhor estratégia jurídica.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-number">3</div>
+            <div class="timeline-content">
+              <h3>Proposta Transparente</h3>
+              <p>Plano de ação claro, com prazos, valores e expectativas realistas. Sem surpresas.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-number">4</div>
+            <div class="timeline-content">
+              <h3>Execução e Acompanhamento</h3>
+              <p>Estratégia em prática com comunicação constante. Você sempre saberá o status do seu caso.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-lg">
+          <a href={WPP("Gostaria de iniciar o processo")} class="btn btn-primary">Comece Agora</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         9. ABOUT
+         ================================================ -->
+    <section class="section about" id="sobre">
+      <div class="container">
+        <div class="about-inner">
+          <div class="about-photo">
+            <img
+              src="/img/glauco-ramos-advogado.jpg"
+              alt="Dr. Glauco Ramos — Advogado Empresarial"
+              width="280"
+              loading="lazy"
+            />
+            <div class="photo-caption">
+              <strong>Dr. Glauco Ramos</strong>
+              Ex-Procurador Jurídico · OAB/PR
+            </div>
+          </div>
+
+          <div class="about-content">
+            <h2 class="section-heading">Conheça Dr. Glauco Ramos</h2>
+            <p>
+              Advogado formado pela UEL com especializações em Direito Civil, Processual Civil e
+              <strong>Direito Tributário pelo IBET</strong>. Mais de 30 anos de carreira defendendo
+              empresários e empresas em suas demandas mais complexas.
+            </p>
+
+            <ul class="about-credentials">
+              <li><span class="cred-icon">🎓</span> Especialização em Direito Tributário — IBET</li>
+              <li><span class="cred-icon">🏛️</span> Ex-Procurador Jurídico do Município de Rolândia-PR</li>
+              <li><span class="cred-icon">🏛️</span> Ex-Procurador da CMTU de Londrina</li>
+              <li><span class="cred-icon">⚖️</span> OAB/PR — Advocacia Empresarial, Societária e Tributária</li>
+              <li><span class="cred-icon">📍</span> Escritórios em São Paulo, Curitiba e Londrina</li>
+            </ul>
+
+            <div class="about-quote">
+              <p>"Meu compromisso é transformar desafios jurídicos em oportunidades para o crescimento do seu negócio."</p>
+              <cite>— Dr. Glauco Ramos</cite>
+            </div>
+
+            <a href={WPP("Gostaria de falar com Dr. Glauco Ramos")} class="btn btn-primary">
+              Fale com Dr. Glauco
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         10. ARTICLES
+         ================================================ -->
+    <section class="section articles-section" id="artigos">
+      <div class="container">
+        <h2 class="section-heading">Conteúdo Jurídico para Empresários</h2>
+        <p class="section-subheading">Aprofunde seu conhecimento antes de tomar qualquer decisão</p>
+
+        <div class="articles-grid">
+          <article class="article-card">
+            <div class="article-img-wrapper">
+              <img
+                src="/img/artigo-planejamento-tributario.webp"
+                alt="Planejamento Tributário para Empresas"
+                class="article-img"
+                loading="lazy"
+                onerror="this.style.background='#1C2541';this.style.minHeight='180px'"
+              />
+              <span class="article-category">Direito Tributário</span>
+            </div>
+            <div class="article-body">
+              <h3>Como Reduzir Legalmente a Carga Tributária da sua Empresa</h3>
+              <p class="article-excerpt">Descubra as principais estratégias de planejamento tributário que empresários devem conhecer para economizar sem infringir a lei.</p>
+              <a href={WPP("Vi o artigo sobre planejamento tributário e quero saber mais")} class="article-link">
+                Conversar com especialista →
+              </a>
+            </div>
+          </article>
+
+          <article class="article-card">
+            <div class="article-img-wrapper">
+              <img
+                src="/img/artigo-contrato-empresarial.webp"
+                alt="Contratos Empresariais"
+                class="article-img"
+                loading="lazy"
+                onerror="this.style.background='#1C2541';this.style.minHeight='180px'"
+              />
+              <span class="article-category">Contratos</span>
+            </div>
+            <div class="article-body">
+              <h3>5 Cláusulas Essenciais que Todo Contrato Empresarial Precisa Ter</h3>
+              <p class="article-excerpt">Saiba quais cláusulas protegem sua empresa de litígios onerosos e como revisar os contratos que você já possui.</p>
+              <a href={WPP("Vi o artigo sobre contratos empresariais e quero saber mais")} class="article-link">
+                Conversar com especialista →
+              </a>
+            </div>
+          </article>
+
+          <article class="article-card">
+            <div class="article-img-wrapper">
+              <img
+                src="/img/artigo-conflito-societario.webp"
+                alt="Conflito Societário"
+                class="article-img"
+                loading="lazy"
+                onerror="this.style.background='#1C2541';this.style.minHeight='180px'"
+              />
+              <span class="article-category">Direito Societário</span>
+            </div>
+            <div class="article-body">
+              <h3>Conflito Entre Sócios: Como Resolver Sem Destruir a Empresa</h3>
+              <p class="article-excerpt">Entenda quando acionar a dissolução parcial, mediação ou arbitragem para preservar o negócio em disputas societárias.</p>
+              <a href={WPP("Vi o artigo sobre conflito societário e quero saber mais")} class="article-link">
+                Conversar com especialista →
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         11. FAQ
+         ================================================ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <h2 class="section-heading">Perguntas Frequentes</h2>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Vocês atuam como escritório completo de advocacia empresarial?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>Sim. Nossa <strong>advocacia empresarial</strong> funciona de forma integrada — da <strong>consultoria tributária</strong> aprofundada até atuações preventivas em grandes contratos corporativos, agindo no papel diário de <strong>advogado para empresa</strong>.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Como o advogado empresarial ajuda nas rotinas trabalhistas da empresa?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>A defesa em ações da Justiça do Trabalho exige um olhar patronal especializado. Atuamos diretamente como <strong>advogado trabalhista empresarial</strong>, defendendo teses pró-negócios e reduzindo processos e multas da DRT para o seu CNPJ.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Minha empresa fica fora de Londrina ou SP. Vocês atendem outras cidades?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>Com certeza. Através da nossa infraestrutura digitalizada, <strong>atendemos todo o Brasil</strong> de forma remota com extrema agilidade nas consultas, contratos e defesas que a sua empresa precisa.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Qual o custo da consultoria inicial?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>A <strong>primeira consultoria é gratuita e sem compromisso</strong>. Nosso objetivo é entender profundamente seu caso antes de qualquer proposta. Entre em contato pelo WhatsApp para agendar.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-lg">
+          <a href={WPP("Tenho algumas dúvidas sobre advocacia empresarial")} class="btn btn-primary">
+            Tire Suas Dúvidas Agora
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         12. CONTACT FORM
+         ================================================ -->
+    <section id="contato" class="section section-alt">
+      <div class="container">
+        <h2 class="section-heading">Proteja Seu Negócio Agora</h2>
+        <p class="section-subheading">Agende sua consultoria gratuita. Resposta em até 24 horas.</p>
+
+        <div class="contact-form-wrapper">
+          <form id="contact-form" class="contact-form">
+            <div class="form-group">
+              <label for="nome">Nome Completo *</label>
+              <input type="text" id="nome" name="nome" required autocomplete="name" autocapitalize="words" placeholder="Seu nome" />
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail *</label>
+              <input type="email" id="email" name="email" required autocomplete="email" placeholder="seu@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="telefone">WhatsApp *</label>
+              <input type="tel" id="telefone" name="telefone" required autocomplete="tel" inputmode="numeric" maxlength="16" placeholder="(43) 9 9999-9999" />
+            </div>
+            <div class="form-group">
+              <label for="cidade">Cidade / Estado</label>
+              <input type="text" id="cidade" name="cidade" autocomplete="address-level2" autocapitalize="words" placeholder="Ex: Curitiba / PR" />
+            </div>
+            <div class="form-group">
+              <label for="mensagem">Descreva brevemente seu desafio</label>
+              <textarea id="mensagem" name="mensagem" placeholder="Ex: Tenho um conflito societário com um sócio..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-large" style="width:100%;">
+              Quero minha Consultoria Gratuita
+            </button>
+
+            <div class="form-footer">
+              <p class="form-footer-item">🔒 Suas informações estão seguras e protegidas</p>
+              <p class="form-footer-item">✓ Resposta em até 24 horas</p>
+              <p class="form-footer-item">✓ Sem compromisso inicial</p>
+            </div>
+          </form>
+
+          <div class="contact-info">
+            <h3>Ou fale diretamente:</h3>
+
+            <!-- Social proof junto ao CTA -->
+            <p class="proof-row">⭐⭐⭐⭐⭐ &nbsp;<strong style="color:#fff">4.5</strong>&nbsp; · 31 avaliações verificadas no Google</p>
+
+            <ul class="contact-details">
+              <li>
+                <span class="icon">📱</span>
+                <span>WhatsApp: <a href="https://wa.me/5543991244440">(43) 9 9124-4440</a></span>
+              </li>
+              <li>
+                <span class="icon">📧</span>
+                <span>E-mail: <a href="mailto:advocacia@glaucoramos.com">advocacia@glaucoramos.com</a></span>
+              </li>
+              <li>
+                <span class="icon">📍</span>
+                <span>São Paulo · Curitiba · Londrina</span>
+              </li>
+            </ul>
+
+            <a href={WPP("Quero falar sobre advocacia empresarial")} class="btn btn-whatsapp btn-large" style="width:100%; margin-bottom:1rem;">
+              <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
+              Chamar no WhatsApp
+            </a>
+
+            <p style="font-size:0.8125rem; color: var(--color-text-muted);">
+              Atendimento disponível de segunda a sábado, 8h às 20h. Urgências 24h.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         13. FOOTER
+         ================================================ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/img/logo-glauco-ramos.webp" alt="Glauco Ramos" width="48" height="48" style="margin-bottom:0.75rem; filter:brightness(1.1);" loading="lazy" />
+            <h4>Glauco Ramos Advocacia</h4>
+            <p>Advocacia empresarial com excelência, estratégia e compromisso com o seu resultado.</p>
+          </div>
+
+          <div>
+            <h4>Áreas de Atuação</h4>
+            <ul>
+              <li><a href="#solucoes">Consultoria Empresarial</a></li>
+              <li><a href="#solucoes">Direito Societário</a></li>
+              <li><a href="#solucoes">Direito Tributário</a></li>
+              <li><a href="#solucoes">Contratos Empresariais</a></li>
+              <li><a href="#solucoes">Fusões e Aquisições</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Links Rápidos</h4>
+            <ul>
+              <li><a href="#sobre">Sobre Dr. Glauco</a></li>
+              <li><a href="#artigos">Artigos Jurídicos</a></li>
+              <li><a href="#faq">Perguntas Frequentes</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Contato</h4>
+            <ul>
+              <li>📞 (43) 9 9124-4440</li>
+              <li>✉️ advocacia@glaucoramos.com</li>
+              <li>🌐 glaucoramos.com.br</li>
+              <li>📍 SP · Curitiba · Londrina</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Glauco Ramos Advocacia. Todos os direitos reservados. | OAB/PR | LGPD Compliance</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ================================================
+         STICKY MOBILE CTA BAR
+         ================================================ -->
+    <div class="sticky-cta-bar" id="sticky-cta" aria-label="Barra de contato rápido" role="complementary">
+      <a href={WPP("Olá, gostaria de falar com um especialista")} class="btn btn-whatsapp">
+        <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
+        WhatsApp
+      </a>
+      <a href="#contato" class="btn btn-primary">Consultoria Gratuita</a>
+    </div>
+
+    <!-- ================================================
+         FLOATING WHATSAPP (Desktop only)
+         ================================================ -->
+    <a
+      href={WPP("Olá, gostaria de falar com um especialista")}
+      class="floating-whatsapp"
+      aria-label="Fale conosco no WhatsApp"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 32 32" fill="currentColor">
+        <path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0zM16.062 28.228h-.005c-2.319 0-4.489-.64-6.342-1.753l-.451-.267-4.675 1.227 1.247-4.559-.294-.467c-1.185-1.862-1.889-4.131-1.889-6.565 0-6.822 5.531-12.353 12.353-12.353s12.353 5.531 12.353 12.353c0 6.822-5.53 12.353-12.353 12.353h0z"/>
+      </svg>
+    </a>
+
+    <LeadCaptureModal />
+
+    <!-- ================================================
+         SCRIPTS
+         ================================================ -->
+    <script>
+      // ── Video Lazy Load ───────────────────────────────
+      const videoPlayer = document.getElementById('video-player') as HTMLElement | null;
+      if (videoPlayer) {
+        const loadVideo = () => {
+          const videoId = videoPlayer.dataset.videoId;
+          const iframe = document.createElement('iframe');
+          iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          iframe.allowFullscreen = true;
+          // Hide thumbnail and play btn
+          const thumb = videoPlayer.querySelector('.video-thumbnail') as HTMLElement | null;
+          const playBtn = videoPlayer.querySelector('.video-play-btn') as HTMLElement | null;
+          if (thumb) thumb.style.display = 'none';
+          if (playBtn) playBtn.style.display = 'none';
+          videoPlayer.appendChild(iframe);
+        };
+        videoPlayer.addEventListener('click', loadVideo);
+        videoPlayer.addEventListener('keydown', (e: KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') loadVideo();
+        });
+      }
+
+      // ── FAQ Accordion ─────────────────────────────────
+      document.querySelectorAll<HTMLButtonElement>('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq-item') as HTMLElement | null;
+          if (!item) return;
+          const isOpen = item.classList.contains('open');
+          // Close all
+          document.querySelectorAll('.faq-item').forEach(i => {
+            i.classList.remove('open');
+            const q = i.querySelector('.faq-question') as HTMLButtonElement | null;
+            if (q) q.setAttribute('aria-expanded', 'false');
+          });
+          // Toggle current
+          if (!isOpen) {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    </script>
+
+    <FormScript />
+  </body>
 </html>
