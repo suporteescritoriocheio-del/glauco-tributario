@@ -30,134 +30,149 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
     </noscript>
 
     <!-- ================================================
-         1. HERO
+         1. HERO — Layout Esquerda+Direita
          ================================================ -->
     <section class="hero">
       <div class="container">
-        <img
-          src="/img/logo-glauco-ramos.webp"
-          alt="Glauco Ramos Advocacia"
-          class="hero-logo"
-          width="72" height="72"
-          loading="eager"
-        />
+        <div class="hero-inner">
 
-        <div class="urgency-badge">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          +30 anos de experiência · Ex-Procurador Jurídico
-        </div>
+          <div class="hero-left">
+            <img
+              src="/img/logo-glauco-ramos.webp"
+              alt="Glauco Ramos Advocacia"
+              class="hero-logo"
+              width="60" height="60"
+              loading="eager"
+            />
 
-        <h1>
-          Sua Empresa Está Exposta?
-          <span>Proteja Seu Patrimônio com Advocacia Estratégica.</span>
-        </h1>
+            <div class="hero-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              +30 anos de experiência · Ex-Procurador Jurídico
+            </div>
 
-        <p class="hero-subtitle">
-          Problemas societários, fiscais ou contratuais podem custar milhões.
-          +30 anos defendendo empresários em todo o Brasil com estratégia e resultado.
-        </p>
+            <h1>
+              Sua Empresa Está Exposta?
+              <span>Proteja Seu Patrimônio com Advocacia Estratégica.</span>
+            </h1>
 
-        <div class="hero-ctas">
-          <a
-            href={WPP("Olá, gostaria de agendar uma consultoria gratuita")}
-            class="btn btn-primary btn-large"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            Agende sua Consultoria Gratuita
-          </a>
-          <a href="#contato" class="btn btn-secondary">Ver Formulário de Contato</a>
-        </div>
+            <p class="hero-subtitle">
+              Problemas societários, fiscais ou contratuais podem custar milhões.
+              Mais de 30 anos defendendo empresários em todo o Brasil com estratégia e resultado.
+            </p>
 
-        <p class="hero-urgency">
-          ✓ Consultoria gratuita &nbsp;·&nbsp; ✓ Atendimento remoto em todo o Brasil &nbsp;·&nbsp; ✓ Resposta em até 24h
-        </p>
+            <div class="hero-ctas">
+              <a
+                href={WPP("Olá, gostaria de agendar uma consultoria estratégica")}
+                class="btn btn-primary btn-large"
+                id="hero-cta-whatsapp"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                Agendar Consulta Estratégica
+              </a>
+              <a href="#contato" class="btn btn-secondary" id="hero-cta-form">Ver Formulário de Contato</a>
+            </div>
 
-        <div class="hero-trust">
-          <span class="hero-trust-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            4.5 · 31 avaliações Google
-          </span>
-          <span>·</span>
-          <span class="hero-trust-item">⚖️ OAB/PR</span>
-          <span>·</span>
-          <span class="hero-trust-item">🏛️ Ex-Procurador Jurídico Municipal</span>
-          <span>·</span>
-          <span class="hero-trust-item">📍 SP · Curitiba · Londrina</span>
+            <p class="hero-info">
+              Consultoria gratuita &nbsp;·&nbsp; Atendimento remoto em todo o Brasil &nbsp;·&nbsp; Resposta em até 24h
+            </p>
+          </div>
+
+          <div class="hero-photo-wrapper">
+            <img
+              src="/img/glauco-ramos-advogado.jpg"
+              alt="Dr. Glauco Ramos — Advogado Empresarial"
+              class="hero-photo"
+              width="420"
+              loading="eager"
+            />
+          </div>
+
         </div>
       </div>
     </section>
 
     <!-- ================================================
-         2. CREDIBILITY BAR
+         2. FAIXA DE CONFIANÇA
          ================================================ -->
-    <section class="credibility">
+    <div class="trust-bar" role="complementary" aria-label="Indicadores de credibilidade">
       <div class="container">
-        <div class="credibility-grid">
-          <div class="credibility-item">
-            <span class="credibility-icon">⭐</span>
-            <div class="credibility-text">
-              <strong>4.5 estrelas</strong>
-              31 avaliações no Google
-            </div>
+        <div class="trust-bar-inner">
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span><strong>4.5/5</strong> no Google · 31 avaliações verificadas</span>
           </div>
-          <div class="credibility-item">
-            <span class="credibility-icon">📍</span>
-            <div class="credibility-text">
-              <strong>3 Escritórios</strong>
-              SP, Curitiba e Londrina
-            </div>
+          <span class="trust-sep">|</span>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>OAB/PR — Inscrito e em dia</span>
           </div>
-          <div class="credibility-item">
-            <span class="credibility-icon">⚖️</span>
-            <div class="credibility-text">
-              <strong>+30 anos</strong>
-              De experiência jurídica
-            </div>
+          <span class="trust-sep">|</span>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>SP · Curitiba · Londrina</span>
           </div>
-          <div class="credibility-item">
-            <span class="credibility-icon">🏆</span>
-            <div class="credibility-text">
-              <strong>Ex-Procurador</strong>
-              Jurídico Municipal
-            </div>
+          <span class="trust-sep">|</span>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Ex-Procurador Jurídico Municipal</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================
+         3. MANIFESTO / IDENTIFICAÇÃO DA DOR
+         ================================================ -->
+    <section class="manifesto section">
+      <div class="container">
+        <div class="manifesto-inner">
+          <h2>Um Escritório que Age como Escudo do seu Negócio</h2>
+          <p>
+            Enquanto o empresário foca no crescimento, riscos jurídicos silenciosos acumulam-se:
+            contratos mal redigidos, obrigações tributárias negligenciadas, conflitos societários
+            latentes. Cada um desses pontos cegos pode se tornar, do dia para a noite,
+            uma ameaça real ao patrimônio que você levou anos para construir.
+          </p>
+          <p>
+            O escritório Glauco Ramos Advocacia atua de forma preventiva e estratégica —
+            mapeamos as vulnerabilidades antes que se tornem processos, e quando o litígio
+            é inevitável, atuamos com a profundidade técnica de +30 anos de prática jurídica
+            em direito empresarial, tributário e societário.
+          </p>
         </div>
       </div>
     </section>
 
     <!-- ================================================
-         3. VIDEO SECTION (Lazy Load)
+         4. VIDEO (Lazy Load)
          ================================================ -->
-    <section class="video-section section">
+    <section class="video-section">
       <div class="container">
         <div class="video-layout">
           <div class="video-content">
-            <span class="video-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span class="video-label">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               Assista ao vídeo
             </span>
-            <h2 class="section-heading" style="text-align:left; margin-bottom:1rem;">
-              Conheça Nossa Abordagem Jurídica
-            </h2>
+            <h2>Conheça Nossa Abordagem Jurídica</h2>
             <p>
-              Antes de acionar um advogado, entenda como trabalhamos. Nossa metodologia combina
-              <strong>estratégia preventiva</strong> com atuação ágil em contencioso — assim sua
-              empresa nunca é pega de surpresa.
+              Antes de contratar, entenda como trabalhamos. Nossa metodologia combina
+              <strong>estratégia preventiva</strong> com atuação ágil em contencioso —
+              assim sua empresa nunca é pega de surpresa.
             </p>
             <p>
-              Dr. Glauco Ramos explica em detalhes como proteger o patrimônio da sua empresa,
+              Dr. Glauco Ramos explica como proteger o patrimônio da sua empresa,
               evitar autuações fiscais e estruturar contratos que realmente funcionam.
             </p>
-            <a href={WPP("Vi o vídeo e gostaria de conversar")} class="btn btn-primary">
+            <a href={WPP("Vi o vídeo e gostaria de conversar")} class="btn btn-primary" id="video-cta">
               Falar com o Dr. Glauco
             </a>
           </div>
 
-          <div class="video-player-wrapper" id="video-player" data-video-id="dQw4w9WgXcQ" role="button" tabindex="0" aria-label="Assistir vídeo">
-            <!-- Thumbnail (substitua pelo ID do vídeo real do YouTube) -->
+          <div class="video-player-wrapper" id="video-player" data-video-id="dQw4w9WgXcQ" role="button" tabindex="0" aria-label="Assistir apresentação do Dr. Glauco Ramos">
             <img
               src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
-              alt="Vídeo de apresentação — Dr. Glauco Ramos"
+              alt="Apresentação — Dr. Glauco Ramos Advocacia"
               class="video-thumbnail"
               loading="lazy"
             />
@@ -173,244 +188,70 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
     </section>
 
     <!-- ================================================
-         4. PROBLEMS
+         5. ÁREAS DE ATUAÇÃO
          ================================================ -->
-    <section class="section problems-section section-alt">
+    <section class="services-section" id="solucoes">
       <div class="container">
-        <h2 class="section-heading">Seu Negócio Enfrenta Algum Desses Desafios?</h2>
-        <ul class="checklist">
-          <li>Conflitos societários entre sócios que ameaçam a continuidade da empresa</li>
-          <li>Problemas tributários com multas e autuações fiscais indevidas</li>
-          <li>Contratos mal elaborados que geram prejuízos e insegurança jurídica</li>
-          <li>Processos trabalhistas que comprometem o caixa da empresa</li>
-          <li>Dúvidas sobre fusões e aquisições sem assessoria especializada</li>
-          <li>Falta de planejamento sucessório que coloca o patrimônio em risco</li>
-          <li>Disputas comerciais com fornecedores, clientes ou parceiros</li>
-        </ul>
-        <div class="text-center">
-          <a href={WPP("Preciso de um especialista em direito empresarial")} class="btn btn-primary">
-            Fale com um Especialista Agora
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================
-         5. SOLUTIONS
-         ================================================ -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section-heading">Advocacia Empresarial Completa</h2>
-        <p class="section-subheading">Soluções integradas para proteger e fazer seu negócio crescer</p>
+        <h2 class="section-heading">Áreas de Atuação</h2>
+        <p class="section-subheading">Soluções jurídicas integradas para proteger e fazer seu negócio crescer</p>
 
         <div class="services-grid">
           <div class="service-card">
-            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-3-3v6m-7 4V5a2 2 0 012-2h10a2 2 0 012 2v14l-7-3-7 3z"/></svg>
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M9 12h6m-3-3v6m-7 4V5a2 2 0 012-2h10a2 2 0 012 2v14l-7-3-7 3z"/></svg>
             <h3>Consultoria Empresarial</h3>
             <p>Análise completa para identificar riscos e oportunidades jurídicas antes que se tornem problemas.</p>
           </div>
 
           <div class="service-card">
-            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
             <h3>Direito Societário</h3>
             <p>Acordo entre sócios, entrada e saída, governança corporativa e planejamento sucessório.</p>
           </div>
 
           <div class="service-card">
-            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             <h3>Contratos Empresariais</h3>
             <p>Elaboração, análise e negociação de contratos que protegem seus interesses e evitam litígios.</p>
           </div>
 
           <div class="service-card">
-            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
             <h3>Planejamento Tributário</h3>
             <p>Redução legal da carga tributária e defesa em autuações fiscais com estratégias personalizadas.</p>
           </div>
 
           <div class="service-card">
-            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
             <h3>Fusões e Aquisições</h3>
             <p>Assessoria completa em M&A, due diligence e reestruturações societárias.</p>
           </div>
 
           <div class="service-card">
-            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21.21 15.89A10 10 0 118 2.83"/><path d="M22 12A10 10 0 0012 2v10z"/></svg>
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M21.21 15.89A10 10 0 118 2.83"/><path d="M22 12A10 10 0 0012 2v10z"/></svg>
             <h3>Recuperação Judicial</h3>
             <p>Estratégias para superar crises financeiras e manter sua empresa operando.</p>
           </div>
         </div>
 
-        <div class="text-center mt-lg">
-          <a href={WPP("Preciso de ajuda com direito empresarial")} class="btn btn-primary btn-large">
-            Solicite sua Consultoria Gratuita
+        <div class="text-center">
+          <a href={WPP("Preciso de ajuda com direito empresarial")} class="btn btn-primary btn-large" id="services-cta">
+            Solicitar Consultoria Gratuita
           </a>
         </div>
       </div>
     </section>
 
     <!-- ================================================
-         6. WHY CHOOSE US
+         6. FUNDADOR / EQUIPE
          ================================================ -->
-    <section class="section section-alt">
-      <div class="container">
-        <h2 class="section-heading">A Escolha de Empresários que Não Aceitam Improviso</h2>
-
-        <div class="diff-grid">
-          <div class="diff-item">
-            <div class="diff-icon-wrapper">
-              <svg class="diff-icon-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            </div>
-            <div>
-              <h3>Especialização Comprovada</h3>
-              <p>Especialização em Direito Tributário pelo IBET e experiência como Procurador Jurídico Municipal. Domínio profundo do setor público e privado.</p>
-            </div>
-          </div>
-
-          <div class="diff-item">
-            <div class="diff-icon-wrapper">
-              <svg class="diff-icon-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-            </div>
-            <div>
-              <h3>Visão Nacional</h3>
-              <p>Escritórios em SP, Curitiba e Londrina, com atendimento digital para todo o Brasil. Onde você estiver, estamos prontos.</p>
-            </div>
-          </div>
-
-          <div class="diff-item">
-            <div class="diff-icon-wrapper">
-              <svg class="diff-icon-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            </div>
-            <div>
-              <h3>Resposta Rápida 24h</h3>
-              <p>Plantão 24h e primeira resposta em até 24 horas. Seu problema empresarial não pode esperar — e nós entendemos isso.</p>
-            </div>
-          </div>
-
-          <div class="diff-item">
-            <div class="diff-icon-wrapper">
-              <svg class="diff-icon-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </div>
-            <div>
-              <h3>Atendimento Personalizado</h3>
-              <p>Você não é mais um número. Acesso direto a advogados sênior com conhecimento profundo do seu negócio.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="text-center mt-lg">
-          <a href={WPP("Quero falar com um especialista em advocacia empresarial")} class="btn btn-primary">
-            Agende uma Conversa
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================
-         7. TESTIMONIALS + SOCIAL PROOF
-         ================================================ -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section-heading">O Que Dizem Empresários que Confiaram em Nós</h2>
-
-        <div class="testimonials">
-          <div class="testimonial">
-            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-            <p class="testimonial-text">
-              "Excelente! Muito competente e comprometido. Mesmo sendo de outro estado, me prestou esclarecimentos do início ao fim. Fiquei muito satisfeita."
-            </p>
-            <p class="testimonial-author">— Cíntia Santos</p>
-          </div>
-
-          <div class="testimonial">
-            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-            <p class="testimonial-text">
-              "Ética e comprometimento. Demonstrou segurança e teve soluções inovadoras. Grande especialista na área tributária."
-            </p>
-            <p class="testimonial-author">— Lourdes Serri</p>
-          </div>
-
-          <div class="testimonial">
-            <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-            <p class="testimonial-text">
-              "Por 3 gerações fomos agraciados em ter o Dr. Glauco Ramos como patrono. Além de excelente advogado, um grande mestre e amigo."
-            </p>
-            <p class="testimonial-author">— Adyr Neto</p>
-          </div>
-        </div>
-
-        <div class="text-center mt-lg">
-          <p class="social-proof-row">
-            <span>⭐ <strong style="color:#fff">4.5</strong> no Google</span>
-            <span>·</span>
-            <span>31 avaliações verificadas</span>
-          </p>
-          <a
-            href={WPP("Vi os depoimentos e gostaria de conversar")}
-            class="btn btn-primary"
-            style="margin-top:1.5rem"
-          >
-            Quero Resultados Como Esses
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================
-         8. PROCESS
-         ================================================ -->
-    <section class="section section-alt">
-      <div class="container">
-        <h2 class="section-heading">Do Primeiro Contato à Solução</h2>
-
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-number">1</div>
-            <div class="timeline-content">
-              <h3>Contato Inicial</h3>
-              <p>Entre em contato por WhatsApp, telefone ou formulário. Respondemos em até 24h para agendar sua consultoria gratuita.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-number">2</div>
-            <div class="timeline-content">
-              <h3>Análise Estratégica</h3>
-              <p>Reunião presencial ou online para entender profundamente seu caso e identificar a melhor estratégia jurídica.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-number">3</div>
-            <div class="timeline-content">
-              <h3>Proposta Transparente</h3>
-              <p>Plano de ação claro, com prazos, valores e expectativas realistas. Sem surpresas.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-number">4</div>
-            <div class="timeline-content">
-              <h3>Execução e Acompanhamento</h3>
-              <p>Estratégia em prática com comunicação constante. Você sempre saberá o status do seu caso.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="text-center mt-lg">
-          <a href={WPP("Gostaria de iniciar o processo")} class="btn btn-primary">Comece Agora</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================
-         9. ABOUT
-         ================================================ -->
-    <section class="section about" id="sobre">
+    <section class="about section" id="sobre">
       <div class="container">
         <div class="about-inner">
           <div class="about-photo">
             <img
               src="/img/glauco-ramos-advogado.jpg"
               alt="Dr. Glauco Ramos — Advogado Empresarial"
-              width="280"
+              width="300"
               loading="lazy"
             />
             <div class="photo-caption">
@@ -420,19 +261,21 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
           </div>
 
           <div class="about-content">
-            <h2 class="section-heading">Conheça Dr. Glauco Ramos</h2>
+            <h2 class="section-heading" style="text-align:left">Conheça Dr. Glauco Ramos</h2>
             <p>
               Advogado formado pela UEL com especializações em Direito Civil, Processual Civil e
               <strong>Direito Tributário pelo IBET</strong>. Mais de 30 anos de carreira defendendo
-              empresários e empresas em suas demandas mais complexas.
+              empresários e empresas em suas demandas mais complexas. Longa experiência como
+              Procurador Jurídico no setor público, o que confere ao escritório uma visão ímpar
+              sobre obrigações tributárias e processos administrativos.
             </p>
 
             <ul class="about-credentials">
-              <li><span class="cred-icon">🎓</span> Especialização em Direito Tributário — IBET</li>
-              <li><span class="cred-icon">🏛️</span> Ex-Procurador Jurídico do Município de Rolândia-PR</li>
-              <li><span class="cred-icon">🏛️</span> Ex-Procurador da CMTU de Londrina</li>
-              <li><span class="cred-icon">⚖️</span> OAB/PR — Advocacia Empresarial, Societária e Tributária</li>
-              <li><span class="cred-icon">📍</span> Escritórios em São Paulo, Curitiba e Londrina</li>
+              <li><span class="cred-dot"></span> Especialização em Direito Tributário — IBET</li>
+              <li><span class="cred-dot"></span> Ex-Procurador Jurídico do Município de Rolândia-PR</li>
+              <li><span class="cred-dot"></span> Ex-Procurador da CMTU de Londrina</li>
+              <li><span class="cred-dot"></span> OAB/PR — Advocacia Empresarial, Societária e Tributária</li>
+              <li><span class="cred-dot"></span> Escritórios em São Paulo, Curitiba e Londrina</li>
             </ul>
 
             <div class="about-quote">
@@ -440,8 +283,8 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
               <cite>— Dr. Glauco Ramos</cite>
             </div>
 
-            <a href={WPP("Gostaria de falar com Dr. Glauco Ramos")} class="btn btn-primary">
-              Fale com Dr. Glauco
+            <a href={WPP("Gostaria de falar com Dr. Glauco Ramos")} class="btn btn-primary" id="about-cta">
+              Falar com Dr. Glauco
             </a>
           </div>
         </div>
@@ -449,11 +292,78 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
     </section>
 
     <!-- ================================================
-         10. ARTICLES
+         7. DEPOIMENTOS
          ================================================ -->
-    <section class="section articles-section" id="artigos">
+    <section class="testimonials-section" id="depoimentos">
       <div class="container">
-        <h2 class="section-heading">Conteúdo Jurídico para Empresários</h2>
+        <h2 class="section-heading">O Que Dizem Nossos Clientes</h2>
+
+        <div class="testimonials">
+          <div class="testimonial">
+            <span class="testimonial-quote-mark">"</span>
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="testimonial-text">
+              "Excelente! Muito competente e comprometido. Mesmo sendo de outro estado, me prestou esclarecimentos do início ao fim. Fiquei muito satisfeita. Recomendo."
+            </p>
+            <p class="testimonial-author">— Cíntia Santos · agosto de 2024</p>
+          </div>
+
+          <div class="testimonial">
+            <span class="testimonial-quote-mark">"</span>
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="testimonial-text">
+              "Ética e comprometimento. Demonstrou segurança e teve soluções inovadoras. Grande especialista na área tributária."
+            </p>
+            <p class="testimonial-author">— Lourdes Serri · maio de 2024</p>
+          </div>
+
+          <div class="testimonial">
+            <span class="testimonial-quote-mark">"</span>
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="testimonial-text">
+              "Por 3 gerações fomos agraciados em ter o Dr. Glauco Ramos como patrono. Além de excelente advogado, um grande mestre e amigo."
+            </p>
+            <p class="testimonial-author">— Adyr Neto · maio de 2024</p>
+          </div>
+        </div>
+
+        <div class="testimony-aggregate">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span><strong>4.5</strong> de 5 · 31 avaliações verificadas no Google</span>
+        </div>
+
+        <div class="text-center mt-lg">
+          <a href={WPP("Vi os depoimentos e gostaria de conversar")} class="btn btn-primary" id="testimonials-cta">
+            Quero Resultados Como Esses
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         8. ARTIGOS E INSIGHTS
+         ================================================ -->
+    <section class="articles-section" id="artigos">
+      <div class="container">
+        <h2 class="section-heading">Artigos e Insights Jurídicos</h2>
         <p class="section-subheading">Aprofunde seu conhecimento antes de tomar qualquer decisão</p>
 
         <div class="articles-grid">
@@ -464,15 +374,15 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
                 alt="Planejamento Tributário para Empresas"
                 class="article-img"
                 loading="lazy"
-                onerror="this.style.background='#1C2541';this.style.minHeight='180px'"
+                onerror="this.parentElement.style.minHeight='180px';this.style.display='none'"
               />
               <span class="article-category">Direito Tributário</span>
             </div>
             <div class="article-body">
               <h3>Como Reduzir Legalmente a Carga Tributária da sua Empresa</h3>
               <p class="article-excerpt">Descubra as principais estratégias de planejamento tributário que empresários devem conhecer para economizar sem infringir a lei.</p>
-              <a href={WPP("Vi o artigo sobre planejamento tributário e quero saber mais")} class="article-link">
-                Conversar com especialista →
+              <a href="https://glaucoramos.com.br/guia-completo-de-planejamento-patrimonial-sucessorio-e-tributario-para-empresarios/" class="article-link" target="_blank" rel="noopener">
+                Ler artigo completo →
               </a>
             </div>
           </article>
@@ -481,18 +391,18 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
             <div class="article-img-wrapper">
               <img
                 src="/img/artigo-contrato-empresarial.webp"
-                alt="Contratos Empresariais"
+                alt="Holding Familiar para Empresários"
                 class="article-img"
                 loading="lazy"
-                onerror="this.style.background='#1C2541';this.style.minHeight='180px'"
+                onerror="this.parentElement.style.minHeight='180px';this.style.display='none'"
               />
-              <span class="article-category">Contratos</span>
+              <span class="article-category">Planejamento Patrimonial</span>
             </div>
             <div class="article-body">
-              <h3>5 Cláusulas Essenciais que Todo Contrato Empresarial Precisa Ter</h3>
-              <p class="article-excerpt">Saiba quais cláusulas protegem sua empresa de litígios onerosos e como revisar os contratos que você já possui.</p>
-              <a href={WPP("Vi o artigo sobre contratos empresariais e quero saber mais")} class="article-link">
-                Conversar com especialista →
+              <h3>Holding Familiar: Guia Definitivo para Empresários</h3>
+              <p class="article-excerpt">Vantagens, custos e como estruturar uma holding para proteger seu patrimônio e otimizar a sucessão empresarial.</p>
+              <a href="https://glaucoramos.com.br/holding-familiar-o-guia-definitivo-para-empresarios-vantagens-custos-e-como-estruturar/" class="article-link" target="_blank" rel="noopener">
+                Ler artigo completo →
               </a>
             </div>
           </article>
@@ -501,18 +411,18 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
             <div class="article-img-wrapper">
               <img
                 src="/img/artigo-conflito-societario.webp"
-                alt="Conflito Societário"
+                alt="Recuperação Judicial"
                 class="article-img"
                 loading="lazy"
-                onerror="this.style.background='#1C2541';this.style.minHeight='180px'"
+                onerror="this.parentElement.style.minHeight='180px';this.style.display='none'"
               />
-              <span class="article-category">Direito Societário</span>
+              <span class="article-category">Direito Empresarial</span>
             </div>
             <div class="article-body">
-              <h3>Conflito Entre Sócios: Como Resolver Sem Destruir a Empresa</h3>
-              <p class="article-excerpt">Entenda quando acionar a dissolução parcial, mediação ou arbitragem para preservar o negócio em disputas societárias.</p>
-              <a href={WPP("Vi o artigo sobre conflito societário e quero saber mais")} class="article-link">
-                Conversar com especialista →
+              <h3>Recuperação Judicial: O Guia Definitivo para Salvar sua Empresa</h3>
+              <p class="article-excerpt">Entenda quando acionar a recuperação judicial, como funciona o processo e as estratégias para preservar seu negócio em crise.</p>
+              <a href="https://glaucoramos.com.br/recuperacao-judicial-o-guia-definitivo-para-salvar-sua-empresa-da-crise/" class="article-link" target="_blank" rel="noopener">
+                Ler artigo completo →
               </a>
             </div>
           </article>
@@ -521,56 +431,66 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
     </section>
 
     <!-- ================================================
-         11. FAQ
+         9. FAQ
          ================================================ -->
-    <section class="section" id="faq">
+    <section class="faq-section" id="faq">
       <div class="container">
-        <h2 class="section-heading">Perguntas Frequentes</h2>
+        <h2 class="section-heading">Dúvidas Frequentes</h2>
 
         <div class="faq-list">
           <div class="faq-item">
-            <button class="faq-question" aria-expanded="false">
+            <button class="faq-question" aria-expanded="false" id="faq-1">
               Vocês atuam como escritório completo de advocacia empresarial?
-              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-answer">
+            <div class="faq-answer" role="region" aria-labelledby="faq-1">
               <p>Sim. Nossa <strong>advocacia empresarial</strong> funciona de forma integrada — da <strong>consultoria tributária</strong> aprofundada até atuações preventivas em grandes contratos corporativos, agindo no papel diário de <strong>advogado para empresa</strong>.</p>
             </div>
           </div>
 
           <div class="faq-item">
-            <button class="faq-question" aria-expanded="false">
+            <button class="faq-question" aria-expanded="false" id="faq-2">
               Como o advogado empresarial ajuda nas rotinas trabalhistas da empresa?
-              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-answer">
+            <div class="faq-answer" role="region" aria-labelledby="faq-2">
               <p>A defesa em ações da Justiça do Trabalho exige um olhar patronal especializado. Atuamos diretamente como <strong>advogado trabalhista empresarial</strong>, defendendo teses pró-negócios e reduzindo processos e multas da DRT para o seu CNPJ.</p>
             </div>
           </div>
 
           <div class="faq-item">
-            <button class="faq-question" aria-expanded="false">
+            <button class="faq-question" aria-expanded="false" id="faq-3">
               Minha empresa fica fora de Londrina ou SP. Vocês atendem outras cidades?
-              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-answer">
+            <div class="faq-answer" role="region" aria-labelledby="faq-3">
               <p>Com certeza. Através da nossa infraestrutura digitalizada, <strong>atendemos todo o Brasil</strong> de forma remota com extrema agilidade nas consultas, contratos e defesas que a sua empresa precisa.</p>
             </div>
           </div>
 
           <div class="faq-item">
-            <button class="faq-question" aria-expanded="false">
+            <button class="faq-question" aria-expanded="false" id="faq-4">
               Qual o custo da consultoria inicial?
-              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div class="faq-answer">
+            <div class="faq-answer" role="region" aria-labelledby="faq-4">
               <p>A <strong>primeira consultoria é gratuita e sem compromisso</strong>. Nosso objetivo é entender profundamente seu caso antes de qualquer proposta. Entre em contato pelo WhatsApp para agendar.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-5">
+              Em quais áreas o escritório possui maior especialização?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-5">
+              <p>Atuamos em casos de alta complexidade: <strong>direito empresarial, societário, tributário</strong>, contratos, fusões, aquisições, recuperação judicial, direito agrário, defesa em processos administrativos disciplinares e outros.</p>
             </div>
           </div>
         </div>
 
         <div class="text-center mt-lg">
-          <a href={WPP("Tenho algumas dúvidas sobre advocacia empresarial")} class="btn btn-primary">
+          <a href={WPP("Tenho algumas dúvidas sobre advocacia empresarial")} class="btn btn-primary" id="faq-cta">
             Tire Suas Dúvidas Agora
           </a>
         </div>
@@ -578,9 +498,9 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
     </section>
 
     <!-- ================================================
-         12. CONTACT FORM
+         10. FORMULÁRIO DE CONTATO
          ================================================ -->
-    <section id="contato" class="section section-alt">
+    <section id="contato" class="contact-section">
       <div class="container">
         <h2 class="section-heading">Proteja Seu Negócio Agora</h2>
         <p class="section-subheading">Agende sua consultoria gratuita. Resposta em até 24 horas.</p>
@@ -608,65 +528,79 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
               <textarea id="mensagem" name="mensagem" placeholder="Ex: Tenho um conflito societário com um sócio..."></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-large" style="width:100%;">
+            <button type="submit" class="btn btn-primary btn-large" style="width:100%;" id="form-submit">
               Quero minha Consultoria Gratuita
             </button>
 
             <div class="form-footer">
-              <p class="form-footer-item">🔒 Suas informações estão seguras e protegidas</p>
-              <p class="form-footer-item">✓ Resposta em até 24 horas</p>
-              <p class="form-footer-item">✓ Sem compromisso inicial</p>
+              <p class="form-footer-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                Suas informações estão seguras e protegidas
+              </p>
+              <p class="form-footer-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Resposta em até 24 horas
+              </p>
+              <p class="form-footer-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Sem compromisso inicial
+              </p>
             </div>
           </form>
 
           <div class="contact-info">
-            <h3>Ou fale diretamente:</h3>
-
-            <!-- Social proof junto ao CTA -->
-            <p class="proof-row">⭐⭐⭐⭐⭐ &nbsp;<strong style="color:#fff">4.5</strong>&nbsp; · 31 avaliações verificadas no Google</p>
+            <h3>Ou fale diretamente</h3>
+            <p class="proof-row">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              4.5 de 5 · 31 avaliações verificadas no Google
+            </p>
 
             <ul class="contact-details">
               <li>
-                <span class="icon">📱</span>
-                <span>WhatsApp: <a href="https://wa.me/5543991244440">(43) 9 9124-4440</a></span>
+                <span class="contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                </span>
+                <span>WhatsApp: <a href="tel:+5543991244440">(43) 9 9124-4440</a></span>
               </li>
               <li>
-                <span class="icon">📧</span>
-                <span>E-mail: <a href="mailto:advocacia@glaucoramos.com">advocacia@glaucoramos.com</a></span>
+                <span class="contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <span><a href="mailto:advocacia@glaucoramos.com">advocacia@glaucoramos.com</a></span>
               </li>
               <li>
-                <span class="icon">📍</span>
+                <span class="contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </span>
                 <span>São Paulo · Curitiba · Londrina</span>
               </li>
             </ul>
 
-            <a href={WPP("Quero falar sobre advocacia empresarial")} class="btn btn-whatsapp btn-large" style="width:100%; margin-bottom:1rem;">
-              <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
+            <a href={WPP("Quero falar sobre advocacia empresarial")} class="btn btn-whatsapp btn-large" style="width:100%; margin-bottom:1rem;" id="contact-whatsapp">
+              <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
               Chamar no WhatsApp
             </a>
 
-            <p style="font-size:0.8125rem; color: var(--color-text-muted);">
-              Atendimento disponível de segunda a sábado, 8h às 20h. Urgências 24h.
-            </p>
+            <p class="contact-hours">Atendimento de segunda a sábado, 8h às 20h. Urgências 24h.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ================================================
-         13. FOOTER
+         11. FOOTER
          ================================================ -->
     <footer class="footer">
       <div class="container">
         <div class="footer-grid">
           <div class="footer-brand">
-            <img src="/img/logo-glauco-ramos.webp" alt="Glauco Ramos" width="48" height="48" style="margin-bottom:0.75rem; filter:brightness(1.1);" loading="lazy" />
+            <img src="/img/logo-glauco-ramos.webp" alt="Glauco Ramos" width="44" height="44" style="margin-bottom:0.75rem; opacity:0.85;" loading="lazy" />
             <h4>Glauco Ramos Advocacia</h4>
             <p>Advocacia empresarial com excelência, estratégia e compromisso com o seu resultado.</p>
           </div>
 
           <div>
-            <h4>Áreas de Atuação</h4>
+            <h4>Areas de Atuação</h4>
             <ul>
               <li><a href="#solucoes">Consultoria Empresarial</a></li>
               <li><a href="#solucoes">Direito Societário</a></li>
@@ -689,10 +623,10 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
           <div>
             <h4>Contato</h4>
             <ul>
-              <li>📞 (43) 9 9124-4440</li>
-              <li>✉️ advocacia@glaucoramos.com</li>
-              <li>🌐 glaucoramos.com.br</li>
-              <li>📍 SP · Curitiba · Londrina</li>
+              <li><a href="tel:+5543991244440">(43) 9 9124-4440</a></li>
+              <li><a href="mailto:advocacia@glaucoramos.com">advocacia@glaucoramos.com</a></li>
+              <li>glaucoramos.com.br</li>
+              <li>SP · Curitiba · Londrina</li>
             </ul>
           </div>
         </div>
@@ -707,22 +641,23 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
          STICKY MOBILE CTA BAR
          ================================================ -->
     <div class="sticky-cta-bar" id="sticky-cta" aria-label="Barra de contato rápido" role="complementary">
-      <a href={WPP("Olá, gostaria de falar com um especialista")} class="btn btn-whatsapp">
-        <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
+      <a href={WPP("Olá, gostaria de falar com um especialista")} class="btn btn-whatsapp" id="sticky-whatsapp">
+        <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
         WhatsApp
       </a>
-      <a href="#contato" class="btn btn-primary">Consultoria Gratuita</a>
+      <a href="#contato" class="btn btn-primary" id="sticky-form">Consultoria Gratuita</a>
     </div>
 
     <!-- ================================================
-         FLOATING WHATSAPP (Desktop only)
+         FLOATING WHATSAPP (Desktop)
          ================================================ -->
     <a
       href={WPP("Olá, gostaria de falar com um especialista")}
       class="floating-whatsapp"
       aria-label="Fale conosco no WhatsApp"
+      id="floating-wpp"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 32 32" fill="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" fill="currentColor">
         <path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0zM16.062 28.228h-.005c-2.319 0-4.489-.64-6.342-1.753l-.451-.267-4.675 1.227 1.247-4.559-.294-.467c-1.185-1.862-1.889-4.131-1.889-6.565 0-6.822 5.531-12.353 12.353-12.353s12.353 5.531 12.353 12.353c0 6.822-5.53 12.353-12.353 12.353h0z"/>
       </svg>
     </a>
@@ -742,7 +677,6 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
           iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
           iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
           iframe.allowFullscreen = true;
-          // Hide thumbnail and play btn
           const thumb = videoPlayer.querySelector('.video-thumbnail') as HTMLElement | null;
           const playBtn = videoPlayer.querySelector('.video-play-btn') as HTMLElement | null;
           if (thumb) thumb.style.display = 'none';
@@ -761,13 +695,11 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
           const item = btn.closest('.faq-item') as HTMLElement | null;
           if (!item) return;
           const isOpen = item.classList.contains('open');
-          // Close all
           document.querySelectorAll('.faq-item').forEach(i => {
             i.classList.remove('open');
             const q = i.querySelector('.faq-question') as HTMLButtonElement | null;
             if (q) q.setAttribute('aria-expanded', 'false');
           });
-          // Toggle current
           if (!isOpen) {
             item.classList.add('open');
             btn.setAttribute('aria-expanded', 'true');
