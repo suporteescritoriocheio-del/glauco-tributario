@@ -5,6 +5,24 @@ import type { APIRoute } from 'astro';
 // Force this route to be server-rendered (not pre-rendered as static)
 export const prerender = false;
 
+function escapeHtml(value: unknown): string {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function parseEmailList(value: string | undefined, fallback: string[]): string[] {
+    const parsed = value
+        ?.split(',')
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+    return parsed && parsed.length > 0 ? parsed : fallback;
+}
+
 export const POST: APIRoute = async ({ request }) => {
     try {
         const body = await request.json();
@@ -70,7 +88,8 @@ export const POST: APIRoute = async ({ request }) => {
         const validatedWhatsapp = cleanPhone;
 
         // Format timestamp
-        const formattedDate = new Date(timestamp).toLocaleString('pt-BR', {
+        const leadTimestamp = timestamp ? new Date(timestamp) : new Date();
+        const formattedDate = (Number.isNaN(leadTimestamp.getTime()) ? new Date() : leadTimestamp).toLocaleString('pt-BR', {
             timeZone: 'America/Sao_Paulo',
             dateStyle: 'short',
             timeStyle: 'short',
@@ -78,13 +97,29 @@ export const POST: APIRoute = async ({ request }) => {
 
         // Send email via Resend
         const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
+        const resendFromEmail = import.meta.env.LEAD_NOTIFICATION_FROM
+            || import.meta.env.RESEND_FROM_EMAIL
+            || 'Glauco Ramos <onboarding@resend.dev>';
+        const resendRecipients = parseEmailList(
+            import.meta.env.LEAD_NOTIFICATION_TO,
+            ['advocacia@glaucoramos.com', 'higorrodriguest8@gmail.com'],
+        );
+        const safeName = escapeHtml(name);
+        const safeWhatsapp = escapeHtml(validatedWhatsapp);
+        const safeEmail = escapeHtml(email);
+        const safeCity = escapeHtml(city);
+        const safeMessage = escapeHtml(message);
+        const safeSource = escapeHtml(source || 'Formulário de Contato');
 
         if (!RESEND_API_KEY) {
             console.error('RESEND_API_KEY not configured');
-            // Don't fail the request - still return success to user
             return new Response(
-                JSON.stringify({ success: true, warning: 'Email não configurado' }),
-                { status: 200, headers: { 'Content-Type': 'application/json' } }
+                JSON.stringify({
+                    success: false,
+                    error: 'Serviço de e-mail não configurado',
+                    details: 'Defina RESEND_API_KEY no ambiente de execução.',
+                }),
+                { status: 503, headers: { 'Content-Type': 'application/json' } }
             );
         }
 
@@ -97,19 +132,18 @@ export const POST: APIRoute = async ({ request }) => {
                 'Authorization': `Bearer ${RESEND_API_KEY}`,
             },
             body: JSON.stringify({
-                // Use Resend test email until domain is verified
-                // Change to 'contato@glaucoramos.com' after domain verification
-                from: 'Glauco Tributário <contato@glaucoramos.com.br>',
-                to: ['advocacia@glaucoramos.com', 'higorrodriguest8@gmail.com'],
-                subject: `Novo Lead - ${name} via ${source}`,
+                from: resendFromEmail,
+                to: resendRecipients,
+                reply_to: email ? [email] : undefined,
+                subject: `Novo Lead - ${name} via ${source || 'Formulário de Contato'}`,
                 html: `
                     <h2>Novo Lead Capturado!</h2>
-                    <p><strong>Nome:</strong> ${name}</p>
-                    <p><strong>WhatsApp:</strong> ${validatedWhatsapp}</p>
-                    ${email ? `<p><strong>Email:</strong> ${email}</p>` : ''}
-                    ${city ? `<p><strong>Cidade:</strong> ${city}</p>` : ''}
-                    ${message ? `<p><strong>Mensagem:</strong> ${message}</p>` : ''}
-                    <p><strong>Origem:</strong> ${source}</p>
+                    <p><strong>Nome:</strong> ${safeName}</p>
+                    <p><strong>WhatsApp:</strong> ${safeWhatsapp}</p>
+                    ${email ? `<p><strong>Email:</strong> ${safeEmail}</p>` : ''}
+                    ${city ? `<p><strong>Cidade:</strong> ${safeCity}</p>` : ''}
+                    ${message ? `<p><strong>Mensagem:</strong> ${safeMessage}</p>` : ''}
+                    <p><strong>Origem:</strong> ${safeSource}</p>
                     <p><strong>Data/Hora:</strong> ${formattedDate}</p>
                     <hr>
                     <p><em>Lead capturado via site</em></p>
@@ -118,13 +152,31 @@ export const POST: APIRoute = async ({ request }) => {
         });
 
         if (!emailResponse.ok) {
-            const errorData = await emailResponse.json();
+            const errorText = await emailResponse.text();
+            let errorData: unknown = errorText;
+
+            try {
+                errorData = JSON.parse(errorText);
+            } catch {
+                // Keep raw text if body is not JSON
+            }
+
             console.error('Resend API error:', JSON.stringify(errorData));
-            // Still return success to user - don't block WhatsApp redirect
+
+            return new Response(
+                JSON.stringify({
+                    success: false,
+                    error: 'Falha ao enviar o e-mail do lead',
+                    details: errorData,
+                }),
+                { status: 502, headers: { 'Content-Type': 'application/json' } }
+            );
         }
 
+        const emailData = await emailResponse.json().catch(() => null);
+
         return new Response(
-            JSON.stringify({ success: true }),
+            JSON.stringify({ success: true, delivery: emailData }),
             { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
 

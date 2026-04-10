@@ -3,6 +3,11 @@ import SEO from "../components/SEO.astro";
 import StructuredData from "../components/StructuredData.astro";
 import FormScript from "../components/FormScript.astro";
 import LeadCaptureModal from "../components/LeadCaptureModal.astro";
+import ArticleInsightsSection from "../components/ArticleInsightsSection.astro";
+import HeroSection from "../components/HeroSection.astro";
+import StickyCtaBar from "../components/StickyCtaBar.astro";
+import type { ArticleFeedSource } from "../config/articleFeed";
+import heroContent from "../data/heroes/advogado-empresarial.json";
 import "../styles/advogado-empresarial.css";
 
 const pageTitle = "Advocacia Empresarial Estratégica | Glauco Ramos Advocacia";
@@ -11,6 +16,62 @@ const pageDescription =
 
 const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
 const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
+
+const articleSource: ArticleFeedSource = {
+  type: "manual",
+  articles: [
+    {
+      category: "Direito Tributário",
+      title: "Como Reduzir Legalmente a Carga Tributária da sua Empresa",
+      excerpt:
+        "Descubra as principais estratégias de planejamento tributário que empresários devem conhecer para economizar sem infringir a lei.",
+      href: "https://glaucoramos.com.br/guia-completo-de-planejamento-patrimonial-sucessorio-e-tributario-para-empresarios/",
+      image: {
+        src: "/img/article-planejamento-tributario.svg",
+        alt: "Ilustração editorial sobre planejamento tributário empresarial",
+      },
+    },
+    {
+      category: "Planejamento Patrimonial",
+      title: "Holding Familiar: Guia Definitivo para Empresários",
+      excerpt:
+        "Vantagens, custos e como estruturar uma holding para proteger seu patrimônio e otimizar a sucessão empresarial.",
+      href: "https://glaucoramos.com.br/holding-familiar-o-guia-definitivo-para-empresarios-vantagens-custos-e-como-estruturar/",
+      image: {
+        src: "/img/article-holding-familiar.svg",
+        alt: "Ilustração editorial sobre holding familiar para empresários",
+      },
+    },
+    {
+      category: "Direito Empresarial",
+      title: "Recuperação Judicial: O Guia Definitivo para Salvar sua Empresa",
+      excerpt:
+        "Entenda quando acionar a recuperação judicial, como funciona o processo e as estratégias para preservar seu negócio em crise.",
+      href: "https://glaucoramos.com.br/recuperacao-judicial-o-guia-definitivo-para-salvar-sua-empresa-da-crise/",
+      image: {
+        src: "/img/article-recuperacao-judicial.svg",
+        alt: "Ilustração editorial sobre recuperação judicial empresarial",
+      },
+    },
+  ],
+};
+
+const stickyCtaProps = {
+  ariaLabel: "Barra de contato rápido da landing page de advocacia empresarial",
+  title: "Fale com o Advogado",
+  subtitle: "Tiramos suas dúvidas gratuitamente",
+  ctas: [
+    {
+      href: WPP("Olá, gostaria de tirar uma dúvida com um especialista"),
+      label: "WhatsApp",
+      variant: "whatsapp" as const,
+      icon: "whatsapp" as const,
+      id: "sticky-whatsapp",
+      dataMessage: "Olá, gostaria de tirar uma dúvida com um especialista",
+      ariaLabel: "Falar via WhatsApp com um especialista em advocacia empresarial",
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -32,64 +93,24 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
     <!-- ================================================
          1. HERO — Layout Esquerda+Direita
          ================================================ -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-inner">
-
-          <div class="hero-left">
-            <img
-              src="/img/logo-glauco-ramos.webp"
-              alt="Glauco Ramos Advocacia"
-              class="hero-logo"
-              width="60" height="60"
-              loading="eager"
-            />
-
-            <div class="hero-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              +30 anos de experiência · Ex-Procurador Jurídico
-            </div>
-
-            <h1>
-              Sua Empresa Está Exposta?
-              <span>Proteja Seu Patrimônio com Advocacia Estratégica.</span>
-            </h1>
-
-            <p class="hero-subtitle">
-              Problemas societários, fiscais ou contratuais podem custar milhões.
-              Mais de 30 anos defendendo empresários em todo o Brasil com estratégia e resultado.
-            </p>
-
-            <div class="hero-ctas">
-              <a
-                href={WPP("Olá, gostaria de agendar uma consultoria estratégica")}
-                class="btn btn-primary btn-large"
-                id="hero-cta-whatsapp"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-                Agendar Consulta Estratégica
-              </a>
-              <a href="#contato" class="btn btn-secondary" id="hero-cta-form">Ver Formulário de Contato</a>
-            </div>
-
-            <p class="hero-info">
-              Consultoria gratuita &nbsp;·&nbsp; Atendimento remoto em todo o Brasil &nbsp;·&nbsp; Resposta em até 24h
-            </p>
-          </div>
-
-          <div class="hero-photo-wrapper">
-            <img
-              src="/img/glauco-ramos-advogado.jpg"
-              alt="Dr. Glauco Ramos — Advogado Empresarial"
-              class="hero-photo"
-              width="420"
-              loading="eager"
-            />
-          </div>
-
-        </div>
-      </div>
-    </section>
+    <HeroSection
+      content={heroContent}
+      logo={{
+        src: "/img/logo-glauco-ramos.webp",
+        alt: "Glauco Ramos Advocacia",
+        width: 60,
+        height: 60,
+        loading: "eager",
+      }}
+      image={{
+        src: "/img/glauco-ramos-advogado.jpg",
+        alt: "Dr. Glauco Ramos — Advogado Empresarial",
+        width: 420,
+        loading: "eager",
+      }}
+      primaryCtaHref={WPP("Olá, gostaria de agendar uma consultoria estratégica")}
+      primaryCtaId="hero-cta-whatsapp"
+    />
 
     <!-- ================================================
          2. FAIXA DE CONFIANÇA
@@ -361,74 +382,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
     <!-- ================================================
          8. ARTIGOS E INSIGHTS
          ================================================ -->
-    <section class="articles-section" id="artigos">
-      <div class="container">
-        <h2 class="section-heading">Artigos e Insights Jurídicos</h2>
-        <p class="section-subheading">Aprofunde seu conhecimento antes de tomar qualquer decisão</p>
-
-        <div class="articles-grid">
-          <article class="article-card">
-            <div class="article-img-wrapper">
-              <img
-                src="/img/artigo-planejamento-tributario.webp"
-                alt="Planejamento Tributário para Empresas"
-                class="article-img"
-                loading="lazy"
-                onerror="this.parentElement.style.minHeight='180px';this.style.display='none'"
-              />
-              <span class="article-category">Direito Tributário</span>
-            </div>
-            <div class="article-body">
-              <h3>Como Reduzir Legalmente a Carga Tributária da sua Empresa</h3>
-              <p class="article-excerpt">Descubra as principais estratégias de planejamento tributário que empresários devem conhecer para economizar sem infringir a lei.</p>
-              <a href="https://glaucoramos.com.br/guia-completo-de-planejamento-patrimonial-sucessorio-e-tributario-para-empresarios/" class="article-link" target="_blank" rel="noopener">
-                Ler artigo completo →
-              </a>
-            </div>
-          </article>
-
-          <article class="article-card">
-            <div class="article-img-wrapper">
-              <img
-                src="/img/artigo-contrato-empresarial.webp"
-                alt="Holding Familiar para Empresários"
-                class="article-img"
-                loading="lazy"
-                onerror="this.parentElement.style.minHeight='180px';this.style.display='none'"
-              />
-              <span class="article-category">Planejamento Patrimonial</span>
-            </div>
-            <div class="article-body">
-              <h3>Holding Familiar: Guia Definitivo para Empresários</h3>
-              <p class="article-excerpt">Vantagens, custos e como estruturar uma holding para proteger seu patrimônio e otimizar a sucessão empresarial.</p>
-              <a href="https://glaucoramos.com.br/holding-familiar-o-guia-definitivo-para-empresarios-vantagens-custos-e-como-estruturar/" class="article-link" target="_blank" rel="noopener">
-                Ler artigo completo →
-              </a>
-            </div>
-          </article>
-
-          <article class="article-card">
-            <div class="article-img-wrapper">
-              <img
-                src="/img/artigo-conflito-societario.webp"
-                alt="Recuperação Judicial"
-                class="article-img"
-                loading="lazy"
-                onerror="this.parentElement.style.minHeight='180px';this.style.display='none'"
-              />
-              <span class="article-category">Direito Empresarial</span>
-            </div>
-            <div class="article-body">
-              <h3>Recuperação Judicial: O Guia Definitivo para Salvar sua Empresa</h3>
-              <p class="article-excerpt">Entenda quando acionar a recuperação judicial, como funciona o processo e as estratégias para preservar seu negócio em crise.</p>
-              <a href="https://glaucoramos.com.br/recuperacao-judicial-o-guia-definitivo-para-salvar-sua-empresa-da-crise/" class="article-link" target="_blank" rel="noopener">
-                Ler artigo completo →
-              </a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
+    <ArticleInsightsSection source={articleSource} />
 
     <!-- ================================================
          9. FAQ
@@ -640,13 +594,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
     <!-- ================================================
          STICKY MOBILE CTA BAR
          ================================================ -->
-    <div class="sticky-cta-bar" id="sticky-cta" aria-label="Barra de contato rápido" role="complementary">
-      <a href={WPP("Olá, gostaria de falar com um especialista")} class="btn btn-whatsapp" id="sticky-whatsapp">
-        <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
-        WhatsApp
-      </a>
-      <a href="#contato" class="btn btn-primary" id="sticky-form">Consultoria Gratuita</a>
-    </div>
+    <StickyCtaBar {...stickyCtaProps} />
 
     <!-- ================================================
          FLOATING WHATSAPP (Desktop)

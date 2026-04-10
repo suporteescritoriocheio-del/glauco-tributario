@@ -1,6 +1,10 @@
 ---
-// Structured data for enhanced SEO and rich snippets
-const structuredData = {
+interface Props {
+    data?: unknown;
+}
+
+// Structured data for enhanced SEO and rich snippets.
+const defaultStructuredData = {
     "@context": "https://schema.org",
     "@graph": [
         {
@@ -140,6 +144,8 @@ const structuredData = {
         },
     ],
 };
+
+const { data = defaultStructuredData } = Astro.props as Props;
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+<script type="application/ld+json" set:html={JSON.stringify(data)} />

@@ -1,0 +1,87 @@
+---
+import "../styles/sticky-cta-bar.css";
+
+type StickyCtaVariant = "primary" | "secondary" | "whatsapp";
+type StickyCtaIcon = "none" | "whatsapp";
+
+interface StickyCtaAction {
+  href: string;
+  label: string;
+  variant?: StickyCtaVariant;
+  id?: string;
+  dataMessage?: string;
+  ariaLabel?: string;
+  target?: string;
+  rel?: string;
+  icon?: StickyCtaIcon;
+}
+
+interface Props {
+  id?: string;
+  ariaLabel?: string;
+  title: string;
+  subtitle?: string;
+  ctas: StickyCtaAction[];
+  className?: string;
+}
+
+const {
+  id = "sticky-cta",
+  ariaLabel = "Barra de contato rápido",
+  title,
+  subtitle,
+  ctas,
+  className,
+} = Astro.props;
+
+const hasText = Boolean(title || subtitle);
+const isSingleCta = ctas.length === 1;
+const barClasses = [
+  "sticky-cta-bar",
+  className,
+  hasText && "has-text",
+  isSingleCta && "single-cta",
+].filter(Boolean);
+const spacerClasses = [
+  "sticky-cta-spacer",
+  hasText && "has-text",
+  isSingleCta && "single-cta",
+].filter(Boolean);
+---
+
+<div class:list={spacerClasses} aria-hidden="true"></div>
+
+<div class:list={barClasses} id={id} aria-label={ariaLabel} role="complementary">
+  {hasText && (
+    <div class="sticky-cta-text">
+      <strong>{title}</strong>
+      {subtitle && <span>{subtitle}</span>}
+    </div>
+  )}
+
+  <div class="sticky-cta-actions">
+    {ctas.map((cta) => {
+      const variant = cta.variant ?? "primary";
+      const showWhatsappIcon = (cta.icon ?? "none") === "whatsapp" || variant === "whatsapp";
+
+      return (
+        <a
+          href={cta.href}
+          class:list={["btn", `btn-${variant}`]}
+          id={cta.id}
+          data-message={cta.dataMessage}
+          aria-label={cta.ariaLabel}
+          target={cta.target}
+          rel={cta.rel}
+        >
+          {showWhatsappIcon && (
+            <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"></path>
+            </svg>
+          )}
+          {cta.label}
+        </a>
+      );
+    })}
+  </div>
+</div>

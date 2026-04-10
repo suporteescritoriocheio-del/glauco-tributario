@@ -224,8 +224,10 @@ leadForm?.addEventListener('submit', async (e) => {
             }),
         });
 
-        if (!response.ok) {
-            throw new Error('Falha ao enviar dados');
+        const result = await response.json().catch(() => null);
+
+        if (!response.ok || !result?.success) {
+            throw new Error(result?.error || 'Falha ao enviar dados');
         }
 
         // Track conversion
@@ -302,7 +304,7 @@ leadForm?.addEventListener('submit', async (e) => {
     } catch (error) {
         console.error('Error capturing lead:', error);
         // Lead is already saved proactively, show error but allow WhatsApp redirect
-        alert('Erro ao enviar. Redirecionando para o WhatsApp...');
+        alert('Nao foi possivel confirmar o envio do e-mail agora. Redirecionando para o WhatsApp...');
 
         // Fallback redirect
         setTimeout(() => {

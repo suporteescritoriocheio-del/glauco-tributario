@@ -3,6 +3,8 @@ import SEO from "../components/SEO.astro";
 import StructuredData from "../components/StructuredData.astro";
 import FormScript from "../components/FormScript.astro";
 import LeadCaptureModal from "../components/LeadCaptureModal.astro";
+import HeroSection from "../components/HeroSection.astro";
+import StickyCtaBar from "../components/StickyCtaBar.astro";
 import "../styles/advogado-societario.css";
 
 const pageTitle = "Advogado Societário | Resolução de Conflitos e Proteção | Glauco Ramos";
@@ -11,6 +13,54 @@ const pageDescription =
 
 const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
 const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
+
+const heroProps = {
+  content: {
+    badgeText: "Advogado Societário · Atendimento Nacional",
+    title: "Proteção do Seu Patrimônio e Resolução de Conflitos entre ",
+    titleHighlight: "Sócios da Sua Empresa.",
+    subtitle: "A falta de estruturação societária correta pode custar o seu negócio. Evite bloqueios, exclusões injustas e litígios destrutivos com nossa experiência de mais de 30 anos defendendo interesses corporativos.",
+    primaryCtaLabel: "Agendar Consulta Estratégica",
+    infoItems: [
+      "Consultoria gratuita",
+      "Atendimento remoto em todo o Brasil",
+      "Primeira resposta rápida"
+    ]
+  },
+  logo: {
+    src: "/img/logo-glauco-ramos.webp",
+    alt: "Glauco Ramos Advocacia",
+    width: 60,
+    height: 60,
+    loading: "eager" as const
+  },
+  image: {
+    src: "/img/glauco-ramos-advogado.jpg",
+    alt: "Dr. Glauco Ramos — Advogado Societário",
+    width: 420,
+    loading: "eager" as const
+  },
+  primaryCtaHref: WPP("Olá, preciso de um Advogado Societário urgente para minha empresa"),
+  primaryCtaId: "hero-cta-whatsapp",
+  primaryCtaDataMessage: "Olá, preciso de um Advogado Societário urgente para minha empresa"
+};
+
+const stickyCtaProps = {
+  ariaLabel: "Barra de contato rápido da landing page de advogado societário",
+  title: "Fale com o Societário",
+  subtitle: "Orientação rápida para conflitos e blindagem da sociedade",
+  ctas: [
+    {
+      href: WPP("Desejo orientações diretas sobre meu negócio"),
+      label: "WhatsApp",
+      variant: "whatsapp" as const,
+      icon: "whatsapp" as const,
+      id: "sticky-whatsapp",
+      dataMessage: "Desejo orientações diretas sobre meu negócio",
+      ariaLabel: "Falar via WhatsApp sobre direito societário",
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -32,63 +82,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
     <!-- ================================================
          1. HERO — Layout Esquerda+Direita
          ================================================ -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-inner">
-
-          <div class="hero-left">
-            <img
-              src="/img/logo-glauco-ramos.webp"
-              alt="Glauco Ramos Advocacia"
-              class="hero-logo"
-              width="60" height="60"
-              loading="eager"
-            />
-
-            <div class="hero-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              Advogado Societário · Atendimento Nacional
-            </div>
-
-            <h1>
-              Proteção do Seu Patrimônio e Resolução de Conflitos entre
-              <span>Sócios da Sua Empresa.</span>
-            </h1>
-
-            <p class="hero-subtitle">
-              A falta de estruturação societária correta pode custar o seu negócio. Evite bloqueios, exclusões injustas e litígios destrutivos com nossa experiência de mais de 30 anos defendendo interesses corporativos.
-            </p>
-
-            <div class="hero-ctas">
-              <a
-                href={WPP("Olá, preciso de um Advogado Societário urgente para minha empresa")}
-                class="btn btn-primary btn-large"
-                id="hero-cta-whatsapp"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-                Agendar Consulta Estratégica
-              </a>
-              <a href="#contato" class="btn btn-secondary" id="hero-cta-form">Formulário de Contato</a>
-            </div>
-
-            <p class="hero-info">
-              Consultoria gratuita &nbsp;·&nbsp; Atendimento remoto em todo o Brasil &nbsp;·&nbsp; Primeira resposta rápida
-            </p>
-          </div>
-
-          <div class="hero-photo-wrapper">
-            <img
-              src="/img/glauco-ramos-advogado.jpg"
-              alt="Dr. Glauco Ramos — Advogado Societário"
-              class="hero-photo"
-              width="420"
-              loading="eager"
-            />
-          </div>
-
-        </div>
-      </div>
-    </section>
+    <HeroSection {...heroProps} />
 
     <!-- ================================================
          2. FAIXA DE CONFIANÇA
@@ -161,7 +155,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
               O Dr. Glauco Ramos explica como atuamos para proteger o patrimônio e a sociedade da 
               sua empresa das maiores fragilidades, evitando surpresas fiscais ocultas e garantindo uma negociação segura.
             </p>
-            <a href={WPP("Assisti ao seu vídeo e gostaria de orientação societária")} class="btn btn-primary" id="video-cta">
+            <a href={WPP("Assisti ao seu vídeo e gostaria de orientação societária")} class="btn btn-primary" id="video-cta" data-message="Assisti ao seu vídeo e gostaria de orientação societária">
               Falar com o Dr. Glauco
             </a>
           </div>
@@ -237,7 +231,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
         </div>
 
         <div class="text-center mt-lg">
-          <a href={WPP("Gostaria de uma análise do meu cenário societário")} class="btn btn-primary btn-large" id="services-cta">
+          <a href={WPP("Gostaria de uma análise do meu cenário societário")} class="btn btn-primary btn-large" id="services-cta" data-message="Gostaria de uma análise do meu cenário societário">
             Requerer Análise Especializada
           </a>
         </div>
@@ -288,7 +282,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
               <cite>— Dr. Glauco Ramos</cite>
             </div>
 
-            <a href={WPP("Desejo falar com o Dr. Glauco Ramos agora")} class="btn btn-primary" id="about-cta">
+            <a href={WPP("Desejo falar com o Dr. Glauco Ramos agora")} class="btn btn-primary" id="about-cta" data-message="Desejo falar com o Dr. Glauco Ramos agora">
               Falar com o Dr. Glauco
             </a>
           </div>
@@ -356,7 +350,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
         </div>
 
         <div class="text-center mt-lg">
-          <a href={WPP("Vi a expertise do escritório e gostaria de conversar")} class="btn btn-primary" id="testimonials-cta">
+          <a href={WPP("Vi a expertise do escritório e gostaria de conversar")} class="btn btn-primary" id="testimonials-cta" data-message="Vi a expertise do escritório e gostaria de conversar">
             Proteger os Interesses da Sua Empresa
           </a>
         </div>
@@ -485,7 +479,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
         </div>
 
         <div class="text-center mt-lg">
-          <a href={WPP("Tenho perguntas sobre a resolução de impasses da vida societária da minha empresa")} class="btn btn-primary" id="faq-cta">
+          <a href={WPP("Tenho perguntas sobre a resolução de impasses da vida societária da minha empresa")} class="btn btn-primary" id="faq-cta" data-message="Tenho perguntas sobre a resolução de impasses da vida societária da minha empresa">
             Obter Ajuda Imediata Sobre a Empresa
           </a>
         </div>
@@ -567,7 +561,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
               </li>
             </ul>
 
-            <a href={WPP("Olá, estou na página sobre o serviço societário e precisava de garantias perante a minha negociação/conflito")} class="btn btn-whatsapp btn-large" style="width:100%; margin-bottom:1rem;" id="contact-whatsapp">
+            <a href={WPP("Olá, estou na página sobre o serviço societário e precisava de garantias perante a minha negociação/conflito")} class="btn btn-whatsapp btn-large" style="width:100%; margin-bottom:1rem;" id="contact-whatsapp" data-message="Olá, estou na página sobre o serviço societário e precisava de garantias perante a minha negociação/conflito">
               <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
               Conversar Pelo WhatsApp
             </a>
@@ -631,13 +625,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
     <!-- ================================================
          STICKY MOBILE CTA BAR
          ================================================ -->
-    <div class="sticky-cta-bar" id="sticky-cta" aria-label="Barra de contato rápido societário" role="complementary">
-      <a href={WPP("Desejo orientações diretas sobre meu negócio")} class="btn btn-whatsapp" id="sticky-whatsapp">
-        <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
-        WhatsApp
-      </a>
-      <a href="#contato" class="btn btn-primary" id="sticky-form">Consultoria Gratuita</a>
-    </div>
+    <StickyCtaBar {...stickyCtaProps} />
 
     <!-- ================================================
          FLOATING WHATSAPP (Desktop)
@@ -647,6 +635,7 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
       class="floating-whatsapp"
       aria-label="Fale conosco no WhatsApp sobre Proteção Societária"
       id="floating-wpp"
+      data-message="Desejo pedir o contato imediato do advogado sobre um conflito ou adequação em minha empresa"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" fill="currentColor">
         <path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0zM16.062 28.228h-.005c-2.319 0-4.489-.64-6.342-1.753l-.451-.267-4.675 1.227 1.247-4.559-.294-.467c-1.185-1.862-1.889-4.131-1.889-6.565 0-6.822 5.531-12.353 12.353-12.353s12.353 5.531 12.353 12.353c0 6.822-5.53 12.353-12.353 12.353h0z"/>
@@ -681,7 +670,8 @@ const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
       }
 
       // ── FAQ Accordion ─────────────────────────────────
-      document.querySelectorAll<HTMLButtonElement>('.faq-question').forEach(btn => {
+      const faqButtons = document.querySelectorAll<HTMLButtonElement>('.faq-question');
+      faqButtons.forEach(btn => {
         btn.addEventListener('click', () => {
           const item = btn.closest('.faq-item') as HTMLElement | null;
           if (!item) return;

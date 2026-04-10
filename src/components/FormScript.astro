@@ -309,8 +309,12 @@
                         timestamp: new Date().toISOString(),
                     }),
                 })
-                    .then((response) => {
-                        if (response.ok) {
+                    .then(async (response) => {
+                        const result = await response
+                            .json()
+                            .catch(() => null);
+
+                        if (response.ok && result?.success) {
                             submissionCount++;
                             saveLeadBackup(
                                 {
@@ -416,7 +420,10 @@
                                 }
                             }
                         } else {
-                            throw new Error("Erro no envio");
+                            throw new Error(
+                                result?.error ||
+                                    "Erro ao enviar o e-mail do lead",
+                            );
                         }
                     })
                     .catch((error) => {
@@ -435,7 +442,7 @@
                             "api_error",
                         );
                         alert(
-                            "Erro ao enviar dados. Redirecionando para o WhatsApp...",
+                            "Nao foi possivel confirmar o envio do e-mail agora. Redirecionando para o WhatsApp...",
                         );
 
                         const whatsappMsg = encodeURIComponent(

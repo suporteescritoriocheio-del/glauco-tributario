@@ -1,0 +1,96 @@
+---
+interface HeroContent {
+  badgeText: string;
+  title: string;
+  titleHighlight: string;
+  subtitle: string;
+  primaryCtaLabel: string;
+  infoItems?: string[];
+}
+
+interface HeroImage {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  loading?: "eager" | "lazy";
+}
+
+interface Props {
+  content: HeroContent;
+  logo: HeroImage;
+  image: HeroImage;
+  primaryCtaHref: string;
+  primaryCtaId?: string;
+  primaryCtaDataMessage?: string;
+}
+
+const {
+  content,
+  logo,
+  image,
+  primaryCtaHref,
+  primaryCtaId = "hero-cta-primary",
+  primaryCtaDataMessage,
+} = Astro.props;
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          class="hero-logo"
+          width={logo.width ?? 60}
+          height={logo.height ?? 60}
+          loading={logo.loading ?? "eager"}
+        />
+
+        <div class="hero-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          {content.badgeText}
+        </div>
+
+        <h1>
+          {content.title}
+          <span>{content.titleHighlight}</span>
+        </h1>
+
+        <p class="hero-subtitle">{content.subtitle}</p>
+
+        <div class="hero-ctas">
+          <a
+            href={primaryCtaHref}
+            class="btn btn-primary btn-large"
+            id={primaryCtaId}
+            data-message={primaryCtaDataMessage}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path>
+            </svg>
+            {content.primaryCtaLabel}
+          </a>
+        </div>
+
+        {content.infoItems && content.infoItems.length > 0 && (
+          <p class="hero-info">{content.infoItems.join(" · ")}</p>
+        )}
+      </div>
+
+      <div class="hero-photo-wrapper">
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="hero-photo"
+          width={image.width ?? 420}
+          height={image.height}
+          loading={image.loading ?? "eager"}
+        />
+      </div>
+    </div>
+  </div>
+</section>

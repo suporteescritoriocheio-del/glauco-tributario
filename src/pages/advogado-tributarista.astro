@@ -3,6 +3,58 @@ import SEO from "../components/SEO.astro";
 import "../styles/advogado-tributarista.css";
 import LeadCaptureModal from "../components/LeadCaptureModal.astro";
 import FormScript from "../components/FormScript.astro";
+import HeroSection from "../components/HeroSection.astro";
+import StickyCtaBar from "../components/StickyCtaBar.astro";
+
+const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
+const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
+
+const heroProps = {
+  content: {
+    badgeText: "ADVOGADO TRIBUTARISTA ONLINE: Defesa Fiscal Imediata",
+    title: "Advogado Tributarista: Proteja o Caixa da Empresa contra ",
+    titleHighlight: "o Leão",
+    subtitle: "Evite penhora de bens, bloqueios do SISBAJUD nas contas da empresa e multas milionárias da Receita Federal. Defesa cirúrgica executada por um Ex-Procurador especialista em Tributário.",
+    primaryCtaLabel: "FALE COM UM ADVOGADO TRIBUTARISTA AGORA",
+    infoItems: [
+      "Desbloqueios e Defesas Emergenciais",
+      "Ex-Procurador Municipal"
+    ]
+  },
+  logo: {
+    src: "/img/logo-glauco-ramos.webp",
+    alt: "Glauco Ramos Advocacia",
+    width: 80,
+    height: 80,
+    loading: "eager" as const
+  },
+  image: {
+    src: "/img/glauco-ramos-advogado.jpg",
+    alt: "Dr. Glauco Ramos — Advogado Tributarista",
+    width: 420,
+    loading: "eager" as const
+  },
+  primaryCtaHref: WPP("Olá, preciso de um Advogado Tributarista urgente"),
+  primaryCtaId: "hero-cta-whatsapp",
+  primaryCtaDataMessage: "Olá, preciso de um Advogado Tributarista urgente"
+};
+
+const stickyCtaProps = {
+  ariaLabel: "Barra de contato rápido da landing page de advogado tributarista",
+  title: "Defesa Tributária Imediata",
+  subtitle: "Resposta rápida para autuações, bloqueios e execuções fiscais",
+  ctas: [
+    {
+      href: WPP("Preciso de amparo ativo de um Advogado Tributarista"),
+      label: "WhatsApp",
+      variant: "whatsapp" as const,
+      icon: "whatsapp" as const,
+      id: "sticky-whatsapp",
+      dataMessage: "Preciso de amparo ativo de um Advogado Tributarista",
+      ariaLabel: "Falar via WhatsApp com um advogado tributarista",
+    },
+  ],
+};
 ---
 
 <html lang="pt-BR">
@@ -24,36 +76,7 @@ import FormScript from "../components/FormScript.astro";
         </noscript>
 
         <!-- 1. HERO SECTION -->
-        <section class="hero">
-            <div class="container">
-                <img src="/img/logo-glauco-ramos.webp" alt="Glauco Ramos Advocacia" class="hero-logo" width="80" height="80" />
-                <div class="urgency-badge">
-                    ⚖️ ADVOGADO TRIBUTARISTA ONLINE: Defesa Fiscal Imediata
-                </div>
-                <h1>
-                    Advogado Tributarista: Proteja o Caixa da Empresa contra o Leão
-                </h1>
-                <p class="hero-subtitle">
-                    Evite penhora de bens, bloqueios do SISBAJUD nas contas da empresa e multas milionárias da Receita Federal. Defesa cirúrgica executada por um Ex-Procurador especialista em Tributário.
-                </p>
-                <a
-                    href="https://api.whatsapp.com/send/?phone=554391244440&text=Olá,%20preciso%20de%20um%20Advogado%20Tributarista%20urgente"
-                    class="btn btn-primary btn-large"
-                    data-message="Olá, preciso de um Advogado Tributarista urgente"
-                    >FALE COM UM ADVOGADO TRIBUTARISTA AGORA</a
-                >
-                <p class="hero-urgency">
-                    ✓ Desbloqueios e Defesas Emergenciais | ✓ Ex-Procurador Municipal
-                </p>
-                <div class="hero-trust">
-                    <span>⭐⭐⭐⭐⭐ 4.5 no Google</span>
-                    <span>•</span>
-                    <span>OAB/PR</span>
-                    <span>•</span>
-                    <span>Especialização Confiramada pelo IBET</span>
-                </div>
-            </div>
-        </section>
+        <HeroSection {...heroProps} />
 
         <!-- 2. BARRA DE URGÊNCIA E CREDIBILIDADE -->
         <section class="urgency-bar">
@@ -605,6 +628,8 @@ import FormScript from "../components/FormScript.astro";
 
         <!-- Lead Capture Modal and Form Script -->
         <LeadCaptureModal />
+
+        <StickyCtaBar {...stickyCtaProps} />
 
         <!-- Floating WhatsApp Button -->
         <a

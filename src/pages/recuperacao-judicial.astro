@@ -3,6 +3,27 @@ import SEO from "../components/SEO.astro";
 import "../styles/recuperacao-judicial.css";
 import LeadCaptureModal from "../components/LeadCaptureModal.astro";
 import FormScript from "../components/FormScript.astro";
+import StickyCtaBar from "../components/StickyCtaBar.astro";
+
+const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
+const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
+
+const stickyCtaProps = {
+  ariaLabel: "Barra de contato rápido da landing page de recuperação judicial",
+  title: "Recuperação Judicial",
+  subtitle: "Avaliação sigilosa para proteger o caixa da empresa",
+  ctas: [
+    {
+      href: WPP("Gostaria de conversar com um Advogado sobre Recuperação Judicial/Crise Bancária"),
+      label: "WhatsApp",
+      variant: "whatsapp" as const,
+      icon: "whatsapp" as const,
+      id: "sticky-whatsapp",
+      dataMessage: "Gostaria de conversar com um Advogado sobre Recuperação Judicial/Crise Bancária",
+      ariaLabel: "Falar via WhatsApp sobre recuperação judicial",
+    },
+  ],
+};
 ---
 
 <html lang="pt-BR">
@@ -620,6 +641,8 @@ import FormScript from "../components/FormScript.astro";
 
         <!-- Lead Capture Modal and Form Script -->
         <LeadCaptureModal />
+
+        <StickyCtaBar {...stickyCtaProps} />
 
         <!-- Floating WhatsApp Button -->
         <a

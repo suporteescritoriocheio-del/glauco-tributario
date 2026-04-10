@@ -1,0 +1,79 @@
+---
+import {
+  getArticleFeed,
+  type ArticleFeedSource,
+} from "../config/articleFeed";
+import "../styles/article-insights.css";
+
+interface Props {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  source: ArticleFeedSource;
+}
+
+const {
+  id = "artigos",
+  title = "Artigos e Insights Jurídicos",
+  subtitle = "Aprofunde seu conhecimento antes de tomar qualquer decisão",
+  source,
+} = Astro.props as Props;
+
+const articles = await getArticleFeed(source);
+---
+
+{
+  articles.length > 0 && (
+    <section class="insights-articles-section" id={id}>
+      <div class="container">
+        <h2 class="section-heading">{title}</h2>
+        <p class="section-subheading">{subtitle}</p>
+
+        <div class="insights-articles-grid">
+          {articles.map((article) => (
+            <article class="insights-article-card">
+              <a
+                href={article.href}
+                class="insights-article-card-link"
+                target="_blank"
+                rel="noopener"
+                aria-label={`Abrir artigo: ${article.title}`}
+              >
+                <div class="insights-article-image-wrapper">
+                  {
+                    article.image ? (
+                      <img
+                        src={article.image.src}
+                        alt={article.image.alt}
+                        class="insights-article-image"
+                        loading="lazy"
+                        decoding="async"
+                        onerror="this.style.display='none';this.parentElement.classList.add('insights-article-image-wrapper--fallback')"
+                      />
+                    ) : (
+                      <div
+                        class="insights-article-image insights-article-image--placeholder"
+                        aria-hidden="true"
+                      ></div>
+                    )
+                  }
+
+                  <span class="insights-article-category">{article.category}</span>
+                </div>
+
+                <div class="insights-article-body">
+                  <h3>{article.title}</h3>
+                  <p class="insights-article-excerpt">{article.excerpt}</p>
+                  <span class="insights-article-link">
+                    Ler artigo completo
+                    <span aria-hidden="true">→</span>
+                  </span>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
