@@ -12,7 +12,7 @@ import "../styles/direito-a-saude.css";
 
 const pageTitle = "Liminar contra Plano de Saúde | Glauco Ramos Advocacia";
 const pageDescription =
-  "Negativa de cirurgia, exame ou home care? Revertemos em horas via plantão judiciário — inclusive finais de semana. +30 anos de experiência. Sem ganho, sem cobrança.";
+  "Negativa de cirurgia, exame ou home care? Revertemos em horas via plantão judiciário — inclusive finais de semana. +30 anos de experiência.";
 
 const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
 const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
@@ -136,7 +136,7 @@ const stickyCtaProps = {
           <span class="trust-sep">|</span>
           <div class="trust-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Sem ganho, sem cobrança</span>
+            <span>Ex-Procurador Jurídico Municipal</span>
           </div>
         </div>
       </div>
@@ -276,50 +276,6 @@ const stickyCtaProps = {
             <a href={WPP("Quero entrar com ação contra meu plano de saúde")} class="btn btn-primary" id="pain-solution-cta" data-message="Quero entrar com ação contra meu plano de saúde">
               Agir Agora
             </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================
-         6. VIDEO (Lazy Load)
-         ================================================ -->
-    <section class="video-section">
-      <div class="container">
-        <div class="video-layout">
-          <div class="video-content">
-            <span class="video-label">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              Assista ao vídeo
-            </span>
-            <h2>Como Funciona a Liminar Judicial de Urgência</h2>
-            <p>
-              Antes de tomar qualquer decisão, entenda como atuamos. Nossa metodologia combina
-              <strong>triagem imediata dos documentos médicos</strong> com acesso direto ao
-              plantão judiciário — obtendo liminares em horas, não em semanas.
-            </p>
-            <p>
-              Dr. Glauco Ramos explica como o direito à saúde é garantido judicialmente e
-              por que grandes operadoras recuam quando enfrentam um advogado combativo.
-            </p>
-            <a href={WPP("Vi o vídeo e gostaria de conversar sobre meu caso")} class="btn btn-primary" id="video-cta" data-message="Vi o vídeo e gostaria de conversar sobre meu caso">
-              Falar com o Dr. Glauco
-            </a>
-          </div>
-
-          <div class="video-player-wrapper" id="video-player" data-video-id="mOZtKBFkCAY" role="button" tabindex="0" aria-label="Assistir apresentação do Dr. Glauco Ramos sobre direito à saúde">
-            <img
-              src="https://img.youtube.com/vi/mOZtKBFkCAY/maxresdefault.jpg"
-              alt="Apresentação — Dr. Glauco Ramos sobre Direito à Saúde"
-              class="video-thumbnail"
-              loading="lazy"
-            />
-            <div class="video-play-btn">
-              <div class="play-icon-circle">
-                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </div>
-              <span class="video-play-label">Assistir Apresentação</span>
-            </div>
           </div>
         </div>
       </div>
@@ -629,10 +585,6 @@ const stickyCtaProps = {
               </p>
               <p class="form-footer-item">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                Sem ganho, sem cobrança
-              </p>
-              <p class="form-footer-item">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                 Plantão 24h — inclusive fins de semana
               </p>
             </div>
@@ -733,21 +685,6 @@ const stickyCtaProps = {
          ================================================ -->
     <StickyCtaBar {...stickyCtaProps} />
 
-    <!-- ================================================
-         FLOATING WHATSAPP (Desktop)
-         ================================================ -->
-    <a
-      href={WPP("URGENTE: Preciso de ajuda com meu plano de saúde")}
-      class="floating-whatsapp"
-      aria-label="Fale conosco no WhatsApp"
-      id="floating-wpp"
-      data-message="URGENTE: Preciso de ajuda com meu plano de saúde"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" fill="currentColor">
-        <path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0zM16.062 28.228h-.005c-2.319 0-4.489-.64-6.342-1.753l-.451-.267-4.675 1.227 1.247-4.559-.294-.467c-1.185-1.862-1.889-4.131-1.889-6.565 0-6.822 5.531-12.353 12.353-12.353s12.353 5.531 12.353 12.353c0 6.822-5.53 12.353-12.353 12.353h0z"/>
-      </svg>
-    </a>
-
     <LeadCaptureModal
       title="Fale com o Advogado de Plantão"
       subtitle="Deixe seus dados para análise urgente do seu caso:"
@@ -758,27 +695,6 @@ const stickyCtaProps = {
          SCRIPTS
          ================================================ -->
     <script>
-      // ── Video Lazy Load ───────────────────────────────
-      const videoPlayer = document.getElementById('video-player') as HTMLElement | null;
-      if (videoPlayer) {
-        const loadVideo = () => {
-          const videoId = videoPlayer.dataset.videoId;
-          const iframe = document.createElement('iframe');
-          iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
-          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-          iframe.allowFullscreen = true;
-          const thumb = videoPlayer.querySelector('.video-thumbnail') as HTMLElement | null;
-          const playBtn = videoPlayer.querySelector('.video-play-btn') as HTMLElement | null;
-          if (thumb) thumb.style.display = 'none';
-          if (playBtn) playBtn.style.display = 'none';
-          videoPlayer.appendChild(iframe);
-        };
-        videoPlayer.addEventListener('click', loadVideo);
-        videoPlayer.addEventListener('keydown', (e: KeyboardEvent) => {
-          if (e.key === 'Enter' || e.key === ' ') loadVideo();
-        });
-      }
-
       // ── FAQ Accordion ─────────────────────────────────
       document.querySelectorAll<HTMLButtonElement>('.faq-question').forEach(btn => {
         btn.addEventListener('click', () => {
