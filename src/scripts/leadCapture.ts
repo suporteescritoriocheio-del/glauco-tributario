@@ -340,23 +340,27 @@ function initWhatsAppInterceptors() {
         }
 
         // All other WhatsApp buttons → show modal form
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            // Get contextual message from the button's text or data attribute
-            let message = (button as HTMLAnchorElement).getAttribute('data-message');
-
-            // If no data-message, try to extract from href or use page title
-            if (!message) {
-                const href = (button as HTMLAnchorElement).href;
-                const urlParams = new URL(href).searchParams;
+        // Capture the WhatsApp URL before neutralizing href
+        const anchor = button as HTMLAnchorElement;
+        let message = anchor.getAttribute('data-message');
+        if (!message) {
+            try {
+                const urlParams = new URL(anchor.href).searchParams;
                 const textParam = urlParams.get('text');
                 message = textParam ? decodeURIComponent(textParam) : getWhatsAppMessage(document.title);
+            } catch {
+                message = getWhatsAppMessage(document.title);
             }
+        }
+        const modalUrl = buildWhatsAppUrl(phoneNumber, message);
 
-            // Build dynamic WhatsApp URL with consistent phone and contextual message
-            const url = buildWhatsAppUrl(phoneNumber, message);
-            showModal(url);
+        // Neutralize href so GTM doesn't intercept this click and navigate
+        // (GTM fires window.location.href after 2s timeout otherwise)
+        anchor.href = '#';
+
+        anchor.addEventListener('click', (e) => {
+            e.preventDefault();
+            showModal(modalUrl);
         });
     });
 }
