@@ -1,1315 +1,803 @@
 ---
 import SEO from "../components/SEO.astro";
-import "../styles/fraude-pix-copia.css";
-import LeadCaptureModal from "../components/LeadCaptureModal.astro";
+import StructuredData from "../components/StructuredData.astro";
 import FormScript from "../components/FormScript.astro";
+import LeadCaptureModal from "../components/LeadCaptureModal.astro";
+import ArticleInsightsSection from "../components/ArticleInsightsSection.astro";
+import HeroSection from "../components/HeroSection.astro";
+import StickyCtaBar from "../components/StickyCtaBar.astro";
+import type { ArticleFeedSource } from "../config/articleFeed";
+import heroContent from "../data/heroes/direito-a-saude.json";
+import "../styles/direito-a-saude.css";
+
+const pageTitle = "Liminar contra Plano de Saúde | Glauco Ramos Advocacia";
+const pageDescription =
+  "Negativa de cirurgia, exame ou home care? Revertemos em horas via plantão judiciário — inclusive finais de semana. +30 anos de experiência. Sem ganho, sem cobrança.";
+
+const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
+const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
+
+const articleSource: ArticleFeedSource = {
+  type: "manual",
+  articles: [
+    {
+      category: "Direito à Saúde",
+      title: "Plano de Saúde Negou Cirurgia? Entenda Seus Direitos",
+      excerpt:
+        "Descubra como a jurisprudência do STJ garante que o médico assistente, e não o auditor do plano, define o material necessário ao ato cirúrgico.",
+      href: "https://glaucoramos.com.br/blog/",
+      image: {
+        src: "/img/article-planejamento-tributario.svg",
+        alt: "Ilustração editorial sobre direitos do paciente contra plano de saúde",
+      },
+    },
+    {
+      category: "Liminar Judicial",
+      title: "Carência em Urgência: A Lei que o Plano Não Conta a Você",
+      excerpt:
+        "A Lei 9.656/98 e a Súmula 597 do STJ são claras: em risco iminente de vida, a carência cai para 24 horas. Saiba como acionar esse direito imediatamente.",
+      href: "https://glaucoramos.com.br/blog/",
+      image: {
+        src: "/img/article-holding-familiar.svg",
+        alt: "Ilustração editorial sobre liminar judicial em urgência médica",
+      },
+    },
+    {
+      category: "Oncologia e Alto Custo",
+      title: "Medicamentos de Alto Custo: O Rol da ANS Não é Absoluto",
+      excerpt:
+        "Com a Lei 14.454/2022, o Rol da ANS perdeu caráter taxativo. Se houver eficácia atestada por CONITEC, ANVISA ou FDA, o fornecimento é obrigatório.",
+      href: "https://glaucoramos.com.br/blog/",
+      image: {
+        src: "/img/article-recuperacao-judicial.svg",
+        alt: "Ilustração editorial sobre medicamentos de alto custo e plano de saúde",
+      },
+    },
+  ],
+};
+
+const stickyCtaProps = {
+  ariaLabel: "Barra de contato rápido — direito à saúde",
+  title: "Negativa do Plano?",
+  subtitle: "Fale com o advogado de plantão agora",
+  ctas: [
+    {
+      href: WPP("URGENTE: Tive uma negativa do plano e preciso falar com um especialista agora"),
+      label: "WhatsApp de Plantão",
+      variant: "whatsapp" as const,
+      icon: "whatsapp" as const,
+      id: "sticky-whatsapp",
+      dataMessage: "URGENTE: Tive uma negativa do plano e preciso falar com um especialista agora",
+      ariaLabel: "Falar via WhatsApp com especialista em direito à saúde",
+    },
+  ],
+};
 ---
 
+<!doctype html>
 <html lang="pt-BR">
-    <head>
-        <SEO
-            title="Liminar contra Plano de Saúde e SUS | Glauco Ramos Advocacia"
-            description="Negativa de cirurgia, exames ou home care? Atuamos no Plantão Judiciário para reverter abusos de planos de saúde imediatamente. Atendimento emergencial 24h."
-        />
-        <style>
-            /* Specific overrides for this page to make it denser and more impactful */
-            :root {
-                --color-primary: #002d62; /* Deep Blue for Trust/Health */
-                --color-primary-dark: #001f44;
-                --color-accent: #e53935; /* Urgent Red */
-                --color-accent-hover: #c62828;
-                --color-gold: #d4af37;
-            }
-            .urgency-badge {
-                background-color: var(--color-accent);
-                color: white;
-                padding: 10px 20px;
-                border-radius: 50px;
-                display: inline-block;
-                font-weight: bold;
-                margin-bottom: 2rem;
-                font-size: 0.9rem;
-                letter-spacing: 0.5px;
-                box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
-                animation: pulse-red 2s infinite;
-            }
-            @keyframes pulse-red {
-                0% {
-                    box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.7);
-                }
-                70% {
-                    box-shadow: 0 0 0 15px rgba(229, 57, 53, 0);
-                }
-                100% {
-                    box-shadow: 0 0 0 0 rgba(229, 57, 53, 0);
-                }
-            }
-            .hero {
-                background:
-                    linear-gradient(
-                        rgba(0, 45, 98, 0.9),
-                        rgba(0, 45, 98, 0.95)
-                    ),
-                    url("/images/hospital-background.jpg") center/cover;
-                background-attachment: scroll;
-                padding: 5rem 0 3rem;
-                min-height: 100svh;
-                display: flex;
-                align-items: center;
-            }
-            .hero .container {
-                padding-top: 1rem;
-            }
-            .hero-logo {
-                display: block;
-                width: 80px;
-                height: auto;
-                margin: 0 auto 1.5rem;
-                filter: brightness(1.1);
-            }
-            .hero-trust {
-                display: flex;
-                gap: 0.75rem;
-                justify-content: center;
-                align-items: center;
-                flex-wrap: wrap;
-                margin-top: 1rem;
-                font-size: 0.8rem;
-                color: rgba(255,255,255,0.7);
-            }
-            .hero h1 {
-                font-size: clamp(1.8rem, 4.5vw, 3rem);
-                line-height: 1.1;
-                margin-bottom: 1.5rem;
-                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            }
-            .hero-subtitle {
-                font-size: clamp(0.95rem, 2vw, 1.2rem);
-                max-width: 900px;
-                margin: 0 auto 3rem;
-                color: #e0e0e0;
-                line-height: 1.6;
-            }
-            .btn-danger {
-                background: var(--color-accent);
-                color: white;
-            }
-            .btn-danger:hover {
-                background: var(--color-accent-hover);
-            }
-            .situation-card {
-                border-top: 5px solid var(--color-accent);
-                transition:
-                    transform 0.3s ease,
-                    box-shadow 0.3s ease;
-            }
-            .situation-card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-            }
-            .statistics-section {
-                background: var(--color-primary);
-                color: white;
-                padding: 60px 0;
-            }
-            .stat-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 2rem;
-                text-align: center;
-            }
-            .stat-item h4 {
-                font-size: 3rem;
-                color: var(--color-gold);
-                margin-bottom: 0.5rem;
-            }
-            .stat-item p {
-                font-size: 1.1rem;
-                font-weight: 500;
-            }
-            .pain-point-list {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            .pain-point-list li {
-                padding: 15px 0 15px 45px;
-                position: relative;
-                font-size: 1.2rem;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            }
-            .pain-point-list li:before {
-                content: "❌";
-                position: absolute;
-                left: 0;
-                top: 15px;
-            }
-            .solution-list li:before {
-                content: "✅";
-            }
-            .testimonial-card {
-                background: white;
-                padding: 2rem;
-                border-radius: 10px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-                margin-bottom: 2rem;
-                position: relative;
-            }
-            .testimonial-card::before {
-                content: '"';
-                font-size: 8rem;
-                color: rgba(212, 175, 55, 0.2);
-                position: absolute;
-                top: -20px;
-                left: 20px;
-                font-family: serif;
-            }
-            .timeline-content p {
-                color: var(--color-text) !important;
-                font-weight: 500;
-                line-height: 1.6;
-            }
-            .section-alt {
-                background-color: #f8f9fa !important;
-            }
-            .situation-card ul li {
-                color: #2c3e50;
-                font-size: 1.05rem;
-                line-height: 1.6;
-                margin-bottom: 1rem;
-            }
-            .pain-point-list li {
-                color: #2c3e50;
-                font-size: 1.15rem;
-                font-weight: 500;
-                line-height: 1.5;
-            }
-            .solution-list li {
-                color: #1a252f;
-                font-weight: 600;
-            }
-            .faq-item p {
-                font-size: 1rem;
-                line-height: 1.6;
-                color: #34495e;
-                padding: 1rem 0;
-            }
-            .faq-item summary {
-                font-size: 1.15rem;
-                font-weight: 700;
-                color: var(--color-primary-dark);
-                cursor: pointer;
-                padding: 1rem 0;
-                border-bottom: 1px solid #ddd;
-            }
-            @media (max-width: 768px) {
-                .hero {
-                    padding: 3rem 0 2rem;
-                    min-height: 100svh;
-                    align-items: center;
-                    background-attachment: scroll;
-                }
-                .hero-logo {
-                    width: 60px;
-                    margin-bottom: 0.75rem;
-                }
-                .urgency-badge {
-                    margin-bottom: 0.8rem;
-                    padding: 8px 12px;
-                    font-size: 0.75rem;
-                }
-                .hero h1 {
-                    font-size: 1.6rem !important;
-                    margin-bottom: 0.8rem;
-                    line-height: 1.15;
-                }
-                .hero-subtitle {
-                    font-size: 0.95rem !important;
-                    margin-bottom: 1.2rem !important;
-                    line-height: 1.4;
-                }
-                .hero .btn-large {
-                    font-size: 0.85rem !important;
-                    padding: 0.9rem 1.5rem !important;
-                }
-                .hero .hero-cta-group {
-                    gap: 0.5rem !important;
-                    margin-bottom: 1rem !important;
-                }
-                .hero .hero-cta-subtext {
-                    font-size: 0.85rem !important;
-                }
-                .hero .hero-urgency {
-                    gap: 0.5rem !important;
-                    flex-direction: column;
-                    font-size: 0.8rem;
-                }
-                .hero .hero-urgency span {
-                    font-size: 0.8rem;
-                }
-                .hero-trust {
-                    font-size: 0.72rem;
-                    gap: 0.4rem;
-                }
-                .hero-trust span:nth-child(2),
-                .hero-trust span:nth-child(4) {
-                    display: none;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Google Tag Manager (noscript) -->
-        <noscript>
-            <iframe
-                src="https://www.googletagmanager.com/ns.html?id=GTM-58XT4LRL"
-                height="0"
-                width="0"
-                style="display:none;visibility:hidden"></iframe>
-        </noscript>
+  <head>
+    <SEO title={pageTitle} description={pageDescription} />
+    <StructuredData />
+  </head>
 
-        <!-- 1. HERO SECTION MAIS DENSA -->
-        <section class="hero">
-            <div class="container text-center">
-                <img src="/img/logo-glauco-ramos.webp" alt="Glauco Ramos Advocacia" class="hero-logo" width="80" height="80" />
-                <div class="urgency-badge">
-                    ⚠️ URGENTE: Seu plano pode ser obrigado a cobrir seu tratamento hoje
-                </div>
-                <h1 style="font-weight: 800;">
-                    Plano de Saúde Negou seu Tratamento? Podemos Reverter em Horas
-                </h1>
-                <p
-                    class="hero-subtitle"
-                    style="color: #f8f9fa; font-size: 1.3rem; font-weight: 500; text-shadow: 0 1px 3px rgba(0,0,0,0.8);"
-                >
-                    Negativa de cirurgia, exame ou home care é ilegal. Conseguimos liminares no plantão judiciário, inclusive finais de semana e feriados.
-                </p>
+  <body>
+    <!-- GTM noscript -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-58XT4LRL"
+        height="0" width="0"
+        style="display:none;visibility:hidden"></iframe>
+    </noscript>
 
-                <div
-                    style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-bottom: 2rem;"
-                    class="hero-cta-group"
-                >
-                    <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=URGENTE:%20Tive%20uma%20negativa%20sensível%20do%20plano%20e%20preciso%20falar%20com%20um%20especialista%20agora"
-                        class="btn btn-primary btn-large"
-                        style="text-transform: uppercase; letter-spacing: 1px; width: 100%; max-width: 500px;"
-                        data-message="URGENTE: Tive uma negativa sensível do plano e preciso falar com um especialista agora"
-                    >
-                        ACIONAR O ADVOGADO DE PLANTÃO AGORA
-                    </a>
-                    <p
-                        class="hero-cta-subtext"
-                        style="color: #ffffff; font-size: 1.1rem; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.5);"
-                    >
-                        Atendimento Imediato pelo WhatsApp. Não aguarde o
-                        horário comercial.
-                    </p>
-                </div>
+    <!-- ================================================
+         1. HERO — Layout Esquerda+Direita
+         ================================================ -->
+    <HeroSection
+      content={heroContent}
+      logo={{
+        src: "/img/logo-glauco-ramos.webp",
+        alt: "Glauco Ramos Advocacia",
+        width: 60,
+        height: 60,
+        loading: "eager",
+      }}
+      image={{
+        src: "/img/glauco-ramos-advogado.jpg",
+        alt: "Dr. Glauco Ramos — Especialista em Direito à Saúde",
+        width: 420,
+        loading: "eager",
+      }}
+      primaryCtaHref={WPP("URGENTE: Tive uma negativa do plano e preciso falar com um especialista agora")}
+      primaryCtaId="hero-cta-whatsapp"
+      primaryCtaDataMessage="URGENTE: Tive uma negativa do plano e preciso falar com um especialista agora"
+    />
 
-                <p class="hero-urgency">
-                    ✓ Plantão judiciário 24h | ✓ Liminar em horas | ✓ Sem ganho, sem cobrança
-                </p>
-                <div class="hero-trust">
-                    <span>⭐⭐⭐⭐⭐ 4.5 no Google (31 avaliações)</span>
-                    <span>•</span>
-                    <span>OAB/PR</span>
-                    <span>•</span>
-                    <span>Ex-Procurador Jurídico Municipal</span>
-                </div>
+    <!-- ================================================
+         2. FAIXA DE CONFIANÇA
+         ================================================ -->
+    <div class="trust-bar" role="complementary" aria-label="Indicadores de credibilidade">
+      <div class="container">
+        <div class="trust-bar-inner">
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span><strong>4.5/5</strong> no Google · 31 avaliações verificadas</span>
+          </div>
+          <span class="trust-sep">|</span>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>OAB/PR — Inscrito e em dia</span>
+          </div>
+          <span class="trust-sep">|</span>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Plantão 24h · Feriados e fins de semana</span>
+          </div>
+          <span class="trust-sep">|</span>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Sem ganho, sem cobrança</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================
+         3. MANIFESTO / IDENTIFICAÇÃO DA DOR
+         ================================================ -->
+    <section class="manifesto section">
+      <div class="container">
+        <div class="manifesto-inner">
+          <h2>A Negativa do Seu Plano Não é um Erro — É uma Estratégia Calculada</h2>
+          <p>
+            Grandes operadoras de saúde empregam equipes inteiras de auditores e advogados com uma
+            única missão: encontrar brechas contratuais e regulatórias para negar coberturas. Para elas,
+            cada negativa representa economia direta. Para você, representa risco de vida.
+          </p>
+          <p>
+            O escritório Glauco Ramos Advocacia atua de forma combativa e urgente — com mais de 30 anos
+            de experiência no contencioso civil, obtemos liminares judiciais que obrigam operadoras a
+            cumprir sua obrigação legal, inclusive durante a madrugada, fins de semana e feriados, quando
+            a situação não pode esperar o horário comercial.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         4. ESTATÍSTICAS / NÚMEROS DE IMPACTO
+         ================================================ -->
+    <section class="stats-section section-alt">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">92%</span>
+            <p class="stat-desc">das negativas baseadas no "Rol da ANS" são revertidas na Justiça quando há laudo médico justificado</p>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">24h</span>
+            <p class="stat-desc">é o prazo máximo de carência permitido por lei em casos de urgência ou emergência médica com risco de vida</p>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <p class="stat-desc">da decisão técnica sobre o tratamento é do médico assistente, nunca do auditor ou junta burocrática do plano</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         5. SITUAÇÕES — ÁREAS DE ATUAÇÃO
+         ================================================ -->
+    <section class="services-section" id="solucoes">
+      <div class="container">
+        <h2 class="section-heading">Situações em que Atuamos</h2>
+        <p class="section-subheading">Cada negativa tem uma base legal específica para ser revertida</p>
+
+        <div class="services-grid">
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <h3>Cirurgias e Materiais (OPME)</h3>
+            <p>O plano autoriza a cirurgia mas nega o material prescrito pelo cirurgião. O STJ é claro: quem define o material é o médico, não o auditor.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <h3>Carência em Urgência</h3>
+            <p>Internação negada por carência durante risco de vida. A Lei 9.656/98 e Súmula 597 do STJ reduzem a carência para 24 horas em emergências.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M9 12h6m-3-3v6m-7 4V5a2 2 0 012-2h10a2 2 0 012 2v14l-7-3-7 3z"/></svg>
+            <h3>Oncologia e Alto Custo</h3>
+            <p>Medicamentos biológicos ou quimioterapia oral negados. Com a Lei 14.454/2022, o Rol da ANS não é mais taxativo — eficácia comprovada obriga o fornecimento.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <h3>Home Care e Internação Domiciliar</h3>
+            <p>Programa de atenção domiciliar negado como "conforto". Os TJs brasileiros consolidaram que Home Care com indicação médica é extensão da internação hospitalar.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            <h3>SUS — Ação Judicial Pública</h3>
+            <p>Sem plano privado? Acionamos Liminares Federais e Estaduais contra Estado e União para garantir leitos de UTI, transferências e medicamentos de alto custo.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <h3>Negativa Tática ("Em Análise")</h3>
+            <p>Plano que fica eternamente "em análise" para desgastar o paciente. Prints do portal + laudo médico são suficientes para embasar a liminar.</p>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <a href={WPP("Preciso de ajuda urgente com meu plano de saúde")} class="btn btn-primary btn-large" id="services-cta">
+            Analisar Minha Situação Gratuitamente
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         5b. CONTRASTE DOR VS SOLUÇÃO
+         ================================================ -->
+    <section class="pain-solution section-alt">
+      <div class="container">
+        <div class="pain-solution-inner">
+          <div class="pain-col">
+            <h3 class="pain-col-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              O Que o Teleatendimento Diz
+            </h3>
+            <ul class="pain-list">
+              <li>"Seu contrato é antigo, não adaptado à lei nova."</li>
+              <li>"O médico pediu material importado, cobrimos apenas o similar nacional."</li>
+              <li>"A ANS não nos obriga a cobrir esse medicamento quimioterápico oral."</li>
+              <li>"Precisa entrar com pedido de reanálise para nossa junta médica interna."</li>
+            </ul>
+            <div class="pain-alert">
+              <p>Enquanto você gasta horas no SAC, a doença avança. Eles apostam no seu cansaço emocional e patrimonial.</p>
             </div>
-        </section>
+          </div>
 
-        <!-- 2. ESTATÍSTICAS E CONSCIENTIZAÇÃO -->
-        <section class="statistics-section">
-            <div class="container">
-                <div class="stat-grid">
-                    <div class="stat-item">
-                        <h4>92%</h4>
-                        <p>
-                            Das negativas de planos de saúde baseadas no "Rol da
-                            ANS" são revertidas na Justiça quando há laudo
-                            médico justificado.
-                        </p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>24h</h4>
-                        <p>
-                            É o prazo máximo permitido por lei (Lei 9.656/98)
-                            para carência em casos de urgência ou emergência
-                            médica (Risco de Vida).
-                        </p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>100%</h4>
-                        <p>
-                            A exclusividade da decisão técnica sobre o
-                            tratamento é do seu Médico, e não do auditor ou da
-                            junta burocrática do plano.
-                        </p>
-                    </div>
-                </div>
+          <div class="solution-col">
+            <h3 class="solution-col-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              O Que o Judiciário Impõe a Eles
+            </h3>
+            <ul class="solution-list">
+              <li>É abusiva a cláusula que restringe direitos fundamentais inerentes ao contrato de plano de saúde.</li>
+              <li>A limitação de tempo de internação em UTI é cláusula abusiva e gera indenização moral severa.</li>
+              <li>A recusa indevida agrava o sofrimento psicológico de quem está vulnerável — isso gera <strong>Danos Morais</strong>.</li>
+              <li>Multa diária (astreintes) de R$ 1.000 a R$ 50.000 caso o plano descumpra a liminar do juiz.</li>
+            </ul>
+            <a href={WPP("Quero entrar com ação contra meu plano de saúde")} class="btn btn-primary" id="pain-solution-cta" data-message="Quero entrar com ação contra meu plano de saúde">
+              Agir Agora
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         6. VIDEO (Lazy Load)
+         ================================================ -->
+    <section class="video-section">
+      <div class="container">
+        <div class="video-layout">
+          <div class="video-content">
+            <span class="video-label">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Assista ao vídeo
+            </span>
+            <h2>Como Funciona a Liminar Judicial de Urgência</h2>
+            <p>
+              Antes de tomar qualquer decisão, entenda como atuamos. Nossa metodologia combina
+              <strong>triagem imediata dos documentos médicos</strong> com acesso direto ao
+              plantão judiciário — obtendo liminares em horas, não em semanas.
+            </p>
+            <p>
+              Dr. Glauco Ramos explica como o direito à saúde é garantido judicialmente e
+              por que grandes operadoras recuam quando enfrentam um advogado combativo.
+            </p>
+            <a href={WPP("Vi o vídeo e gostaria de conversar sobre meu caso")} class="btn btn-primary" id="video-cta" data-message="Vi o vídeo e gostaria de conversar sobre meu caso">
+              Falar com o Dr. Glauco
+            </a>
+          </div>
+
+          <div class="video-player-wrapper" id="video-player" data-video-id="mOZtKBFkCAY" role="button" tabindex="0" aria-label="Assistir apresentação do Dr. Glauco Ramos sobre direito à saúde">
+            <img
+              src="https://img.youtube.com/vi/mOZtKBFkCAY/maxresdefault.jpg"
+              alt="Apresentação — Dr. Glauco Ramos sobre Direito à Saúde"
+              class="video-thumbnail"
+              loading="lazy"
+            />
+            <div class="video-play-btn">
+              <div class="play-icon-circle">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="video-play-label">Assistir Apresentação</span>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- 3. IDENTIFICAÇÃO DA SITUAÇÃO PROFUNDA -->
-        <section class="section section-alt">
-            <div class="container">
-                <h2
-                    class="text-center"
-                    style="font-weight: 800; color: var(--color-primary-dark);"
-                >
-                    Qual Desespero a Operadora Está Fazendo Você Passar?
-                </h2>
-                <p
-                    class="section-subtitle text-center"
-                    style="max-width: 800px; margin: 0 auto 3rem; color: #2c3e50; font-size: 1.25rem; font-weight: 500;"
-                >
-                    As negativas não são falhas pontuais, são estratégias
-                    corporativas de redução de custo (Glosa). Seu desespero é
-                    calculado nas planilhas deles. Veja como nós quebramos essa
-                    lógica.
-                </p>
+    <!-- ================================================
+         7. COMO FUNCIONA — PROCESSO PASSO A PASSO
+         ================================================ -->
+    <section class="process-section section-alt" id="como-funciona">
+      <div class="container">
+        <h2 class="section-heading">Como Funciona a Liminar e o Plantão 24h</h2>
+        <p class="section-subheading">Da sua mensagem à ordem judicial — tudo em horas</p>
 
-                <div class="situation-grid">
-                    <div class="situation-card urgency-max">
-                        <div
-                            class="situation-badge"
-                            style="background: var(--color-primary-dark); color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5); padding: 8px 12px; border-radius: 4px; display: inline-block;"
-                        >
-                            🩺 CIRURGIAS E MATERIAIS ESPECIAIS (OPME)
-                        </div>
-                        <h3>
-                            O Médico prescreveu o melhor material. O plano quer
-                            o mais barato.
-                        </h3>
-                        <ul>
-                            <li>
-                                <strong>A Tática do Plano:</strong> Eles autorizam
-                                a cirurgia, mas negam o stent importado, a prótese
-                                ortopédica específica ou o marcapasso de última geração
-                                alegando "ausência de cobertura contratual" ou "não
-                                constar no rol".
-                            </li>
-                            <li>
-                                <strong>A Realidade Legal:</strong> O STJ (Superior
-                                Tribunal de Justiça) já consolidou que quem determina
-                                o material para o sucesso do ato cirúrgico é o cirurgião
-                                assistente. O plano não pode fragmentar a cobertura.
-                            </li>
-                            <li>
-                                <strong>Nossa Ação Célere:</strong> Mandado Judicial
-                                Liminar obrigando a liberação global e irrestrita
-                                dos materiais exatos solicitados no pedido médico,
-                                sob pena de prisão do diretor da operadora.
-                            </li>
-                        </ul>
-                        <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Negaram%20minha%20cirurgia%20ou%20material%20(OPME)%20-%20Preciso%20de%20ajuda"
-                            class="btn btn-primary"
-                            style="width: 100%; text-align: center;"
-                            data-message="Negaram minha cirurgia ou material (OPME) - Preciso de ajuda"
-                            >LIBERAR MINHA CIRURGIA</a
-                        >
-                    </div>
-
-                    <div class="situation-card urgency-max">
-                        <div
-                            class="situation-badge"
-                            style="background: var(--color-accent); color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5); padding: 8px 12px; border-radius: 4px; display: inline-block;"
-                        >
-                            🚨 TEMPO É VIDA: CARÊNCIA EM URGÊNCIA
-                        </div>
-                        <h3>
-                            O paciente corre risco de vida e o plano exige 180
-                            dias.
-                        </h3>
-                        <ul>
-                            <li>
-                                <strong>A Tática do Plano:</strong> O paciente infarta,
-                                sofre um AVC grave ou entra em trabalho de parto prematuro.
-                                No balcão do hospital, o plano bloqueia a internação
-                                em UTI alegando que o contrato é novo e a carência
-                                hospitalar não foi cumprida.
-                            </li>
-                            <li>
-                                <strong>A Realidade Legal:</strong> A legislação (Lei
-                                9.656/98 e Súmula 597 do STJ) é absolutamente taxativa:
-                                em cenários atestados no pronto-socorro como "risco
-                                iminente de morte ou lesões irreparáveis", a carência
-                                universal cai automaticamente para 24 horas.
-                            </li>
-                            <li>
-                                <strong>Nossa Ação Célere:</strong> Despachamos com
-                                o Juiz de Plantão (na mesma hora) uma Liminar Inaudita
-                                Altera Pars ordenando a internação imediata em UTI
-                                ou a transferência custeada pelo plano.
-                            </li>
-                        </ul>
-                        <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Plano%20alegou%20carência%20no%20meio%20de%20um%20risco%20de%20vida"
-                            class="btn btn-primary"
-                            style="width: 100%; text-align: center;"
-                            data-message="Plano alegou carência no meio de um risco de vida"
-                            >QUEBRAR CARÊNCIA AGORA</a
-                        >
-                    </div>
-
-                    <div class="situation-card urgency-max">
-                        <div
-                            class="situation-badge"
-                            style="background: var(--color-primary-dark); color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5); padding: 8px 12px; border-radius: 4px; display: inline-block;"
-                        >
-                            💊 ONCOLOGIA E ALTO CUSTO
-                        </div>
-                        <h3>
-                            A quimioterapia oral de 40 mil reais que salva vidas
-                            foi negada.
-                        </h3>
-                        <ul>
-                            <li>
-                                <strong>A Tática do Plano:</strong> Focando em terapias
-                                genéticas de ponta ou medicações biológicas modernas
-                                (como pembrolizumabe, nivolumabe), os planos e o SUS
-                                se recusam veementemente a custear, utilizando a "ausência
-                                no Rol da ANS" como escudo absoluto.
-                            </li>
-                            <li>
-                                <strong>A Realidade Legal:</strong> Com o advento
-                                da Lei 14.454/2022 aprovada pelo Congresso, o Rol
-                                da ANS perdeu seu caráter "taxativo". Se existir eficácia
-                                atestada por órgãos como CONITEC, ANVISA ou agências
-                                internacionais (FDA), o fornecimento é cogente (obrigatório).
-                            </li>
-                            <li>
-                                <strong>Nossa Ação Célere:</strong> Ação Cominatória
-                                com Pedido de Fornecimento Contínuo, garantindo que
-                                o ciclo completo receitado pelo oncologista seja fornecido
-                                sem interrupções.
-                            </li>
-                        </ul>
-                        <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Negaram%20meu%20tratamento%20de%20alto%20custo"
-                            class="btn btn-primary"
-                            style="width: 100%; text-align: center;"
-                            data-message="Negaram meu tratamento de alto custo"
-                            >OBRIGAR O FORNECIMENTO</a
-                        >
-                    </div>
-
-                    <div class="situation-card urgency-max">
-                        <div
-                            class="situation-badge"
-                            style="background: var(--color-primary-dark); color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5); padding: 8px 12px; border-radius: 4px; display: inline-block;"
-                        >
-                            🏠 HOME CARE (INTERNAÇÃO DOMICILIAR)
-                        </div>
-                        <h3>
-                            A Alta complexo negada sob falsa premissa de
-                            "cuidador de idoso".
-                        </h3>
-                        <ul>
-                            <li>
-                                <strong>A Tática do Plano:</strong> Pacientes com
-                                ELA, distrofias, ou sequelas severas de AVC recebem
-                                indicação de seguir com UTI em casa (Home Care) para
-                                evitar infecções hospitalares. O plano nega, alegando
-                                exclusão contratual e dizendo que se trata apenas
-                                de "serviço de conforto".
-                            </li>
-                            <li>
-                                <strong>A Realidade Legal:</strong> Inúmeras súmulas
-                                dos Tribunais de Justiça do Brasil (ex: TJSP, TJPR)
-                                determinam que, havendo recomendação médica para transição
-                                hospital-domicílio, o Home Care se torna um sucedâneo
-                                (extensão) da internação cobrindo fisio, fono, técnicos
-                                e equipamentos vitais (BiPAP/O2).
-                            </li>
-                            <li>
-                                <strong>Nossa Ação Célere:</strong> Liminar impondo
-                                a implantação do PAD (Programa de Atenção Domiciliar)
-                                integral no prazo de 48h na residência do paciente.
-                            </li>
-                        </ul>
-                        <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Preciso%20de%20ajuda%20urgente%20com%20Liminar%20para%20Home%20Care"
-                            class="btn btn-primary"
-                            style="width: 100%; text-align: center;"
-                            data-message="Preciso de ajuda urgente com Liminar para Home Care"
-                            >GARANTIR MEU HOME CARE</a
-                        >
-                    </div>
-                </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-number">1</div>
+            <div class="timeline-content">
+              <h3>Triagem Imediata (Kit Salva-Vidas)</h3>
+              <p>
+                Você nos aciona pelo WhatsApp. Solicitamos imediatamente 3 documentos essenciais:
+                o relatório médico com a expressão "urgência", a negativa formal do convênio (ou
+                print do portal) e seu documento de identidade com comprovante de residência.
+              </p>
             </div>
-        </section>
+          </div>
 
-        <!-- 4. CONTRASTE DA DOR VS SOLUÇÃO -->
-        <section class="section">
-            <div class="container">
-                <div
-                    style="display: flex; flex-wrap: wrap; gap: 4rem; align-items: center;"
-                >
-                    <div style="flex: 1; min-width: 300px;">
-                        <h2
-                            style="color: var(--color-accent); margin-bottom: 2rem; font-weight: 800;"
-                        >
-                            As Mentiras que o Teleatendimento Conta a Você
-                        </h2>
-                        <ul
-                            class="pain-point-list"
-                            style="margin-bottom: 2rem;"
-                        >
-                            <li>
-                                "Infelizmente, seu contrato é antigo, não
-                                adaptado à lei nova."
-                            </li>
-                            <li>
-                                "O médico solicitou material importado, nós só
-                                cobrimos o similar nacional."
-                            </li>
-                            <li>
-                                "A ANS não obriga a gente a cobrir esse
-                                medicamento quimioterápico via oral."
-                            </li>
-                            <li>
-                                "O Sr. precisa entrar com o pedido de reanálise
-                                para nossa junta médica interna (para ganhar
-                                tempo)."
-                            </li>
-                        </ul>
-                        <div
-                            class="urgency-alert"
-                            style="background: rgba(229, 57, 53, 0.08); padding: 1.5rem; border-left: 5px solid var(--color-accent); border-radius: 4px;"
-                        >
-                            <p
-                                style="margin: 0; color: #c0392b; font-weight: 700; font-size: 1.1rem; line-height: 1.6;"
-                            >
-                                Enquanto você gasta horas no SAC protocolando
-                                reclamações, a doença avança. Eles apostam no
-                                seu cansaço patrimonial e emocional.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div style="flex: 1; min-width: 300px;">
-                        <h2
-                            style="color: var(--color-primary-dark); margin-bottom: 2rem; font-weight: 800;"
-                        >
-                            A Realidade que o Judiciário Impõe a Eles
-                        </h2>
-                        <ul
-                            class="pain-point-list solution-list"
-                            style="margin-bottom: 2rem;"
-                        >
-                            <li>
-                                É abusiva a cláusula que restringe direitos
-                                fundamentais inerentes à natureza do contrato de
-                                plano de saúde.
-                            </li>
-                            <li>
-                                Se a operadora limitou o tempo de internação em
-                                UTI (cláusula abusiva), ela paga indenização
-                                moral severa.
-                            </li>
-                            <li>
-                                A recusa indevida agrava a aflição e o
-                                sofrimento psicológico de quem já se encontra
-                                vulnerável. <strong
-                                    >Isso gera Danos Morais.</strong
-                                >
-                            </li>
-                            <li>
-                                Ordem de multa diária (Astreintes) variando de
-                                R$ 1.000 a R$ 50.000 caso o plano viole a
-                                Liminar do Juiz.
-                            </li>
-                        </ul>
-                        <a
-                            href="#contato"
-                            class="btn btn-primary"
-                            style="width: 100%; text-align: center;"
-                            >SAIR DO DISCURSO DELES E AGIR</a
-                        >
-                    </div>
-                </div>
+          <div class="timeline-item">
+            <div class="timeline-number">2</div>
+            <div class="timeline-content">
+              <h3>Montagem Tática da Petição (em horas)</h3>
+              <p>
+                Nossa equipe elabora imediatamente a petição inicial com a narrativa fática
+                ancorada na jurisprudência pacificada do STJ, requerendo Tutela Antecipada
+                Antecedente <em>Inaudita Altera Pars</em>.
+              </p>
             </div>
-        </section>
+          </div>
 
-        <!-- 5. COMO FUNCIONA O PLANTÃO - PROCESSO -->
-        <section class="section section-dark">
-            <div class="container">
-                <h2 class="text-center" style="font-weight: 800;">
-                    Como Funciona a Dinâmica da Liminar e o Plantão 24h
-                </h2>
-                <p
-                    class="section-subtitle text-center"
-                    style="max-width: 700px; margin: 0 auto 4rem; color: #f8f9fa; font-size: 1.25rem; font-weight: 400; opacity: 0.9;"
-                >
-                    Nós não trabalhamos com prazos alongados. O nosso serviço
-                    core é a entrega em caráter liminar via atuação combativa
-                    direta com o magistrado.
-                </p>
-
-                <div class="timeline" style="max-width: 900px; margin: 0 auto;">
-                    <div class="timeline-item">
-                        <div
-                            class="timeline-number"
-                            style="background: var(--color-gold); border-color: var(--color-gold);"
-                        >
-                            1
-                        </div>
-                        <div class="timeline-content">
-                            <h3 style="color: var(--color-gold);">
-                                O KIT SALVA-VIDAS (Triagem Imediata)
-                            </h3>
-                            <p>
-                                Você nos chama no WhatsApp. Nós exigimos de
-                                imediato 3 documentos capitais: O Relatório
-                                Médico detalhado com a expressão "URGÊNCIA", a
-                                negativa formal do convênio (ou prints do
-                                portal), e sua CNH/RG com comprovante de
-                                residência.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div
-                            class="timeline-number"
-                            style="background: var(--color-gold); border-color: var(--color-gold);"
-                        >
-                            2
-                        </div>
-                        <div class="timeline-content">
-                            <h3 style="color: var(--color-gold);">
-                                MONTAGEM TÁTICA DA PETIÇÃO (Em Horas)
-                            </h3>
-                            <p>
-                                Nossa retaguarda elabora imediatamente a inicial
-                                contendo a narrativa fática imantada à mais alta
-                                jurisprudência pacificada do STJ, pedindo o que
-                                chamamos de Tutela Antecipada Antecedente
-                                Inaudita Altera Pars.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div
-                            class="timeline-number"
-                            style="background: var(--color-gold); border-color: var(--color-gold);"
-                        >
-                            3
-                        </div>
-                        <div class="timeline-content">
-                            <h3 style="color: var(--color-gold);">
-                                O EMBATE NOTURNO (Juiz Plantonista)
-                            </h3>
-                            <p>
-                                Se a vida corre risco na madrugada, protocolo e
-                                ligo diretamente para o celular ou aciono via
-                                fórum o Oficial e o Juiz titular do Plantão
-                                Judiciário, fundamentando o perigo da demora
-                                (Periculum in Mora).
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div
-                            class="timeline-number"
-                            style="background: var(--color-gold); border-color: var(--color-gold);"
-                        >
-                            4
-                        </div>
-                        <div class="timeline-content">
-                            <h3 style="color: var(--color-gold);">
-                                CUMPRIMENTO OFICIAL POR OFICIAL DE JUSTIÇA
-                            </h3>
-                            <p>
-                                Comandamos que a ordem de bloqueio chegue
-                                diretamente via oficial de justiça nos diretores
-                                das unimeds, amils, hapvidas e bradescos do
-                                país. Se não cumprirem de imediato, sofrem
-                                bloqueio BacenJud nas contas da empresa.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+          <div class="timeline-item">
+            <div class="timeline-number">3</div>
+            <div class="timeline-content">
+              <h3>Embate com o Juiz Plantonista</h3>
+              <p>
+                Se a vida corre risco à noite ou no fim de semana, protocolamos e acionamos
+                diretamente o Juiz titular do Plantão Judiciário, fundamentando o perigo
+                da demora (<em>periculum in mora</em>).
+              </p>
             </div>
-        </section>
+          </div>
 
-        <!-- 6. EXPERIÊNCIA COMPROVADA -->
-        <section class="section about section-alt">
-            <div class="container">
-                <div class="about-grid">
-                    <div class="about-photo">
-                        <img src="/img/glauco-ramos-advogado.jpg" alt="Dr. Glauco Ramos — Advogado" width="280" />
-                        <div class="photo-caption">
-                            <strong>Dr. Glauco Ramos</strong>
-                            Especialista em Direito à Saúde
-                        </div>
-                    </div>
-                    <div class="about-content">
-                        <h2>
-                            Não Coloque a Causa da Sua Vida nas Mãos de
-                            Aventureiros
-                        </h2>
-
-                        <div
-                            style="display: flex; flex-direction: column; align-items: center; margin: 2.5rem 0;"
-                        >
-                            <img
-                                src="/images/glauco_rosto.jpg"
-                                alt="Dr. Glauco Ramos"
-                                style="width: 100%; max-width: 350px; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 5px solid white;"
-                            />
-                        </div>
-
-                        <h3
-                            style="font-size: 1.5rem; color: var(--color-primary); margin-top: 1rem; text-align: center;"
-                        >
-                            Dr. Glauco Ramos
-                        </h3>
-                        <p
-                            style="font-size: 1.15rem; line-height: 1.7; color: #34495e;"
-                        >
-                            Enfrentar conglomerados bilionários de saúde não é
-                            tarefa para advogados recém-formados operando em
-                            "clínica geral". Grandes bancas de operadoras
-                            destroem teses fracas.
-                        </p>
-                        <p
-                            style="font-size: 1.15rem; line-height: 1.7; color: #34495e;"
-                        >
-                            Formado pela rígida UEL (Universidade Estadual de
-                            Londrina), Dr. Glauco atuou no coração do sistema
-                            como Ex-Procurador Jurídico, e hoje orquestra uma
-                            visão predatória em favor do paciente. Possui mais
-                            de 30 anos de expertise forjada no contencioso civil
-                            bruto.
-                        </p>
-
-                        <div
-                            class="highlight-box"
-                            style="margin-top: 2rem; background: white; border-left: 5px solid var(--color-gold); padding: 1.5rem;"
-                        >
-                            <p
-                                style="font-style: italic; font-size: 1.25rem; color: #1a252f; margin: 0; font-weight: 600; line-height: 1.6;"
-                            >
-                                "A saúde deixou de ser um sacerdócio e virou uma
-                                planilha de lucros e dividendos para as
-                                operadoras na bolsa de valores. A única
-                                linguagem que eles entendem e respeitam não é o
-                                seu choro no balcão do hospital, é a caneta
-                                pesada de um Juiz de Direito com uma multa
-                                diária acoplada."
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="about-results">
-                        <div class="testimonial-card">
-                            <p
-                                style="position: relative; z-index: 1; font-size: 1.1rem; color: #2c3e50; font-style: italic; font-weight: 500; line-height: 1.7;"
-                            >
-                                "Meu pai estava precisando da válvula TAVI com
-                                urgência extrema (risco de infarto agudo). A
-                                Unimed negou alegando cobertura não prevista.
-                                Estávamos desesperados. Achamos o escritório às
-                                23h de uma sexta-feira. No sábado de manhã, o
-                                oficial de justiça já estava no hospital
-                                obrigando o plano a entregar o material de 90
-                                mil reais inteiro."
-                            </p>
-                            <div
-                                style="margin-top: 1rem; font-weight: bold; color: var(--color-primary);"
-                            >
-                                — Mônica R. Silva (Filha de Paciente)
-                            </div>
-                        </div>
-
-                        <div class="testimonial-card">
-                            <p
-                                style="position: relative; z-index: 1; font-size: 1.1rem; color: #2c3e50; font-style: italic; font-weight: 500; line-height: 1.7;"
-                            >
-                                "A Bradesco Saúde não queria aprovar meu
-                                tratamento oncológico de alto custo porque eu
-                                tinha menos de 2 anos de plano. O escritório
-                                montou uma liminar em poucas horas comprovando a
-                                quebra de carência na urgência oncológica. Hoje
-                                estou no 4º ciclo de quimio, tudo garantido por
-                                juiz."
-                            </p>
-                            <div
-                                style="margin-top: 1rem; font-weight: bold; color: var(--color-primary);"
-                            >
-                                — Roberto T. Alves (Paciente Oncológico)
-                            </div>
-                        </div>
-
-                        <div class="text-center" style="margin-top: 1.5rem;">
-                            <a
-                                href="https://api.whatsapp.com/send/?phone=554391244440&text=Quero%20ter%20a%20mesma%20vitória%20judicial%20contra%20o%20plano"
-                                class="btn btn-primary"
-                                style="width: 100%; padding: 1.2rem;"
-                                data-message="Quero ter a mesma vitória judicial contra o plano"
-                                >ESTOU PRONTO PARA PROCESSAR O PLANO</a
-                            >
-                        </div>
-                    </div>
-                </div>
+          <div class="timeline-item">
+            <div class="timeline-number">4</div>
+            <div class="timeline-content">
+              <h3>Cumprimento por Oficial de Justiça</h3>
+              <p>
+                A ordem judicial chega diretamente, via oficial de justiça, aos diretores da
+                operadora. Se não cumprirem imediatamente, sofrem bloqueio BacenJud nas contas
+                da empresa e o responsável responde por desobediência.
+              </p>
             </div>
-        </section>
+          </div>
+        </div>
 
-        <!-- 7. FAQ -->
-        <section class="section">
-            <div class="container">
-                <h2
-                    class="text-center"
-                    style="margin-bottom: 3rem; font-weight: 800; color: var(--color-primary-dark);"
-                >
-                    Dúvidas Frequentes: Desmascarando as Operadoras
-                </h2>
+        <div class="text-center mt-lg">
+          <a href={WPP("Preciso acionar o plantão judiciário contra meu plano de saúde")} class="btn btn-primary btn-large" id="process-cta" data-message="Preciso acionar o plantão judiciário contra meu plano de saúde">
+            Iniciar Meu Caso Agora
+          </a>
+        </div>
+      </div>
+    </section>
 
-                <div class="faq-list">
-                    <details class="faq-item">
-                        <summary
-                            >O plano nega dar a negativa por escrito. Eles
-                            enrolam dizendo "em análise". E agora?</summary
-                        >
-                        <p>
-                            Essa é uma praxe covarde e muito comum (A "glosa
-                            branca"). O plano enrola os prazos normativos da ANS
-                            (pela RN 259 prazos máximos de liberação não podem
-                            ultrapassar 21 dias). A inércia longa ou o "para
-                            sempre em análise" equiparam-se, perante os juízes,
-                            à negativa tática disfarçada. Nesses casos, o print
-                            do "Aguardando" eterno, atrelado à gravidade do
-                            laudo médio, embasa nossa liminar do mesmo jeito.
-                        </p>
-                    </details>
-
-                    <details class="faq-item">
-                        <summary
-                            >O plano disse que eu tenho que reembolsar o
-                            advogado. Isso é verdade?</summary
-                        >
-                        <p>
-                            De forma alguma. Isso é desinformação que atendentes
-                            são treinados a repassar para desestimular buscar a
-                            via judicial. Os honorários previstos no nosso caso
-                            são cobrados independentemente sob risco eminente.
-                            Muito pelo contrário, quando pedimos indenizações de
-                            Danos Morais pela negativa descabida, esses valores
-                            que você receberá ajudam ou até cobrem todo o
-                            investimento feito na sua defesa.
-                        </p>
-                    </details>
-
-                    <details class="faq-item">
-                        <summary
-                            >Se eu processar o plano, eles vão me perseguir ou
-                            cancelar meu contrato de retaliação?</summary
-                        >
-                        <p>
-                            Este é o maior medo e o maior mito. Operadoras são
-                            regidas à risca pela ANS e o CDC. Se o plano
-                            "cancelar" ou dificultar acessos normais num cliente
-                            amparado por liminar judiciária e que os processou,
-                            isso gera uma multa milionária pelo órgão regulador
-                            e processos criminais de desobediência em rito
-                            federal. O plano jamais mexe ou encosta um dedo em
-                            pacientes protegidos e representados pela
-                            combatividade do nosso Judiciário. Acredite: Você
-                            será muito mais respeitado nos guichês do que o
-                            paciente normal.
-                        </p>
-                    </details>
-
-                    <details class="faq-item">
-                        <summary
-                            >Eu dependo do SUS puro e liso na fila pública.
-                            Vocês fazem Liminar contra as Secretarias de Saúde
-                            também?</summary
-                        >
-                        <p>
-                            Absolutamente sim! Quando não há plano privado,
-                            forçamos o Sistema Único de Saúde. Acionamos
-                            Liminares Federais e Estaduais contra o Estado/União
-                            para que o paciente saia do desespero das "filas da
-                            Cross", dos "leitos zero" lotados e seja transferido
-                            compulsoriamente para UTI, ou receba remédios
-                            gravíssimos do Alto Custo Estadual (pelas Farmácias
-                            Judiciais).
-                        </p>
-                    </details>
-                </div>
+    <!-- ================================================
+         8. FUNDADOR
+         ================================================ -->
+    <section class="about section section-team" id="sobre">
+      <div class="container">
+        <div class="about-inner">
+          <div class="about-photo">
+            <img
+              src="/img/glauco-ramos-advogado.jpg"
+              alt="Dr. Glauco Ramos — Especialista em Direito à Saúde"
+              width="300"
+              loading="lazy"
+            />
+            <div class="photo-caption">
+              <strong>Dr. Glauco Ramos</strong>
+              Especialista em Direito à Saúde · OAB/PR
             </div>
-        </section>
+          </div>
 
-        <!-- 8. CTA FINAL COM FORMULÁRIO -->
-        <section class="section section-cta section-dark" id="contato">
-            <div class="container">
-                <h2
-                    style="color:var(--color-gold); font-size: 2.8rem; margin-bottom: 1rem; font-weight: 800; text-shadow: 0 2px 5px rgba(0,0,0,0.5);"
-                >
-                    Decida AGORA se vai esperar ou se vai lutar.
-                </h2>
-                <p
-                    class="section-subtitle"
-                    style="color: #f1f1f1; margin-bottom: 3rem; font-size: 1.3rem; font-weight: 500;"
-                >
-                    Preencha este protocolo tático rápido ou acione pelo botão
-                    direto. A nossa equipe de contingência jurídica assume a
-                    partir daqui.
-                </p>
+          <div class="about-content">
+            <h2 class="section-heading" style="text-align:left">Não Entregue a Causa da Sua Vida a Aventureiros</h2>
+            <p>
+              Enfrentar conglomerados bilionários de saúde não é tarefa para advogados em
+              "clínica geral". As grandes bancas das operadoras destroem teses técnicas fracas
+              com facilidade. É necessário experiência forjada no contencioso civil real.
+            </p>
+            <p>
+              Formado pela UEL, com especialização em Direito Tributário pelo IBET e mais de
+              30 anos de carreira — incluindo atuação como <strong>Ex-Procurador Jurídico Municipal</strong> —,
+              Dr. Glauco conhece o sistema por dentro e hoje o utiliza integralmente em favor do paciente.
+            </p>
 
-                <div
-                    class="urgency-alert"
-                    style="background:var(--color-accent); color: white; padding: 1.5rem; text-align: center; border-radius: 8px; margin-bottom: 3rem; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; gap: 1rem; box-shadow: 0 10px 20px rgba(229, 57, 53, 0.3);"
-                >
-                    <svg
-                        width="40"
-                        height="40"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        ><path
-                            d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"
-                        ></path></svg
-                    >
-                    Ações de Urgência no Plantão devem ser distribuídas rapidamente.
-                    O sistema PJe não para à noite.
-                </div>
+            <ul class="about-credentials">
+              <li><span class="cred-dot"></span> Especialização em Direito Tributário — IBET</li>
+              <li><span class="cred-dot"></span> Ex-Procurador Jurídico do Município de Rolândia-PR</li>
+              <li><span class="cred-dot"></span> Ex-Procurador da CMTU de Londrina</li>
+              <li><span class="cred-dot"></span> OAB/PR — Direito à Saúde e Contencioso Civil</li>
+              <li><span class="cred-dot"></span> Escritórios em São Paulo, Curitiba e Londrina</li>
+            </ul>
 
-                <div
-                    class="contact-grid"
-                    style="display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 800px; margin: 0 auto;"
-                >
-                    <form
-                        class="contact-form"
-                        id="contact-form"
-                        style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);"
-                    >
-                        <h3
-                            style="margin-bottom: 2rem; border-bottom: 3px solid var(--color-primary); padding-bottom: 1rem; font-size: 1.8rem; color: #1a252f; font-weight: 800;"
-                        >
-                            Formulário de Triagem para Liminar Médica Urgente
-                        </h3>
-
-                        <div class="form-group" style="margin-bottom: 1.5rem;">
-                            <label
-                                for="nome"
-                                style="font-weight:bold;display:block;margin-bottom:0.5rem; color: #555;"
-                                >Sua Identificação Completa (Paciente ou
-                                Responsável Familiar) *</label
-                            >
-                            <input
-                                type="text"
-                                id="nome"
-                                name="nome"
-                                required
-                                autocomplete="name"
-                                autocapitalize="words"
-                                placeholder="Nome Completo"
-                                style="width:100%; padding:1rem; border:2px solid #eaeaea; border-radius:6px; font-size: 1.1rem;"
-                            />
-                        </div>
-
-                        <div
-                            class="form-row"
-                            style="display:flex; gap:1.5rem; margin-bottom:1.5rem; flex-wrap: wrap;"
-                        >
-                            <div
-                                class="form-group"
-                                style="flex:1; min-width: 250px;"
-                            >
-                                <label
-                                    for="telefone"
-                                    style="font-weight:bold;display:block;margin-bottom:0.5rem; color: #555;"
-                                    >WhatsApp Principal *</label
-                                >
-                                <input
-                                    type="tel"
-                                    id="telefone"
-                                    name="telefone"
-                                    required
-                                    autocomplete="tel"
-                                    inputmode="numeric"
-                                    maxlength="16"
-                                    placeholder="(DDD) 9.0000-0000"
-                                    style="width:100%; padding:1rem; border:2px solid #eaeaea; border-radius:6px; font-size: 1.1rem;"
-                                />
-                            </div>
-                            <div
-                                class="form-group"
-                                style="flex:1; min-width: 250px;"
-                            >
-                                <label
-                                    for="email"
-                                    style="font-weight:bold;display:block;margin-bottom:0.5rem; color: #555;"
-                                    >E-mail *</label
-                                >
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    required
-                                    autocomplete="email"
-                                    placeholder="seuemail@exemplo.com"
-                                    style="width:100%; padding:1rem; border:2px solid #eaeaea; border-radius:6px; font-size: 1.1rem;"
-                                />
-                            </div>
-                        </div>
-
-                        <div class="form-group" style="margin-bottom: 2rem;">
-                            <label
-                                style="font-weight:bold;display:block;margin-bottom:1rem; color: #555; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;"
-                                >Qual a natureza crítica da demanda? *</label
-                            >
-                            <div
-                                class="radio-group"
-                                style="display:flex; flex-direction:column; gap:0.8rem; margin-top:0.5rem;"
-                            >
-                                <label
-                                    style="display: flex; align-items: flex-start; gap: 10px; font-size: 1.1rem; color: #444; padding: 10px; border-radius: 6px; background: #f9f9f9; cursor: pointer; transition: background 0.2s;"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="situation"
-                                        value="negativa_cirurgia_opme"
-                                        required
-                                        style="margin-top: 5px; transform: scale(1.2);"
-                                    />
-                                    <span
-                                        >Cirurgia Recusada, Próteses, Stents ou
-                                        OPME Barrada</span
-                                    >
-                                </label>
-
-                                <label
-                                    style="display: flex; align-items: flex-start; gap: 10px; font-size: 1.1rem; color: #444; padding: 10px; border-radius: 6px; background: #f9f9f9; cursor: pointer; transition: background 0.2s;"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="situation"
-                                        value="medicamento_alto_custo"
-                                        style="margin-top: 5px; transform: scale(1.2);"
-                                    />
-                                    <span
-                                        >Remédios Oncológicos, Terapias
-                                        Especiais ou Alto Custo</span
-                                    >
-                                </label>
-
-                                <label
-                                    style="display: flex; align-items: flex-start; gap: 10px; font-size: 1.1rem; color: #444; padding: 10px; border-radius: 6px; background: #f9f9f9; cursor: pointer; transition: background 0.2s;"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="situation"
-                                        value="home_care"
-                                        style="margin-top: 5px; transform: scale(1.2);"
-                                    />
-                                    <span
-                                        >Internação em Home Care / Equipamentos
-                                        / Acompanhamento integral</span
-                                    >
-                                </label>
-
-                                <label
-                                    style="display: flex; align-items: flex-start; gap: 10px; font-size: 1.1rem; color: #444; padding: 10px; border-radius: 6px; background: #fff0f0; border-left: 3px solid var(--color-accent); cursor: pointer;"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="situation"
-                                        value="carencia_urgencia_risco_vida"
-                                        style="margin-top: 5px; transform: scale(1.2);"
-                                    />
-                                    <span
-                                        style="font-weight: bold; color: var(--color-accent);"
-                                        >UTI, Vaga Zero Urgência ou Negativa por
-                                        Carência Abusiva</span
-                                    >
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group" style="margin-bottom: 2rem;">
-                            <label
-                                for="message"
-                                style="font-weight:bold;display:block;margin-bottom:0.5rem; color: #555;"
-                                >Diga em POUCAS palavras o problema (Diagnóstico
-                                e a Operadora)</label
-                            >
-                            <textarea
-                                id="message"
-                                name="message"
-                                rows="4"
-                                placeholder="Ex: Paciente com diagnóstico agressivo precisa do medicamento da Anvisa pra ontem. Plano AMIL Saúde negou cobertura alegando rol paralelo contratual. O médico deu laudo de urgência."
-                                style="width:100%; padding:1rem; border:2px solid #eaeaea; border-radius:6px; font-size: 1.1rem; resize: vertical;"
-                            ></textarea>
-                        </div>
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary btn-large"
-                            style="width: 100%; font-size:1.3rem; padding: 1.5rem; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 10px;"
-                        >
-                            SUBMETER AO PLANTÃO - IR PARA WHATSAPP
-                            <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
-                                ><path
-                                    d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
-                                ></path></svg
-                            >
-                        </button>
-                    </form>
-
-                    <div
-                        class="contact-alternatives"
-                        style="text-align: center; margin-top: 4rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1);"
-                    >
-                        <h3
-                            style="margin-bottom: 1.5rem; color: white; font-size: 1.8rem;"
-                        >
-                            Se o sistema falhou, acesse o canal de crise por
-                            este botão:
-                        </h3>
-
-                        <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=ESTOU%20EM%20EMERGENGÊNCIA.%20Preciso%20de%20uma%20liminar%20urgente%20contra%20o%20plano%20de%20saúde"
-                            class="btn btn-primary btn-large"
-                            style="display: inline-flex; align-items: center; justify-content: center; gap: 0.8rem; font-size:1.4rem; font-weight: bold; min-width: 300px; padding: 1.5rem 3rem; box-shadow: 0 10px 25px rgba(255, 85, 0, 0.4);"
-                            data-message="ESTOU EM EMERGENGÊNCIA. Preciso de uma liminar urgente contra o plano de saúde"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="36"
-                                height="36"
-                                viewBox="0 0 32 32"
-                                fill="currentColor"
-                            >
-                                <path
-                                    d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732 0.737 5.291 2.022 7.491l-0.038-0.070-2.109 7.702 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h0.006c8.209-0.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507l0 0zM16.062 28.228h-0.005c-0 0-0.001 0-0.001 0-2.319 0-4.489-0.64-6.342-1.753l0.056 0.031-0.451-0.267-4.675 1.227 1.247-4.559-0.294-0.467c-1.185-1.862-1.889-4.131-1.889-6.565 0-6.822 5.531-12.353 12.353-12.353s12.353 5.531 12.353 12.353c0 6.822-5.53 12.353-12.353 12.353h-0zM22.838 18.977c-0.371-0.186-2.197-1.083-2.537-1.208-0.341-0.124-0.589-0.185-0.837 0.187-0.246 0.371-0.958 1.207-1.175 1.455-0.216 0.249-0.434 0.279-0.805 0.094-1.15-0.466-2.138-1.087-2.997-1.852l0.010 0.009c-0.799-0.74-1.484-1.587-2.037-2.521l-0.028-0.052c-0.216-0.371-0.023-0.572 0.162-0.757 0.167-0.166 0.372-0.434 0.557-0.65 0.146-0.179 0.271-0.384 0.366-0.604l0.006-0.017c0.043-0.087 0.068-0.188 0.068-0.296 0-0.131-0.037-0.253-0.101-0.357l0.002 0.003c-0.094-0.186-0.836-2.014-1.145-2.758-0.302-0.724-0.609-0.625-0.836-0.637-0.216-0.010-0.464-0.012-0.712-0.012-0.395 0.010-0.746 0.188-0.988 0.463l-0.001 0.002c-0.802 0.761-1.3 1.834-1.3 3.023 0 0.026 0 0.053 0.001 0.079l-0-0.004c0.131 1.467 0.681 2.784 1.527 3.857l-0.012-0.015c1.604 2.379 3.742 4.282 6.251 5.564l0.094 0.043c0.548 0.248 1.25 0.513 1.968 0.74l0.149 0.041c0.442 0.14 0.951 0.221 1.479 0.221 0.303 0 0.601-0.027 0.889-0.078l-0.031 0.004c1.069-0.223 1.956-0.868 2.497-1.749l0.009-0.017c0.165-0.366 0.261-0.793 0.261-1.242 0-0.185-0.016-0.366-0.047-0.542l0.003 0.019c-0.092-0.155-0.34-0.247-0.712-0.434z"
-                                ></path>
-                            </svg>
-                            FALAR NO PLANTÃO WHATSAPP 24H
-                        </a>
-                        <p
-                            style="color: #f1f1f1; margin-top: 1rem; font-size: 1.1rem; font-weight: 600;"
-                        >
-                            Resposta no máximo em 5 minutos.
-                        </p>
-                    </div>
-                </div>
+            <div class="about-quote">
+              <p>"A saúde virou planilha de dividendos para as operadoras. A única linguagem que elas entendem é a caneta de um Juiz de Direito com multa diária acoplada."</p>
+              <cite>— Dr. Glauco Ramos</cite>
             </div>
-        </section>
 
-        <!-- FOOTER -->
-        <footer
-            class="footer"
-            style="background:var(--color-primary-dark); padding: 60px 0 20px;"
-        >
-            <div class="container">
-                <div class="footer-grid">
-                    <div>
-                        <h4>Glauco Ramos Advocacia</h4>
-                        <p>
-                            Escritório de Alta Complexidade. Combatividade
-                            implacável no Direito à Saúde suplementar e
-                            suspensão de atos abusivos de operadoras judiciais
-                            em trâmite na Justiça Comum ou Federal (SUS).
-                        </p>
-                    </div>
+            <a href={WPP("Gostaria de falar com Dr. Glauco Ramos sobre direito à saúde")} class="btn btn-primary" id="about-cta" data-message="Gostaria de falar com Dr. Glauco Ramos sobre direito à saúde">
+              Falar com Dr. Glauco
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                    <div>
-                        <h4>Doutrinas Base de Saúde</h4>
-                        <ul>
-                            <li>Medidas Liminares de Alta Critividade</li>
-                            <li>Súmulas e Teses sobre Home Care</li>
-                            <li>Judicialização do Rol (Lei 14.454)</li>
-                            <li>Quebra Absoluta de Carência - Risco de Vida</li>
-                        </ul>
-                    </div>
+    <!-- ================================================
+         9. DEPOIMENTOS
+         ================================================ -->
+    <section class="testimonials-section" id="depoimentos">
+      <div class="container">
+        <h2 class="section-heading">Resultados Reais de Pacientes Reais</h2>
 
-                    <div>
-                        <h4>Atalhos Institucionais</h4>
-                        <ul>
-                            <li>
-                                <a href="#contato">Plantão Atuação Urgente</a>
-                            </li>
-                            <li>
-                                <a href="/empresarial"
-                                    >Hub: Direito Bancário e Empresarial</a
-                                >
-                            </li>
-                            <li>
-                                <a href="/pad"
-                                    >Hub: Defesa de Servidores e Sindicâncias
-                                    (PAD)</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4>Linha Direta</h4>
-                        <ul>
-                            <li>📞 (43) 9 9124-4440</li>
-                            <li>✉️ atuacao@glaucoramos.com.br</li>
-                            <li>
-                                🌐 Todo Custo Nacional (Processo Digital
-                                Eletrônico PJe)
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div
-                    class="footer-bottom"
-                    style="margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;"
-                >
-                    <p>
-                        &copy; 2026 Glauco Ramos Advocacia. Todos os direitos
-                        reservados. | Inscrição OAB Regulada | LGPD e Tratamento
-                        Fiel de Dados Médicos Adequados à Norma
-                    </p>
-                </div>
+        <div class="testimonials">
+          <div class="testimonial">
+            <span class="testimonial-quote-mark">"</span>
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             </div>
-        </footer>
+            <p class="testimonial-text">
+              "Meu pai precisava da válvula TAVI com urgência extrema. A Unimed negou. Achamos o escritório às 23h de uma sexta-feira. No sábado de manhã, o oficial de justiça já estava no hospital obrigando o plano a entregar o material de 90 mil reais."
+            </p>
+            <p class="testimonial-author">— Mônica R. Silva (filha de paciente) · 2024</p>
+          </div>
 
-        <LeadCaptureModal />
-
-        <!-- Floating WhatsApp Button -->
-        <a
-            href="https://api.whatsapp.com/send/?phone=554391244440&text=Socorro,%20necessito%20de%20uma%20liminar%20urgente%20contra%20o%20plano%20de%20saúde"
-            class="floating-whatsapp"
-            aria-label="Fale conosco no WhatsApp"
-            style="bottom: 30px; right: 30px; box-shadow: 0 0 25px rgba(37,211,102, 0.6); transform: scale(1.1);"
-            data-message="Socorro, necessito de uma liminar urgente contra o plano de saúde"
-        >
-            <div
-                style="position: absolute; top: -10px; right: -5px; background: red; color: white; font-size: 10px; font-weight: bold; border-radius: 20px; padding: 3px 8px; animation: pulse-red 2s infinite;"
-            >
-                ONLINE AGORA
+          <div class="testimonial">
+            <span class="testimonial-quote-mark">"</span>
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             </div>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="36"
-                height="36"
-                viewBox="0 0 32 32"
-                fill="currentColor"
-                class="whatsapp-icon"
-            >
-                <path
-                    d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732 0.737 5.291 2.022 7.491l-0.038-0.070-2.109 7.702 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h0.006c8.209-0.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507l0 0zM16.062 28.228h-0.005c-0 0-0.001 0-0.001 0-2.319 0-4.489-0.64-6.342-1.753l0.056 0.031-0.451-0.267-4.675 1.227 1.247-4.559-0.294-0.467c-1.185-1.862-1.889-4.131-1.889-6.565 0-6.822 5.531-12.353 12.353-12.353s12.353 5.531 12.353 12.353c0 6.822-5.53 12.353-12.353 12.353h-0zM22.838 18.977c-0.371-0.186-2.197-1.083-2.537-1.208-0.341-0.124-0.589-0.185-0.837 0.187-0.246 0.371-0.958 1.207-1.175 1.455-0.216 0.249-0.434 0.279-0.805 0.094-1.15-0.466-2.138-1.087-2.997-1.852l0.010 0.009c-0.799-0.74-1.484-1.587-2.037-2.521l-0.028-0.052c-0.216-0.371-0.023-0.572 0.162-0.757 0.167-0.166 0.372-0.434 0.557-0.65 0.146-0.179 0.271-0.384 0.366-0.604l0.006-0.017c0.043-0.087 0.068-0.188 0.068-0.296 0-0.131-0.037-0.253-0.101-0.357l0.002 0.003c-0.094-0.186-0.836-2.014-1.145-2.758-0.302-0.724-0.609-0.625-0.836-0.637-0.216-0.010-0.464-0.012-0.712-0.012-0.395 0.010-0.746 0.188-0.988 0.463l-0.001 0.002c-0.802 0.761-1.3 1.834-1.3 3.023 0 0.026 0 0.053 0.001 0.079l-0-0.004c0.131 1.467 0.681 2.784 1.527 3.857l-0.012-0.015c1.604 2.379 3.742 4.282 6.251 5.564l0.094 0.043c0.548 0.248 1.25 0.513 1.968 0.74l0.149 0.041c0.442 0.14 0.951 0.221 1.479 0.221 0.303 0 0.601-0.027 0.889-0.078l-0.031 0.004c1.069-0.223 1.956-0.868 2.497-1.749l0.009-0.017c0.165-0.366 0.261-0.793 0.261-1.242 0-0.185-0.016-0.366-0.047-0.542l0.003 0.019c-0.092-0.155-0.34-0.247-0.712-0.434z"
-                ></path>
-            </svg>
-        </a>
+            <p class="testimonial-text">
+              "A Bradesco Saúde não queria aprovar meu tratamento oncológico de alto custo. O escritório montou uma liminar em poucas horas comprovando a quebra de carência na urgência oncológica. Hoje estou no 4° ciclo de quimio, tudo garantido por juiz."
+            </p>
+            <p class="testimonial-author">— Roberto T. Alves (paciente oncológico) · 2024</p>
+          </div>
 
-        <FormScript />
-    </body>
+          <div class="testimonial">
+            <span class="testimonial-quote-mark">"</span>
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="testimonial-text">
+              "Excelente! Muito competente e comprometido. Mesmo sendo de outro estado, me prestou esclarecimentos do início ao fim. Recomendo sem hesitar."
+            </p>
+            <p class="testimonial-author">— Cíntia Santos · agosto de 2024</p>
+          </div>
+        </div>
+
+        <div class="testimony-aggregate">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span><strong>4.5</strong> de 5 · 31 avaliações verificadas no Google</span>
+        </div>
+
+        <div class="text-center mt-lg">
+          <a href={WPP("Vi os depoimentos e gostaria de conversar sobre meu caso")} class="btn btn-primary" id="testimonials-cta" data-message="Vi os depoimentos e gostaria de conversar sobre meu caso">
+            Quero Resultados Como Esses
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         10. ARTIGOS E INSIGHTS
+         ================================================ -->
+    <ArticleInsightsSection
+      source={articleSource}
+      title="Artigos e Insights — Direito à Saúde"
+      subtitle="Entenda seus direitos antes de qualquer decisão"
+    />
+
+    <!-- ================================================
+         11. FAQ
+         ================================================ -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <h2 class="section-heading">Dúvidas Frequentes</h2>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-1">
+              O plano nega dar a negativa por escrito e fica eternamente "em análise". Posso agir assim mesmo?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-1">
+              <p>Sim. Essa prática ("glosa branca") é reconhecida pelos juízes como negativa tática disfarçada. A RN 259 da ANS estabelece prazos máximos de liberação. A inércia prolongada, combinada ao laudo médico que demonstra urgência, é suficiente para embasar a liminar da mesma forma que uma negativa expressa.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-2">
+              O plano disse que eu terei que pagar os honorários do advogado. Isso é verdade?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-2">
+              <p>Não. Isso é desinformação que atendentes são treinados a repassar para desestimular a busca judicial. Trabalhamos no modelo êxito — sem vitória, sem cobrança. Além disso, quando obtemos indenizações por Danos Morais pela negativa descabida, esses valores frequentemente cobrem o investimento feito na defesa.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-3">
+              Se eu processar o plano, eles podem cancelar meu contrato em retaliação?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-3">
+              <p>Não. Operadoras são rigidamente reguladas pela ANS e pelo CDC. Cancelar ou dificultar o acesso de um cliente amparado por liminar judicial geraria multa milionária do órgão regulador e processo criminal por desobediência. Na prática, pacientes representados judicialmente são tratados com muito mais respeito do que os que aceitam as negativas em silêncio.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-4">
+              Não tenho plano privado — dependo do SUS. Vocês atuam nesse caso também?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-4">
+              <p>Sim. Quando não há plano privado, acionamos Liminares Federais e Estaduais contra o Estado ou a União para garantir que o paciente saia das filas, seja transferido para UTI ou receba medicamentos de alto custo pelo programa de farmácia judicial. A Constituição Federal impõe ao Estado o dever de garantir saúde — e fazemos isso valer.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-5">
+              Em quanto tempo conseguem a liminar?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-5">
+              <p>Em casos de comprovada urgência, a liminar pode ser obtida nas mesmas horas do protocolo, inclusive à noite pelo plantão judiciário. O prazo varia conforme a complexidade do caso e a disponibilidade do magistrado plantonista, mas trabalhamos sempre com a máxima urgência possível.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-lg">
+          <a href={WPP("Tenho dúvidas sobre meu direito à saúde e plano de saúde")} class="btn btn-primary" id="faq-cta" data-message="Tenho dúvidas sobre meu direito à saúde e plano de saúde">
+            Tire Suas Dúvidas Agora
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         12. FORMULÁRIO DE CONTATO
+         ================================================ -->
+    <section id="contato" class="contact-section">
+      <div class="container">
+        <h2 class="section-heading">Acione Nossa Equipe de Contingência</h2>
+        <p class="section-subheading">Preencha o formulário ou fale diretamente pelo WhatsApp. Respondemos com urgência.</p>
+
+        <div class="contact-form-wrapper">
+          <form id="contact-form" class="contact-form">
+            <div class="form-group">
+              <label for="nome">Nome Completo (Paciente ou Responsável) *</label>
+              <input type="text" id="nome" name="nome" required autocomplete="name" autocapitalize="words" placeholder="Seu nome" />
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail *</label>
+              <input type="email" id="email" name="email" required autocomplete="email" placeholder="seu@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="telefone">WhatsApp *</label>
+              <input type="tel" id="telefone" name="telefone" required autocomplete="tel" inputmode="numeric" maxlength="16" placeholder="(43) 9 9999-9999" />
+            </div>
+            <div class="form-group">
+              <label for="situacao">Natureza da Demanda</label>
+              <input type="text" id="situacao" name="situacao" placeholder="Ex: Negativa de cirurgia, medicamento de alto custo..." />
+            </div>
+            <div class="form-group">
+              <label for="mensagem">Descreva brevemente a situação</label>
+              <textarea id="mensagem" name="mensagem" placeholder="Ex: O plano negou minha quimioterapia alegando que o medicamento não está no Rol da ANS..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-large" style="width:100%;" id="form-submit">
+              Enviar para Análise Urgente
+            </button>
+
+            <div class="form-footer">
+              <p class="form-footer-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                Seus dados estão seguros e protegidos
+              </p>
+              <p class="form-footer-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Sem ganho, sem cobrança
+              </p>
+              <p class="form-footer-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Plantão 24h — inclusive fins de semana
+              </p>
+            </div>
+          </form>
+
+          <div class="contact-info">
+            <h3>Ou fale diretamente</h3>
+            <p class="proof-row">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              4.5 de 5 · 31 avaliações verificadas no Google
+            </p>
+
+            <ul class="contact-details">
+              <li>
+                <span class="contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                </span>
+                <span>WhatsApp: <a href="tel:+5543991244440">(43) 9 9124-4440</a></span>
+              </li>
+              <li>
+                <span class="contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <span><a href="mailto:advocacia@glaucoramos.com">advocacia@glaucoramos.com</a></span>
+              </li>
+              <li>
+                <span class="contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </span>
+                <span>São Paulo · Curitiba · Londrina</span>
+              </li>
+            </ul>
+
+            <a href={WPP("URGENTE: Preciso de ajuda com meu plano de saúde")} class="btn btn-whatsapp btn-large" style="width:100%; margin-bottom:1rem;" id="contact-whatsapp" data-message="URGENTE: Preciso de ajuda com meu plano de saúde">
+              <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
+              Chamar no WhatsApp
+            </a>
+
+            <p class="contact-hours">Plantão jurídico 24h — inclusive fins de semana e feriados.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         13. FOOTER
+         ================================================ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/img/logo-glauco-ramos.webp" alt="Glauco Ramos" width="44" height="44" style="margin-bottom:0.75rem; opacity:0.85;" loading="lazy" />
+            <h4>Glauco Ramos Advocacia</h4>
+            <p>Direito à saúde com urgência, combatividade e compromisso com o resultado do paciente.</p>
+          </div>
+
+          <div>
+            <h4>Áreas de Atuação</h4>
+            <ul>
+              <li><a href="#solucoes">Cirurgias e Materiais (OPME)</a></li>
+              <li><a href="#solucoes">Carência em Urgência</a></li>
+              <li><a href="#solucoes">Oncologia e Alto Custo</a></li>
+              <li><a href="#solucoes">Home Care</a></li>
+              <li><a href="#solucoes">Ações contra o SUS</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Links Rápidos</h4>
+            <ul>
+              <li><a href="#sobre">Sobre Dr. Glauco</a></li>
+              <li><a href="#como-funciona">Como Funciona</a></li>
+              <li><a href="#artigos">Artigos Jurídicos</a></li>
+              <li><a href="#faq">Perguntas Frequentes</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Contato</h4>
+            <ul>
+              <li><a href="tel:+5543991244440">(43) 9 9124-4440</a></li>
+              <li><a href="mailto:advocacia@glaucoramos.com">advocacia@glaucoramos.com</a></li>
+              <li>glaucoramos.com.br</li>
+              <li>SP · Curitiba · Londrina</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Glauco Ramos Advocacia. Todos os direitos reservados. | OAB/PR | LGPD Compliance</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ================================================
+         STICKY MOBILE CTA BAR
+         ================================================ -->
+    <StickyCtaBar {...stickyCtaProps} />
+
+    <!-- ================================================
+         FLOATING WHATSAPP (Desktop)
+         ================================================ -->
+    <a
+      href={WPP("URGENTE: Preciso de ajuda com meu plano de saúde")}
+      class="floating-whatsapp"
+      aria-label="Fale conosco no WhatsApp"
+      id="floating-wpp"
+      data-message="URGENTE: Preciso de ajuda com meu plano de saúde"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" fill="currentColor">
+        <path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0zM16.062 28.228h-.005c-2.319 0-4.489-.64-6.342-1.753l-.451-.267-4.675 1.227 1.247-4.559-.294-.467c-1.185-1.862-1.889-4.131-1.889-6.565 0-6.822 5.531-12.353 12.353-12.353s12.353 5.531 12.353 12.353c0 6.822-5.53 12.353-12.353 12.353h0z"/>
+      </svg>
+    </a>
+
+    <LeadCaptureModal
+      title="Fale com o Advogado de Plantão"
+      subtitle="Deixe seus dados para análise urgente do seu caso:"
+      submitLabel="Enviar para o WhatsApp"
+    />
+
+    <!-- ================================================
+         SCRIPTS
+         ================================================ -->
+    <script>
+      // ── Video Lazy Load ───────────────────────────────
+      const videoPlayer = document.getElementById('video-player') as HTMLElement | null;
+      if (videoPlayer) {
+        const loadVideo = () => {
+          const videoId = videoPlayer.dataset.videoId;
+          const iframe = document.createElement('iframe');
+          iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          iframe.allowFullscreen = true;
+          const thumb = videoPlayer.querySelector('.video-thumbnail') as HTMLElement | null;
+          const playBtn = videoPlayer.querySelector('.video-play-btn') as HTMLElement | null;
+          if (thumb) thumb.style.display = 'none';
+          if (playBtn) playBtn.style.display = 'none';
+          videoPlayer.appendChild(iframe);
+        };
+        videoPlayer.addEventListener('click', loadVideo);
+        videoPlayer.addEventListener('keydown', (e: KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') loadVideo();
+        });
+      }
+
+      // ── FAQ Accordion ─────────────────────────────────
+      document.querySelectorAll<HTMLButtonElement>('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq-item') as HTMLElement | null;
+          if (!item) return;
+          const isOpen = item.classList.contains('open');
+          document.querySelectorAll('.faq-item').forEach(i => {
+            i.classList.remove('open');
+            const q = i.querySelector('.faq-question') as HTMLButtonElement | null;
+            if (q) q.setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    </script>
+
+    <FormScript />
+  </body>
 </html>

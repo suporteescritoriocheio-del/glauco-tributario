@@ -320,7 +320,7 @@ leadForm?.addEventListener('submit', async (e) => {
 });
 
 // Intercept WhatsApp CTA clicks — EXCEPT floating button (goes direct)
-document.addEventListener('DOMContentLoaded', () => {
+function initWhatsAppInterceptors() {
     const whatsappButtons = document.querySelectorAll('a[href*="whatsapp.com"], a[href*="web.whatsapp"]');
     const phoneNumber = '554391244440'; // Central phone number
 
@@ -359,4 +359,10 @@ document.addEventListener('DOMContentLoaded', () => {
             showModal(url);
         });
     });
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWhatsAppInterceptors);
+} else {
+    initWhatsAppInterceptors();
+}
