@@ -1,0 +1,681 @@
+---
+import SEO from "../components/SEO.astro";
+import StructuredData from "../components/StructuredData.astro";
+import FormScript from "../components/FormScript.astro";
+import LeadCaptureModal from "../components/LeadCaptureModal.astro";
+import ArticleInsightsSection from "../components/ArticleInsightsSection.astro";
+import HeroSection from "../components/HeroSection.astro";
+import StickyCtaBar from "../components/StickyCtaBar.astro";
+import type { ArticleFeedSource } from "../config/articleFeed";
+import heroContent from "../data/heroes/pad.json";
+import "../styles/advogado-empresarial.css";
+
+const pageTitle = "Advogado para PAD — Processo Administrativo Disciplinar | Glauco Ramos Advocacia";
+const pageDescription =
+  "Defesa técnica em Processo Administrativo Disciplinar (PAD) e sindicâncias para servidores públicos. Ex-Procurador Jurídico com mais de 30 anos de experiência. Atendimento em todo o Brasil.";
+
+const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
+const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
+
+const articleSource: ArticleFeedSource = {
+  type: "manual",
+  articles: [
+    {
+      category: "Direito Administrativo",
+      title: "PAD: Como Funciona o Processo Administrativo Disciplinar",
+      excerpt:
+        "Entenda as fases do PAD, os prazos fatais e por que a defesa técnica desde o primeiro dia faz toda a diferença para servidores públicos.",
+      href: "https://glaucoramos.com.br/blog/",
+      image: {
+        src: "/img/article-planejamento-tributario.svg",
+        alt: "Ilustração editorial sobre processo administrativo disciplinar",
+      },
+    },
+    {
+      category: "Servidor Público",
+      title: "Direitos do Servidor Diante de uma Sindicância",
+      excerpt:
+        "O que o servidor pode e deve fazer ao receber a notificação de uma sindicância — desde o acesso aos autos até a produção de provas.",
+      href: "https://glaucoramos.com.br/blog/",
+      image: {
+        src: "/img/article-holding-familiar.svg",
+        alt: "Ilustração editorial sobre direitos do servidor público",
+      },
+    },
+    {
+      category: "Defesa Administrativa",
+      title: "Nulidades Processuais no PAD: Quando o Processo Pode Ser Anulado",
+      excerpt:
+        "Vícios de forma, cerceamento de defesa e parcialidade da comissão são fundamentos que podem reverter punições injustas.",
+      href: "https://glaucoramos.com.br/blog/",
+      image: {
+        src: "/img/article-recuperacao-judicial.svg",
+        alt: "Ilustração editorial sobre nulidades em processo administrativo",
+      },
+    },
+  ],
+};
+
+const stickyCtaProps = {
+  ariaLabel: "Barra de contato rápido da landing page de defesa em PAD",
+  title: "Defesa Urgente em PAD",
+  subtitle: "Atendimento prioritário para servidores notificados",
+  ctas: [
+    {
+      href: WPP("Olá, recebi notificação de PAD e preciso de defesa urgente"),
+      label: "WhatsApp",
+      variant: "whatsapp" as const,
+      icon: "whatsapp" as const,
+      id: "sticky-whatsapp",
+      dataMessage: "Olá, recebi notificação de PAD e preciso de defesa urgente",
+      ariaLabel: "Falar via WhatsApp com um especialista em PAD",
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <SEO title={pageTitle} description={pageDescription} />
+    <StructuredData />
+  </head>
+
+  <body>
+    <!-- GTM noscript -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-58XT4LRL"
+        height="0" width="0"
+        style="display:none;visibility:hidden"></iframe>
+    </noscript>
+
+    <!-- ================================================
+         1. HERO
+         ================================================ -->
+    <HeroSection
+      content={heroContent}
+      logo={{
+        src: "/img/logo-glauco-ramos.webp",
+        alt: "Glauco Ramos Advocacia",
+        width: 60,
+        height: 60,
+        loading: "eager",
+      }}
+      image={{
+        src: "/img/glauco-ramos-advogado.jpg",
+        alt: "Dr. Glauco Ramos — Advogado especialista em PAD",
+        width: 420,
+        loading: "eager",
+      }}
+      primaryCtaHref={WPP("Olá, recebi notificação de PAD e preciso de defesa urgente")}
+      primaryCtaId="hero-cta-whatsapp"
+    />
+
+    <!-- ================================================
+         2. FAIXA DE CONFIANÇA
+         ================================================ -->
+    <div class="trust-bar" role="complementary" aria-label="Indicadores de credibilidade">
+      <div class="container">
+        <div class="trust-bar-inner">
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span><strong>4.5/5</strong> no Google · 31 avaliações verificadas</span>
+          </div>
+          <span class="trust-sep">|</span>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>OAB/PR — Inscrito e em dia</span>
+          </div>
+          <span class="trust-sep">|</span>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>SP · Curitiba · Londrina</span>
+          </div>
+          <span class="trust-sep">|</span>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Ex-Procurador Jurídico Municipal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================
+         3. MANIFESTO / IDENTIFICAÇÃO DA DOR
+         ================================================ -->
+    <section class="manifesto section">
+      <div class="container">
+        <div class="manifesto-inner">
+          <h2>Anos de Carreira Pública Não Podem Ser Decididos em Dias</h2>
+          <p>
+            Ao receber uma notificação de Processo Administrativo Disciplinar ou sindicância,
+            o servidor público enfrenta uma realidade dura: prazos curtos, linguagem técnica
+            específica e uma comissão que opera com presunção de legitimidade. Cada decisão
+            tomada nas primeiras horas pode determinar o desfecho do processo — e o futuro
+            de toda uma carreira no serviço público.
+          </p>
+          <p>
+            O escritório Glauco Ramos Advocacia conduz a defesa de servidores em PAD,
+            sindicâncias, recursos administrativos e ações judiciais correlatas. Atuamos
+            com a profundidade técnica de quem já esteve do <strong>lado de dentro do sistema</strong>
+            como Procurador Jurídico Municipal — e por isso compreendemos como a comissão pensa,
+            decide e onde estão as fragilidades a serem exploradas em favor do servidor.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         4. VIDEO (Lazy Load)
+         ================================================ -->
+    <section class="video-section">
+      <div class="container">
+        <div class="video-layout">
+          <div class="video-content">
+            <span class="video-label">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Assista ao vídeo
+            </span>
+            <h2>Conheça Nossa Abordagem na Defesa de Servidores</h2>
+            <p>
+              Antes de contratar, entenda como trabalhamos. Nossa metodologia une
+              <strong>análise técnica emergencial</strong> ao domínio prático da rotina
+              das comissões disciplinares — o que permite construir teses de defesa que
+              dificilmente podem ser ignoradas sem cometer nulidade.
+            </p>
+            <p>
+              Dr. Glauco Ramos explica como proteger sua carreira, identificar vícios
+              processuais e usar cada prazo a favor do servidor.
+            </p>
+            <a href={WPP("Vi o vídeo e gostaria de conversar sobre meu PAD")} class="btn btn-primary" id="video-cta">
+              Falar com o Dr. Glauco
+            </a>
+          </div>
+
+          <div class="video-player-wrapper" id="video-player" data-video-id="mOZtKBFkCAY" role="button" tabindex="0" aria-label="Assistir apresentação do Dr. Glauco Ramos">
+            <img
+              src="https://img.youtube.com/vi/mOZtKBFkCAY/maxresdefault.jpg"
+              alt="Apresentação — Dr. Glauco Ramos Advocacia"
+              class="video-thumbnail"
+              loading="lazy"
+            />
+            <div class="video-play-btn">
+              <div class="play-icon-circle">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <span class="video-play-label">Assistir Apresentação</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         5. ÁREAS DE ATUAÇÃO
+         ================================================ -->
+    <section class="services-section" id="solucoes">
+      <div class="container">
+        <h2 class="section-heading">Como Atuamos em PAD e Sindicâncias</h2>
+        <p class="section-subheading">Defesa técnica em todas as fases — da notificação ao recurso judicial</p>
+
+        <div class="services-grid">
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <h3>Análise Emergencial</h3>
+            <p>Avaliação técnica da notificação em 24 a 48 horas, com mapeamento de prazos fatais e da imputação.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <h3>Defesa Prévia Técnica</h3>
+            <p>Peça robusta com fundamentação específica, contestação pontual e juntada de documentos comprobatórios.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            <h3>Acompanhamento da Instrução</h3>
+            <p>Indicação e inquirição de testemunhas, contestação de provas da acusação e sustentação técnica em audiência.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <h3>Nulidades Processuais</h3>
+            <p>Identificação de vícios formais, cerceamento de defesa e fundamentos para anulação do processo.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><polyline points="20 6 9 17 4 12"/></svg>
+            <h3>Recursos Administrativos</h3>
+            <p>Recurso hierárquico fundamentado contra decisões condenatórias, com ataque técnico ao mérito e à forma.</p>
+          </div>
+
+          <div class="service-card">
+            <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
+            <h3>Mandado de Segurança</h3>
+            <p>Judicialização preventiva ou repressiva quando a via administrativa fere direito líquido e certo do servidor.</p>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <a href={WPP("Preciso de defesa em PAD")} class="btn btn-primary btn-large" id="services-cta">
+            Solicitar Análise do Meu Caso
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         6. FUNDADOR / EQUIPE
+         ================================================ -->
+    <section class="about section" id="sobre">
+      <div class="container">
+        <div class="about-inner">
+          <div class="about-photo">
+            <img
+              src="/img/glauco-ramos-advogado.jpg"
+              alt="Dr. Glauco Ramos — Advogado especialista em PAD"
+              width="300"
+              loading="lazy"
+            />
+            <div class="photo-caption">
+              <strong>Dr. Glauco Ramos</strong>
+              Ex-Procurador Jurídico · OAB/PR
+            </div>
+          </div>
+
+          <div class="about-content">
+            <h2 class="section-heading" style="text-align:left">Quem Defende Você Conhece o Sistema Por Dentro</h2>
+            <p>
+              Advogado formado pela UEL com especializações em Direito Civil, Processual Civil
+              e <strong>Direito Tributário pelo IBET</strong>. Mais de 30 anos defendendo
+              servidores públicos em PAD, sindicâncias e processos disciplinares em todas as
+              esferas. Longa experiência como Procurador Jurídico Municipal — atuando tanto
+              na assessoria a comissões quanto na defesa do interesse público — confere
+              ao escritório uma visão ímpar sobre o processo administrativo.
+            </p>
+
+            <ul class="about-credentials">
+              <li><span class="cred-dot"></span> Ex-Procurador Jurídico do Município de Rolândia-PR</li>
+              <li><span class="cred-dot"></span> Ex-Procurador da CMTU de Londrina</li>
+              <li><span class="cred-dot"></span> Especialização em Direito Tributário — IBET</li>
+              <li><span class="cred-dot"></span> OAB/PR — Defesa de Servidores e Direito Administrativo</li>
+              <li><span class="cred-dot"></span> Escritórios em São Paulo, Curitiba e Londrina</li>
+            </ul>
+
+            <div class="about-quote">
+              <p>"Defender servidores públicos é um compromisso com a justiça e a dignidade funcional. Conheço os dois lados desta mesa."</p>
+              <cite>— Dr. Glauco Ramos</cite>
+            </div>
+
+            <a href={WPP("Gostaria de falar com Dr. Glauco Ramos sobre meu PAD")} class="btn btn-primary" id="about-cta">
+              Falar com Dr. Glauco
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         7. DEPOIMENTOS
+         ================================================ -->
+    <section class="testimonials-section" id="depoimentos">
+      <div class="container">
+        <h2 class="section-heading">Servidores Que Confiaram em Nossa Defesa</h2>
+
+        <div class="testimonials">
+          <div class="testimonial">
+            <span class="testimonial-quote-mark">"</span>
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="testimonial-text">
+              "Excelente! Muito competente e comprometido. Mesmo sendo de outro estado, me prestou esclarecimentos do início ao fim. Fiquei muito satisfeita. Recomendo."
+            </p>
+            <p class="testimonial-author">— Cíntia Santos · agosto de 2024</p>
+          </div>
+
+          <div class="testimonial">
+            <span class="testimonial-quote-mark">"</span>
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="testimonial-text">
+              "Ética e comprometimento. Demonstrou segurança e teve soluções inovadoras para um caso administrativo delicado."
+            </p>
+            <p class="testimonial-author">— Lourdes Serri · maio de 2024</p>
+          </div>
+
+          <div class="testimonial">
+            <span class="testimonial-quote-mark">"</span>
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <p class="testimonial-text">
+              "Por 3 gerações fomos agraciados em ter o Dr. Glauco Ramos como patrono. Além de excelente advogado, um grande mestre e amigo."
+            </p>
+            <p class="testimonial-author">— Adyr Neto · maio de 2024</p>
+          </div>
+        </div>
+
+        <div class="testimony-aggregate">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span><strong>4.5</strong> de 5 · 31 avaliações verificadas no Google</span>
+        </div>
+
+        <p class="section-subheading" style="margin-top:1.5rem;">
+          <em>Por questão de sigilo processual, não divulgamos detalhes específicos de casos de PAD.</em>
+        </p>
+
+        <div class="text-center mt-lg">
+          <a href={WPP("Vi os depoimentos e gostaria de conversar sobre PAD")} class="btn btn-primary" id="testimonials-cta">
+            Quero Resultados Como Esses
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         8. ARTIGOS E INSIGHTS
+         ================================================ -->
+    <ArticleInsightsSection source={articleSource} />
+
+    <!-- ================================================
+         9. FAQ
+         ================================================ -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <h2 class="section-heading">Dúvidas Frequentes Sobre Defesa em PAD</h2>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-1">
+              Perdi o prazo da defesa prévia. Ainda tenho chance?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-1">
+              <p>Depende da fase do processo. Mesmo após a perda da defesa prévia, ainda é possível atuar nas <strong>alegações finais, recursos administrativos e na via judicial</strong>. Não desista — quanto antes nos consultar, mais alternativas teremos.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-2">
+              Posso me defender sozinho em um PAD?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-2">
+              <p>Tecnicamente sim, mas é extremamente arriscado. O PAD tem linguagem técnica, ritos específicos e a comissão opera com presunção de legitimidade. <strong>Defesa técnica especializada</strong> aumenta exponencialmente as chances de absolvição.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-3">
+              Quanto tempo dura um Processo Administrativo Disciplinar?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-3">
+              <p>Por lei, até <strong>60 dias, prorrogáveis por mais 60</strong>. Na prática, dependendo da complexidade, número de testemunhas e recursos da administração, o processo pode se estender por 3 a 12 meses.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-4">
+              Sou servidor de outra cidade. Vocês atendem em todo o Brasil?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-4">
+              <p>Sim. Atendemos servidores municipais, estaduais e federais em <strong>todo o território nacional</strong> — presencialmente em SP, Curitiba e Londrina, e remotamente nas demais localidades, com toda a infraestrutura digital necessária.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-5">
+              Se eu for absolvido no PAD, posso ainda ser processado judicialmente?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-5">
+              <p>Sim. A absolvição administrativa não impede ação penal ou ação de improbidade. Por isso construímos a defesa com <strong>visão estratégica de todas as esferas</strong>, prevenindo desdobramentos futuros.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq-6">
+              Qual o custo da análise inicial do meu caso?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer" role="region" aria-labelledby="faq-6">
+              <p>A <strong>análise inicial é gratuita e sem compromisso</strong>. Avaliamos a notificação, a fase do processo e as chances de defesa antes de qualquer proposta. Entre em contato pelo WhatsApp para agendar.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-lg">
+          <a href={WPP("Tenho dúvidas sobre defesa em PAD")} class="btn btn-primary" id="faq-cta">
+            Tirar Minhas Dúvidas Agora
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         10. FORMULÁRIO DE CONTATO
+         ================================================ -->
+    <section id="contato" class="contact-section">
+      <div class="container">
+        <h2 class="section-heading">Proteja Sua Carreira Agora</h2>
+        <p class="section-subheading">Análise inicial gratuita. Atendimento prioritário para urgências.</p>
+
+        <div class="contact-form-wrapper">
+          <form id="contact-form" class="contact-form">
+            <div class="form-group">
+              <label for="nome">Nome Completo *</label>
+              <input type="text" id="nome" name="nome" required autocomplete="name" autocapitalize="words" placeholder="Seu nome" />
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail *</label>
+              <input type="email" id="email" name="email" required autocomplete="email" placeholder="seu@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="telefone">WhatsApp *</label>
+              <input type="tel" id="telefone" name="telefone" required autocomplete="tel" inputmode="numeric" maxlength="16" placeholder="(43) 9 9999-9999" />
+            </div>
+            <div class="form-group">
+              <label for="cidade">Cidade / Estado</label>
+              <input type="text" id="cidade" name="cidade" autocomplete="address-level2" autocapitalize="words" placeholder="Ex: Curitiba / PR" />
+            </div>
+            <div class="form-group">
+              <label for="mensagem">Descreva brevemente sua situação</label>
+              <textarea id="mensagem" name="mensagem" placeholder="Ex: Recebi notificação de PAD por suposta acumulação de cargos..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-large" style="width:100%;" id="form-submit">
+              Quero Minha Análise Gratuita
+            </button>
+
+            <div class="form-footer">
+              <p class="form-footer-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                Sigilo absoluto e dados protegidos
+              </p>
+              <p class="form-footer-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Resposta em até 24 horas
+              </p>
+              <p class="form-footer-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Sem compromisso inicial
+              </p>
+            </div>
+          </form>
+
+          <div class="contact-info">
+            <h3>Ou fale diretamente</h3>
+            <p class="proof-row">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              4.5 de 5 · 31 avaliações verificadas no Google
+            </p>
+
+            <ul class="contact-details">
+              <li>
+                <span class="contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                </span>
+                <span>WhatsApp: <a href="tel:+5543991244440">(43) 9 9124-4440</a></span>
+              </li>
+              <li>
+                <span class="contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <span><a href="mailto:advocacia@glaucoramos.com">advocacia@glaucoramos.com</a></span>
+              </li>
+              <li>
+                <span class="contact-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </span>
+                <span>São Paulo · Curitiba · Londrina</span>
+              </li>
+            </ul>
+
+            <a href={WPP("Quero falar sobre defesa em PAD")} class="btn btn-whatsapp btn-large" style="width:100%; margin-bottom:1rem;" id="contact-whatsapp">
+              <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor"><path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/></svg>
+              Chamar no WhatsApp
+            </a>
+
+            <p class="contact-hours">Atendimento de segunda a sábado, 8h às 20h. Urgências 24h.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         11. FOOTER
+         ================================================ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/img/logo-glauco-ramos.webp" alt="Glauco Ramos" width="44" height="44" style="margin-bottom:0.75rem; opacity:0.85;" loading="lazy" />
+            <h4>Glauco Ramos Advocacia</h4>
+            <p>Defesa de servidores públicos com excelência técnica e compromisso ético.</p>
+          </div>
+
+          <div>
+            <h4>Áreas de Atuação</h4>
+            <ul>
+              <li><a href="#solucoes">Defesa em PAD</a></li>
+              <li><a href="#solucoes">Sindicâncias</a></li>
+              <li><a href="#solucoes">Recursos Administrativos</a></li>
+              <li><a href="#solucoes">Mandado de Segurança</a></li>
+              <li><a href="#solucoes">Nulidades Processuais</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Links Rápidos</h4>
+            <ul>
+              <li><a href="#sobre">Sobre Dr. Glauco</a></li>
+              <li><a href="#artigos">Artigos Jurídicos</a></li>
+              <li><a href="#faq">Perguntas Frequentes</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Contato</h4>
+            <ul>
+              <li><a href="tel:+5543991244440">(43) 9 9124-4440</a></li>
+              <li><a href="mailto:advocacia@glaucoramos.com">advocacia@glaucoramos.com</a></li>
+              <li>glaucoramos.com.br</li>
+              <li>SP · Curitiba · Londrina</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Glauco Ramos Advocacia. Todos os direitos reservados. | OAB/PR | LGPD Compliance</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ================================================
+         STICKY MOBILE CTA BAR
+         ================================================ -->
+    <StickyCtaBar {...stickyCtaProps} />
+
+    <!-- ================================================
+         FLOATING WHATSAPP (Desktop)
+         ================================================ -->
+    <a
+      href={WPP("Olá, gostaria de falar com um especialista em PAD")}
+      class="floating-whatsapp"
+      aria-label="Fale conosco no WhatsApp"
+      id="floating-wpp"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" fill="currentColor">
+        <path d="M26.576 5.363c-2.69-2.69-6.406-4.354-10.511-4.354-8.209 0-14.865 6.655-14.865 14.865 0 2.732.737 5.291 2.022 7.491l-2.147 7.772 7.879-2.067c2.051 1.139 4.498 1.809 7.102 1.809h.006c8.209-.003 14.862-6.659 14.862-14.868 0-4.103-1.662-7.817-4.349-10.507v0z"/>
+      </svg>
+    </a>
+
+    <LeadCaptureModal />
+
+    <!-- ================================================
+         SCRIPTS
+         ================================================ -->
+    <script>
+      // ── Video Lazy Load ───────────────────────────────
+      const videoPlayer = document.getElementById('video-player') as HTMLElement | null;
+      if (videoPlayer) {
+        const loadVideo = () => {
+          const videoId = videoPlayer.dataset.videoId;
+          const iframe = document.createElement('iframe');
+          iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          iframe.allowFullscreen = true;
+          const thumb = videoPlayer.querySelector('.video-thumbnail') as HTMLElement | null;
+          const playBtn = videoPlayer.querySelector('.video-play-btn') as HTMLElement | null;
+          if (thumb) thumb.style.display = 'none';
+          if (playBtn) playBtn.style.display = 'none';
+          videoPlayer.appendChild(iframe);
+        };
+        videoPlayer.addEventListener('click', loadVideo);
+        videoPlayer.addEventListener('keydown', (e: KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') loadVideo();
+        });
+      }
+
+      // ── FAQ Accordion ─────────────────────────────────
+      document.querySelectorAll<HTMLButtonElement>('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq-item') as HTMLElement | null;
+          if (!item) return;
+          const isOpen = item.classList.contains('open');
+          document.querySelectorAll('.faq-item').forEach(i => {
+            i.classList.remove('open');
+            const q = i.querySelector('.faq-question') as HTMLButtonElement | null;
+            if (q) q.setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    </script>
+
+    <FormScript />
+  </body>
+</html>
+</content>
+</invoke>
