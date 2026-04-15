@@ -5,8 +5,8 @@ import LeadCaptureModal from "../components/LeadCaptureModal.astro";
 import FormScript from "../components/FormScript.astro";
 import StickyCtaBar from "../components/StickyCtaBar.astro";
 
-const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
-const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
+const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista";
+const WPP = (_msg: string) => "https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista";
 
 const stickyCtaProps = {
   ariaLabel: "Barra de contato rápido da landing page de recuperação judicial",
@@ -19,7 +19,7 @@ const stickyCtaProps = {
       variant: "whatsapp" as const,
       icon: "whatsapp" as const,
       id: "sticky-whatsapp",
-      dataMessage: "Gostaria de conversar com um Advogado sobre Recuperação Judicial/Crise Bancária",
+      dataMessage: "Olá, gostaria de falar com um especialista",
       ariaLabel: "Falar via WhatsApp sobre recuperação judicial",
     },
   ],
@@ -58,9 +58,9 @@ const stickyCtaProps = {
                     Evite a falência, suspenda as ações de cobranças imediatamente (Stay Period) e negocie toda a dívida da sua empresa em bloco, conquistando deságios (descontos) que trarão o troco e a margem de volta.
                 </p>
                 <a
-                    href="https://api.whatsapp.com/send/?phone=554391244440&text=Olá,%20preciso%20de%20orientação%20urgente%20sobre%20Recuperação%20Judicial"
+                    href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                     class="btn btn-primary btn-large"
-                    data-message="Olá, preciso de orientação urgente sobre Recuperação Judicial"
+                    data-message="Olá, gostaria de falar com um especialista"
                     >FALAR COM UM ESPECIALISTA EM RECUPERAÇÃO JUDICIAL</a
                 >
                 <p class="hero-urgency">
@@ -117,9 +117,9 @@ const stickyCtaProps = {
                             </li>
                         </ul>
                         <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Socorro,%20estou%20sofrendo%20uma%20ação%20com%20risco%20de%20falência"
+                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                             class="btn btn-danger"
-                            data-message="Socorro, estou sofrendo uma ação com risco de falência">BLINDAGEM CONTRA FALÊNCIA AGORA</a
+                            data-message="Olá, gostaria de falar com um especialista">BLINDAGEM CONTRA FALÊNCIA AGORA</a
                         >
                     </div>
 
@@ -138,9 +138,9 @@ const stickyCtaProps = {
                             </li>
                         </ul>
                         <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Meus%20bens%20e%20caixa%20estão%20sendo%20executados,%20preciso%20de%20ajuda"
+                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                             class="btn btn-warning"
-                            data-message="Meus bens e caixa estão sendo executados, preciso de ajuda"
+                            data-message="Olá, gostaria de falar com um especialista"
                             >SUSPENDER PENHORAS E LEILÕES</a
                         >
                     </div>
@@ -160,9 +160,9 @@ const stickyCtaProps = {
                             </li>
                         </ul>
                         <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Quero%20entender%20como%20descontar%20dívidas%20na%20Recuperação%20Judicial"
+                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                             class="btn btn-success"
-                            data-message="Quero entender como descontar dívidas na Recuperação Judicial"
+                            data-message="Olá, gostaria de falar com um especialista"
                             >ESTUDAR RENEGOCIAÇÃO GLOBAL</a
                         >
                     </div>
@@ -182,9 +182,9 @@ const stickyCtaProps = {
                             </li>
                         </ul>
                         <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Tenho%20interesse%20na%20Recuperação%20Extrajudicial"
+                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                             class="btn btn-info"
-                            data-message="Tenho interesse na Recuperação Extrajudicial">AVALIAR A OPÇÃO EXTRAJUDICIAL</a
+                            data-message="Olá, gostaria de falar com um especialista">AVALIAR A OPÇÃO EXTRAJUDICIAL</a
                         >
                     </div>
                 </div>
@@ -259,9 +259,9 @@ const stickyCtaProps = {
 
                 <div class="text-center mt-lg">
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Minha%20empresa%20precisa%20de%20urgência%20contra%20atos%20de%20falência"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary"
-                        data-message="Minha empresa precisa de urgência contra atos de falência">BLINDAR O CAIXA DA EMPRESA AGORA</a
+                        data-message="Olá, gostaria de falar com um especialista">BLINDAR O CAIXA DA EMPRESA AGORA</a
                     >
                 </div>
             </div>
@@ -306,9 +306,9 @@ const stickyCtaProps = {
 
                 <div class="text-center mt-lg">
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Quero%20uma%20análise%20sobre%20o%20risco%20de%20Falência%20no%20meu%20Negócio"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary"
-                        data-message="Quero uma análise sobre o risco de Falência no meu Negócio">EM QUAL ETAPA MINHA EMPRESA ESTÁ? AGENDE REUNIÃO</a
+                        data-message="Olá, gostaria de falar com um especialista">EM QUAL ETAPA MINHA EMPRESA ESTÁ? AGENDE REUNIÃO</a
                     >
                 </div>
             </div>
@@ -380,9 +380,9 @@ const stickyCtaProps = {
 
                 <div class="text-center mt-lg">
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Gostaria%20de%20entender%20como%20o%20plano%20se%20aplicaria%20na%20prática"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary"
-                        data-message="Gostaria de entender como o plano se aplicaria na prática">AVALIAR A ESTRUTURA PARA MINHA INDÚSTRIA/COMÉRCIO</a
+                        data-message="Olá, gostaria de falar com um especialista">AVALIAR A ESTRUTURA PARA MINHA INDÚSTRIA/COMÉRCIO</a
                     >
                 </div>
             </div>
@@ -475,9 +475,9 @@ const stickyCtaProps = {
 
                 <div class="text-center mt-lg">
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Gostaria%20de%20esclarecer%20os%20serviços%20que%20minha%20empresa%20precisa%20urgente"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary"
-                        data-message="Gostaria de esclarecer os serviços que minha empresa precisa urgente">SOLICITAR ANÁLISE COMPLETA DO ESCRITÓRIO</a
+                        data-message="Olá, gostaria de falar com um especialista">SOLICITAR ANÁLISE COMPLETA DO ESCRITÓRIO</a
                     >
                 </div>
             </div>
@@ -544,9 +544,9 @@ const stickyCtaProps = {
 
                 <div class="text-center mt-lg">
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Quero%20uma%20consulta%20sigilosa%20sobre%20as%20minhas%20dívidas%20e%20Recuperação"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary"
-                        data-message="Quero uma consulta sigilosa sobre as minhas dívidas e Recuperação">CHAMAR UM ESTRATEGISTA ONLINE E SIGILOSO</a
+                        data-message="Olá, gostaria de falar com um especialista">CHAMAR UM ESTRATEGISTA ONLINE E SIGILOSO</a
                     >
                 </div>
             </div>
@@ -623,10 +623,10 @@ const stickyCtaProps = {
                         <strong>Central de Avaliação Crítica Sigilosa de Negócios. Atendemos todo o Brasil para resgates Corporativos Multirreais com Extrema Discrição.</strong>
                     </p>
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Gostaria%20de%20conversar%20com%20um%20Advogado%20sobre%20Recuperação%20Judicial/Crise%20Bancária"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary btn-large"
                         style="display: block; width: 100%; margin-bottom: 1rem;"
-                        data-message="Gostaria de conversar com um Advogado sobre Recuperação Judicial/Crise Bancária"
+                        data-message="Olá, gostaria de falar com um especialista"
                     >
                         📲 NEGOCIAR A PAZ COM UM ADVOGADO (43) 99124-4440
                     </a>
@@ -646,10 +646,10 @@ const stickyCtaProps = {
 
         <!-- Floating WhatsApp Button -->
         <a
-            href="https://api.whatsapp.com/send/?phone=554391244440&text=Olá,%20acessei%20a%20página%20de%20Recuperação%20Judicial%20e%20gostaria%20de%20verificar%20meu%20cenário"
+            href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
             class="floating-whatsapp"
             aria-label="Diagnóstico Confidencial Recuperação Judicial"
-            data-message="Olá, acessei a página de Recuperação Judicial e gostaria de verificar meu cenário"
+            data-message="Olá, gostaria de falar com um especialista"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -14,8 +14,8 @@ const pageTitle = "Advogado para PAD — Processo Administrativo Disciplinar | G
 const pageDescription =
   "Defesa técnica em Processo Administrativo Disciplinar (PAD) e sindicâncias para servidores públicos. Ex-Procurador Jurídico com mais de 30 anos de experiência. Atendimento em todo o Brasil.";
 
-const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
-const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
+const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista";
+const WPP = (_msg: string) => "https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista";
 
 const articleSource: ArticleFeedSource = {
   type: "manual",
@@ -67,7 +67,7 @@ const stickyCtaProps = {
       variant: "whatsapp" as const,
       icon: "whatsapp" as const,
       id: "sticky-whatsapp",
-      dataMessage: "Olá, recebi notificação de PAD e preciso de defesa urgente",
+      dataMessage: "Olá, gostaria de falar com um especialista",
       ariaLabel: "Falar via WhatsApp com um especialista em PAD",
     },
   ],

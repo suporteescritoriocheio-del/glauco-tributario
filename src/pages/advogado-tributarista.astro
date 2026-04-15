@@ -6,8 +6,8 @@ import FormScript from "../components/FormScript.astro";
 import HeroSection from "../components/HeroSection.astro";
 import StickyCtaBar from "../components/StickyCtaBar.astro";
 
-const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440";
-const WPP = (msg: string) => `${WPP_BASE}&text=${encodeURIComponent(msg)}`;
+const WPP_BASE = "https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista";
+const WPP = (_msg: string) => "https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista";
 
 const heroProps = {
   content: {
@@ -50,7 +50,7 @@ const stickyCtaProps = {
       variant: "whatsapp" as const,
       icon: "whatsapp" as const,
       id: "sticky-whatsapp",
-      dataMessage: "Preciso de amparo ativo de um Advogado Tributarista",
+      dataMessage: "Olá, gostaria de falar com um especialista",
       ariaLabel: "Falar via WhatsApp com um advogado tributarista",
     },
   ],
@@ -119,9 +119,9 @@ const stickyCtaProps = {
                             </li>
                         </ul>
                         <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Socorro,%20tive%20contas%20bloqueadas%20e%20preciso%20de%20um%20Advogado%20Tributarista"
+                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                             class="btn btn-danger"
-                            data-message="Socorro, tive contas bloqueadas e preciso de um Advogado Tributarista">DESBLOQUEAR CONTAS AGORA</a
+                            data-message="Olá, gostaria de falar com um especialista">DESBLOQUEAR CONTAS AGORA</a
                         >
                     </div>
 
@@ -140,9 +140,9 @@ const stickyCtaProps = {
                             </li>
                         </ul>
                         <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Recebi%20uma%20autuação%20fiscal%20e%20quero%20recorrer"
+                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                             class="btn btn-warning"
-                            data-message="Recebi uma autuação fiscal e quero recorrer"
+                            data-message="Olá, gostaria de falar com um especialista"
                             >RECORRER DA MULTA FISCAL</a
                         >
                     </div>
@@ -162,9 +162,9 @@ const stickyCtaProps = {
                             </li>
                         </ul>
                         <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Quero%20fazer%20uma%20Recuperação%20de%20Créditos%20Tributários"
+                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                             class="btn btn-success"
-                            data-message="Quero fazer uma Recuperação de Créditos Tributários"
+                            data-message="Olá, gostaria de falar com um especialista"
                             >RECUPERAR CRÉDITOS DA EMPRESA</a
                         >
                     </div>
@@ -184,9 +184,9 @@ const stickyCtaProps = {
                             </li>
                         </ul>
                         <a
-                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Quero%20reduzir%20meus%20impostos%20legalmente"
+                            href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                             class="btn btn-info"
-                            data-message="Quero reduzir meus impostos legalmente">REDUZIR IMPOSTOS DA EMPRESA</a
+                            data-message="Olá, gostaria de falar com um especialista">REDUZIR IMPOSTOS DA EMPRESA</a
                         >
                     </div>
                 </div>
@@ -261,9 +261,9 @@ const stickyCtaProps = {
 
                 <div class="text-center mt-lg">
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Estou%20com%20um%20problema%20tributário%20grave"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary"
-                        data-message="Estou com um problema tributário grave">SOLICITAR ANÁLISE DO MEU CASO AGORA</a
+                        data-message="Olá, gostaria de falar com um especialista">SOLICITAR ANÁLISE DO MEU CASO AGORA</a
                     >
                 </div>
             </div>
@@ -316,9 +316,9 @@ const stickyCtaProps = {
 
                 <div class="text-center mt-lg">
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Quero%20uma%20reunião%20tributária%20com%20o%20especialista"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary"
-                        data-message="Quero uma reunião tributária com o especialista">AGENDAR REUNIÃO TRIBUTÁRIA</a
+                        data-message="Olá, gostaria de falar com um especialista">AGENDAR REUNIÃO TRIBUTÁRIA</a
                     >
                 </div>
             </div>
@@ -390,9 +390,9 @@ const stickyCtaProps = {
 
                 <div class="text-center mt-lg">
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Gostaria%20de%20fazer%20o%20Raio-X%20Fiscal%20da%20minha%20empresa"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary"
-                        data-message="Gostaria de fazer o Raio-X Fiscal da minha empresa">FAZER O RAIO-X FISCAL ESTRATÉGICO</a
+                        data-message="Olá, gostaria de falar com um especialista">FAZER O RAIO-X FISCAL ESTRATÉGICO</a
                     >
                 </div>
             </div>
@@ -485,9 +485,9 @@ const stickyCtaProps = {
 
                 <div class="text-center mt-lg">
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Gostaria%20de%20esclarecer%20detalhes%20sobre%20a%20defesa%20da%20minha%20empresa"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary"
-                        data-message="Gostaria de esclarecer detalhes sobre a defesa da minha empresa">BUSCAR UMA SOLUÇÃO TRIBUTÁRIA</a
+                        data-message="Olá, gostaria de falar com um especialista">BUSCAR UMA SOLUÇÃO TRIBUTÁRIA</a
                     >
                 </div>
             </div>
@@ -554,9 +554,9 @@ const stickyCtaProps = {
 
                 <div class="text-center mt-lg">
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Quero%20uma%20consulta%20com%20o%20especialista%20em%20Direito%20Tributário"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary"
-                        data-message="Quero uma consulta com o especialista em Direito Tributário">FALAR COM O EX-PROCURADOR SOBRE MINHA EMPRESA</a
+                        data-message="Olá, gostaria de falar com um especialista">FALAR COM O EX-PROCURADOR SOBRE MINHA EMPRESA</a
                     >
                 </div>
             </div>
@@ -610,10 +610,10 @@ const stickyCtaProps = {
                         <strong>Análise Reservada para Empresários. Atendimento 100% Digital ou Presencial (Filiais Prórpias). Ação Imediata para Contas Bloqueadas.</strong>
                     </p>
                     <a
-                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Preciso%20de%20amparo%20ativo%20de%20um%20Advogado%20Tributarista"
+                        href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
                         class="btn btn-primary btn-large"
                         style="display: block; width: 100%; margin-bottom: 1rem;"
-                        data-message="Preciso de amparo ativo de um Advogado Tributarista"
+                        data-message="Olá, gostaria de falar com um especialista"
                     >
                         📲 CHAMAR NO WHATSAPP: (43) 99124-4440
                     </a>
@@ -633,10 +633,10 @@ const stickyCtaProps = {
 
         <!-- Floating WhatsApp Button -->
         <a
-            href="https://api.whatsapp.com/send/?phone=554391244440&text=Olá,%20acessei%20a%20página%20de%20Advogado%20Tributarista%20e%20preciso%20de%20suporte"
+            href="https://api.whatsapp.com/send/?phone=554391244440&text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista"
             class="floating-whatsapp"
             aria-label="Plantão com Tributarista Especialista"
-            data-message="Olá, acessei a página de Advogado Tributarista e preciso de suporte"
+            data-message="Olá, gostaria de falar com um especialista"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
